@@ -1,5 +1,5 @@
 ---
-prosody_vhosts: localhost
+prosody_vhost: localhost
 
 prosody_admins: ['admin',]
 prosody_debug_mode: False
