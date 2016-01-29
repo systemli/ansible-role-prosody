@@ -18,11 +18,6 @@
     - mercurial
     - lua-bitop
 
-- name: Install (temporary) fork of lua-sec
-  apt:
-    pkg: lua-sec-prosody
-    state: present
-
 - name: Add prosody user to ssl-cert group
   user:
     name: prosody
