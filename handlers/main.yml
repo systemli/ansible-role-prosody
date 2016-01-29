@@ -1,0 +1,14 @@
+- name: reload prosody config
+  service:
+    name: prosody
+    state: reloaded
+
+- name: restart munin-node
+  service:
+    name: munin-node
+    state: restarted
+
+- name: restart monit
+  service:
+    name: monit
+    state: restarted

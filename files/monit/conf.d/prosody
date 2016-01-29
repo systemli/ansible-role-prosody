@@ -1,0 +1,5 @@
+check process prosody with pidfile /run/prosody/prosody.pid
+    start program = "/etc/init.d/prosody start" with timeout 60 seconds
+    stop program  = "/etc/init.d/prosody stop"
+    if 5 restarts within 5 cycles then timeout
+    group server

@@ -1,0 +1,40 @@
+- name: get latest version of prosody plugin for munin
+  git:
+    repo: git://github.com/jarus/munin-prosody.git
+    dest: /usr/share/munin-prosody/
+
+- name: ensure munin prosody plugin is present
+  file:
+    src: /usr/share/munin-prosody/prosody_
+    dest: "/etc/munin/plugins/prosody_{{ item }}"
+    state: link
+    owner: root
+    group: root
+    mode: 0755
+  with_items:
+    - c2s
+    - s2s
+    - mem
+    - presence
+    - uptime
+    - users
+  notify: restart munin-node
+
+- name: Allow munin to read prosody users
+  copy:
+    src: prosody.munin
+    dest: /etc/munin/plugin-conf.d/prosody
+    owner: root
+    group: root
+    mode: 0644
+
+- name: ensure monit configs are present
+  copy:
+    src: "monit/conf.d/{{ item }}"
+    dest: "/etc/monit/conf.d/{{ item }}"
+    owner: root
+    group: root
+    mode: 0600
+  with_items:
+    - prosody
+  notify: restart monit
