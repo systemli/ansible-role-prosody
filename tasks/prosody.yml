@@ -1,0 +1,109 @@
+- name: Ensure repository key for Prosody is in place
+  apt_key:
+    url: https://prosody.im/files/prosody-debian-packages.key
+    state: present
+
+- name: Add Prosody repository
+  apt_repository:
+    repo: 'deb http://packages.prosody.im/debian {{ ansible_distribution_release }} main'
+
+- name: Ensure required packages are present
+  apt:
+    pkg: "{{ item }}"
+  with_items:
+    - prosody
+    - lua-zlib
+    - mercurial
+    - lua-bitop
+
+- name: Install (temporary) fork of lua-sec
+  apt:
+    pkg: lua-sec-prosody
+    state: present
+
+- name: Add prosody user to ssl-cert group
+  user:
+    name: prosody
+    groups: ssl-cert
+    append: yes
+
+- name: Configure Prosody
+  template:
+    src: prosody.cfg.lua.j2
+    dest: /etc/prosody/prosody.cfg.lua
+    group: root
+    owner: root
+  notify: reload prosody config
+
+# - name: Create Prosody accounts
+#   command: prosodyctl register {{ item.name }} {{ prosody_virtual_domain }} {{ item.password }}
+#   with_items: prosody_accounts
+
+- name: Get latest prosody modules
+  hg:
+    repo: https://hg.prosody.im/prosody-modules/
+    dest: /usr/share/prosody-modules
+
+- name: Create directory mod_motd_once
+  file:
+    path: /usr/share/prosody-modules/mod_motd_once
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+
+- name: Copy working mod_motd_once
+  copy:
+    src: mod_motd_once.lua
+    dest: /usr/share/prosody-modules/mod_motd_once/mod_motd_once.lua
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Enable external modules
+  file:
+    src: "/usr/share/prosody-modules/mod_{{ item }}/mod_{{ item }}.lua"
+    dest: "/usr/lib/prosody/modules/mod_{{ item }}.lua"
+    state: link
+  with_items: prosody_external_modules
+  notify: reload prosody config
+
+- name: Get mod_register_web templates
+  file:
+    src: /usr/share/prosody-modules/mod_register_web/templates
+    dest: /usr/lib/prosody/modules/templates
+    state: link
+
+- name: Push TLS cert to /etc/prosody/certs/
+  copy:
+    content: "{{ prosody_ssl_cert }}"
+    dest: /etc/prosody/certs/jabber.pem
+    owner: prosody
+    group: prosody
+    mode: 0644
+  tags:
+    - certs-jabber
+  notify: reload prosody config
+
+- name: Push TLS key to /etc/prosody/certs/
+  copy:
+    content: "{{ prosody_ssl_key }}"
+    dest: /etc/prosody/certs/jabber.key
+    owner: prosody
+    group: prosody
+    mode: 0644
+  tags:
+    - certs-jabber
+  notify: reload prosody config
+
+- name: Create parameters for Diffie–Hellman (could take a while)
+  command: "openssl dhparam -out /etc/prosody/certs/dh-{{ prosody_dhparam_length }}.pem {{ prosody_dhparam_length }}"
+  args:
+    creates: /etc/prosody/certs/dh-{{ prosody_dhparam_length }}.pem
+  notify: restart prosody
+
+- name: Start and enable prosody on boot
+  service:
+    name: prosody
+    state: started
+    enabled: yes

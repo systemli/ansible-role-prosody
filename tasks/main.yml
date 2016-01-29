@@ -1,0 +1,2 @@
+- include: prosody.yml tags=prosody
+- include: monitoring.yml tags=prosody,munin,monit
