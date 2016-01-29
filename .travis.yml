@@ -1,6 +1,8 @@
 ---
 language: python
 python: "2.7"
+sudo: required
+dist: trusty
 
 env:
   - ANSIBLE_VERSION=1.8.2
