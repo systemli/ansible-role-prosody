@@ -1,3 +1,4 @@
+---
 - name: Ensure repository key for Prosody is in place
   apt_key:
     url: https://prosody.im/files/prosody-debian-packages.key
@@ -6,6 +7,7 @@
 - name: Add Prosody repository
   apt_repository:
     repo: 'deb http://packages.prosody.im/debian {{ ansible_distribution_release }} main'
+    update_cache: yes
 
 - name: Ensure required packages are present
   apt:
