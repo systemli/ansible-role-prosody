@@ -22,9 +22,6 @@ prosody_vhost: localhost
 prosody_admins: ['admin',]
 prosody_debug_mode: False
 prosody_authentication: internal_hashed
-
-prosody_ssl_cert: /etc/prosody/certs/localhost.crt
-prosody_ssl_key: /etc/prosody/certs/localhost.key
 prosody_dhparam_length: 2048
 
 prosody_welcome_msg:  "Hello $username, welcome to the $host IM server!" 

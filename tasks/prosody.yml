@@ -75,9 +75,10 @@
   copy:
     content: "{{ prosody_ssl_cert }}"
     dest: /etc/prosody/certs/jabber.pem
-    owner: prosody
+    owner: root
     group: prosody
-    mode: 0644
+    mode: 0640
+  when: prosody_ssl_cert is defined
   tags:
     - certs-jabber
   notify: reload prosody config
@@ -86,9 +87,10 @@
   copy:
     content: "{{ prosody_ssl_key }}"
     dest: /etc/prosody/certs/jabber.key
-    owner: prosody
+    owner: root
     group: prosody
-    mode: 0644
+    mode: 0640
+  when: prosody_ssl_key is defined
   tags:
     - certs-jabber
   notify: reload prosody config
