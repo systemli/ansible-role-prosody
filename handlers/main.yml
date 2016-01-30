@@ -3,6 +3,11 @@
     name: prosody
     state: reloaded
 
+- name: restart prosody
+  service:
+    name: prosody
+    state: restarted
+
 - name: restart munin-node
   service:
     name: munin-node

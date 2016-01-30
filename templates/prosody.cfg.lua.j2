@@ -203,7 +203,7 @@ VirtualHost "example.com"
 	}
 
 VirtualHost "{{ prosody_vhost }}"
-{% if prosody_onion_vhost %}
+{% if prosody_onion_vhost is defined %}
 VirtualHost "{{ prosody_onion_vhost }}"
 {% endif %}
 
