@@ -4,12 +4,14 @@ ansible-role-prosody
 [![xmpp.net score](https://xmpp.net/badge.php?domain=jabber.systemli.org)](https://xmpp.net/result.php?domain=jabber.systemli.org&type=client)
 
 
-Install and maintain prosody with ansible
+Install and maintain [Prosody](http://prosody.im/) from offical repo with Ansible.
+Contains tests for Travis CI and Vagrant.
 
 Requirements
 ------------
 
-Debian or Ubuntu
+Debian or Ubuntu.
+Vagrant for testing.
 
 Role Variables
 --------------
@@ -74,6 +76,11 @@ Example Playbook
           -----BEGIN CERTIFICATE-----
             ...
           -----END CERTIFICATE-----
+        prosody_onion_vhost: x5tno6mwkncu4m2h.onion
+
+
+You would need a configured Tor onion service for this.
+Look at https://github.com/systemli/ansible-role-hidden-service
 
 
 License
