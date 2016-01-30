@@ -14,15 +14,15 @@
     pkg: "{{ item }}"
   with_items:
     - prosody
-    - lua-zlib
     - mercurial
     - lua-bitop
+    # compression disabled by default
+    # - lua-zlib
 
-- name: Add prosody user to ssl-cert group
-  user:
-    name: prosody
-    groups: ssl-cert
-    append: yes
+- name: Override init script (https://prosody.im/issues/issue/466)
+  copy:
+    src: prosody.init
+    dest: /etc/init.d/prosody
 
 - name: Configure Prosody
   template:

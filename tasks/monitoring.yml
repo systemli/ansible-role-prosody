@@ -1,7 +1,17 @@
+---
+- name: Install monitoring dependencies
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - munin-node
+    - monit
+    - git
+
 - name: get latest version of prosody plugin for munin
   git:
     repo: git://github.com/jarus/munin-prosody.git
     dest: /usr/share/munin-prosody/
+    accept_hostkey: true
 
 - name: ensure munin prosody plugin is present
   file:
