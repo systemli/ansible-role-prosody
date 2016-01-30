@@ -1,4 +1,0 @@
-- name: Install lua interface to mysql
-  apt:
-    pkg: lua-dbi-mysql
-    state: present
