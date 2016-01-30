@@ -117,8 +117,13 @@ reload_modules = { "register" }
 -- These are the SSL/TLS-related settings. If you don't want
 -- to use SSL/TLS, you may comment or remove this
 ssl = {
+    {% if prosody_ssl_cert is defined and prosody_ssl_key is defined %}
 	key = "/etc/prosody/certs/jabber.key";
 	certificate = "/etc/prosody/certs/jabber.pem";
+    {% else %}
+	key = "/etc/prosody/certs/localhost.key";
+	certificate = "/etc/prosody/certs/localhost.crt";
+    {% endif %}
 	dhparam = "/etc/prosody/certs/dh-{{ prosody_dhparam_length }}.pem"
 }
 
@@ -187,8 +192,6 @@ log = {
 ----------- Virtual hosts -----------
 -- You need to add a VirtualHost entry for each domain you wish Prosody to serve.
 -- Settings under each VirtualHost entry apply *only* to that host.
-
--- VirtualHost "localhost"
 
 VirtualHost "example.com"
 	enabled = false -- Remove this line to enable this host
