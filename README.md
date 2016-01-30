@@ -1,4 +1,6 @@
-ansible-role-prosody [![Build Status](https://travis-ci.org/systemli/ansible-role-prosody.svg?branch=master)](https://travis-ci.org/systemli/ansible-role-prosody) [![xmpp.net scrore](https://xmpp.net/badge.php?domain=jabber.systemli.org)](https://xmpp.net/result.php?domain=jabber.systemli.org&amp;type=client)
+ansible-role-prosody
+[![Build Status](https://travis-ci.org/systemli/ansible-role-prosody.svg?branch=master)](https://travis-ci.org/systemli/ansible-role-prosody)
+[![xmpp.net score](https://xmpp.net/badge.php?domain=jabber.systemli.org)](https://xmpp.net/result.php?domain=jabber.systemli.org&amp;type=client)
 =========
 
 Install and maintain prosody with ansible
