@@ -5,7 +5,6 @@ sudo: required
 dist: trusty
 
 env:
-  - ANSIBLE_VERSION=1.8.2
   - ANSIBLE_VERSION=1.9.4
   - ANSIBLE_VERSION=2.0
 
