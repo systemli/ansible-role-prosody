@@ -3,5 +3,6 @@
   become: yes
   become_user: root
   roles:
-    -
-      role: ansible-role-prosody
+    - role: ansible-role-prosody
+  vars:
+    prosody_test: True

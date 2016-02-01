@@ -4,4 +4,7 @@
 - hosts : all
   remote_user : vagrant
   roles :
-   - prosody
+    - prosody
+  vars:
+    prosody_test: True
+      

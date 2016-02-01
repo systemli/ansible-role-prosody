@@ -14,7 +14,7 @@
   git:
     repo: git://github.com/jarus/munin-prosody.git
     dest: /usr/share/munin-prosody/
-    accept_hostkey: true
+    accept_hostkey: "{{ prosody_test }}"
   tags:
     - munin-node
 
