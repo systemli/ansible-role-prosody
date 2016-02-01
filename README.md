@@ -26,7 +26,7 @@ prosody_authentication: internal_hashed
 prosody_dhparam_length: 2048
 prosody_monitoring: True
 prosody_welcome_msg:  "Hello $username, welcome to the $host IM server!" 
-
+prosody_test: False # "True" disables host key check of git module
 prosody_motd: False
 
 prosody_mod_register_redirect_registration_whitelist: ""
