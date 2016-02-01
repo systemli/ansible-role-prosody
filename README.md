@@ -5,6 +5,7 @@ ansible-role-prosody
 
 
 Install and maintain [Prosody](http://prosody.im/) from offical repo with Ansible.
+Per default, this role also installs monit and munin-node to monitor Prosody. 
 Contains tests for Travis CI and Vagrant.
 
 Requirements
@@ -23,7 +24,7 @@ prosody_admins: ['admin',]
 prosody_debug_mode: False
 prosody_authentication: internal_hashed
 prosody_dhparam_length: 2048
-
+prosody_monitoring: True
 prosody_welcome_msg:  "Hello $username, welcome to the $host IM server!" 
 
 prosody_motd: False

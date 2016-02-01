@@ -6,12 +6,17 @@
     - munin-node
     - monit
     - git
+  tags:
+    - munin-node
+    - monit
 
 - name: get latest version of prosody plugin for munin
   git:
     repo: git://github.com/jarus/munin-prosody.git
     dest: /usr/share/munin-prosody/
     accept_hostkey: true
+  tags:
+    - munin-node
 
 - name: ensure munin prosody plugin is present
   file:
@@ -29,6 +34,8 @@
     - uptime
     - users
   notify: restart munin-node
+  tags:
+    - munin-node
 
 - name: Allow munin to read prosody users
   copy:
@@ -37,6 +44,8 @@
     owner: root
     group: root
     mode: 0644
+  tags:
+    - munin-node
 
 - name: ensure monit configs are present
   copy:
@@ -48,3 +57,5 @@
   with_items:
     - prosody
   notify: restart monit
+  tags:
+    - monit
