@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: systemli
-  description: nstall and maintain Prosody from offical repo with Ansible. Per default, this role also installs monit and munin-node to monitor Prosody. Contains tests for Travis CI and Vagrant.
+  description: Install and maintain Prosody from offical repo with Ansible. Per default, this role also installs monit and munin-node to monitor Prosody. Contains tests for Travis CI and Vagrant.
   company: systemli.org
   license: license (GPLv2, CC-BY, etc)
   min_ansible_version: 1.7
