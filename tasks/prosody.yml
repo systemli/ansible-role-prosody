@@ -24,6 +24,12 @@
     src: prosody.init
     dest: /etc/init.d/prosody
 
+- name: Get latest registration theme
+  git:
+    repo: "{{ prosody_custom_registration_theme_repo }}"
+    dest: "{{ prosody_custom_registration_theme_path }}"
+  when: prosody_custom_registration_theme
+
 - name: Configure Prosody
   template:
     src: prosody.cfg.lua.j2
