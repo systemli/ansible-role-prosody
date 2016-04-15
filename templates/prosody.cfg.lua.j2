@@ -244,3 +244,12 @@ host_guard_blockall = {
 	"{{ host }}",
 {% endfor %}
 }
+
+{% if prosody_custom_registration_theme %}
+
+------ Appearence ------
+
+-- Register Web Template files
+register_web_template = "{{ prosody_custom_registration_theme_path }}"
+
+{% endif %}
