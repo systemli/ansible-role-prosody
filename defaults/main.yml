@@ -25,6 +25,7 @@ prosody_external_modules:
   - filter_chatstates
   - host_guard
   - lastlog
+  - limits
   - list_inactive
   - log_sasl_mech
   - motd_once
