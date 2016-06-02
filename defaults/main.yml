@@ -44,3 +44,6 @@ prosody_s2s_blacklist:
   - validcc-notifier.su
 
 prosody_blacklist: []
+
+prosody_limits_c2s_rate: "3kb/s"
+prosody_limits_c2s_burst: "2s"
