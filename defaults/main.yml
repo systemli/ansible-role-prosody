@@ -26,12 +26,12 @@ prosody_external_modules:
   - csi
   - filter_chatstates
   - host_guard
-  - inotify_reload
   - lastlog
   - limits
   - list_inactive
   - log_sasl_mech
   - motd_once
+  - reload_modules
   - register_redirect
   - register_web
   - query_client_ver
