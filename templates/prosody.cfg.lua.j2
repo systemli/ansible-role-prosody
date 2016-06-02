@@ -182,6 +182,16 @@ log = {
 --	error = "/var/log/prosody/prosody.err";
 }
 
+----------- Limits -----------
+{% if 'limits' in prosody_external_modules %}
+limits = {
+  c2s = {
+    rate = "{{ prosody_limits_c2s_rate }}";
+    burst = "{{ prosody_limits_c2s_burst }}";
+  };
+}
+{% endif %}
+
 ----------- Virtual hosts -----------
 -- You need to add a VirtualHost entry for each domain you wish Prosody to serve.
 -- Settings under each VirtualHost entry apply *only* to that host.
