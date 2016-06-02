@@ -24,6 +24,7 @@ prosody_external_modules:
   - csi
   - filter_chatstates
   - host_guard
+  - inotify_reload
   - lastlog
   - limits
   - list_inactive
@@ -31,7 +32,6 @@ prosody_external_modules:
   - motd_once
   - register_redirect
   - register_web
-  - reload_modules
   - query_client_ver
   - s2s_auth_compat
   - smacks
