@@ -182,6 +182,10 @@ log = {
 --	error = "/var/log/prosody/prosody.err";
 }
 
+{% if 'mam' in prosody_external_modules %}
+default_archive_policy = {{ prosody_mam_default_archive_policy }}
+{% endif %}
+
 {% if 'reload_modules' in prosody_external_modules %}
 -- reload modules on configuration change
 reload_modules = {
