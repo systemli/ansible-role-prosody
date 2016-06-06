@@ -205,6 +205,15 @@ limits = {
 }
 {% endif %}
 
+{% if prosody_custom_registration_theme %}
+
+------ Appearance ------
+
+-- Register Web Template files
+register_web_template = "{{ prosody_custom_registration_theme_path }}"
+
+{% endif %}
+
 ----------- Virtual hosts -----------
 -- You need to add a VirtualHost entry for each domain you wish Prosody to serve.
 -- Settings under each VirtualHost entry apply *only* to that host.
@@ -260,12 +269,3 @@ host_guard_blockall = {
 	"{{ host }}",
 {% endfor %}
 }
-
-{% if prosody_custom_registration_theme %}
-
------- Appearence ------
-
--- Register Web Template files
-register_web_template = "{{ prosody_custom_registration_theme_path }}"
-
-{% endif %}
