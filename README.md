@@ -38,22 +38,27 @@ prosody_mod_register_redirect_registration_url: "https://localhost:5281/register
 prosody_mod_register_redirect_text: "To register please visit {{ prosody_mod_register_redirect_registration_url}}"
 
 prosody_external_modules:
-  - smacks
-  - register_web
-  - reload_modules
-  - s2s_auth_compat
-  - lastlog
-  - list_inactive
-  - register_redirect
-  - motd_once
+  - auto_activate_hosts
+  - c2s_conn_throttle
   - c2s_limit_sessions
-  - log_sasl_mech
-  - query_client_ver
+  - carbons
+  - cloud_notify
   - csi
-  - throttle_presence
   - filter_chatstates
   - host_guard
-  - carbons
+  - lastlog
+  - limits
+  - list_inactive
+  - log_sasl_mech
+  - mam
+  - motd_once
+  - reload_modules
+  - register_redirect
+  - register_web
+  - query_client_ver
+  - s2s_auth_compat
+  - smacks
+  - throttle_presence
 
 prosody_s2s_blacklist:
   - buycc.me
