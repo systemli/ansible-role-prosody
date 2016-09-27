@@ -23,6 +23,7 @@
     - prosody
     - mercurial
     - lua-bitop
+    - lua-event
     # compression disabled by default
     # - lua-zlib
 
