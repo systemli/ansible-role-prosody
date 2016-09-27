@@ -52,11 +52,11 @@
 - name: Get latest prosody modules
   hg:
     repo: https://hg.prosody.im/prosody-modules/
-    dest: /usr/share/prosody-modules
+    dest: "{{ prosody_external_modules_dir }}"
 
 - name: Create directory mod_motd_once
   file:
-    path: /usr/share/prosody-modules/mod_motd_once
+    path: "{{ prosody_external_modules_dir }}/mod_motd_once"
     owner: root
     group: root
     mode: 0755
@@ -65,14 +65,14 @@
 - name: Copy working mod_motd_once
   copy:
     src: mod_motd_once.lua
-    dest: /usr/share/prosody-modules/mod_motd_once/mod_motd_once.lua
+    dest: "{{ prosody_external_modules_dir }}/mod_motd_once/mod_motd_once.lua"
     owner: root
     group: root
     mode: 0644
 
 - name: Enable external modules
   file:
-    src: "/usr/share/prosody-modules/mod_{{ item }}/mod_{{ item }}.lua"
+    src: "{{ prosody_external_modules_dir }}/mod_{{ item }}/mod_{{ item }}.lua"
     dest: "/usr/lib/prosody/modules/mod_{{ item }}.lua"
     state: link
   with_items:  "{{ prosody_external_modules }}"
@@ -80,7 +80,7 @@
 
 - name: Get mod_register_web templates
   file:
-    src: /usr/share/prosody-modules/mod_register_web/templates
+    src: "{{ prosody_external_modules_dir }}/mod_register_web/templates"
     dest: /usr/lib/prosody/modules/templates
     state: link
 
