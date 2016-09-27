@@ -41,6 +41,8 @@ prosody_external_modules:
   - smacks
   - throttle_presence
 
+prosody_external_modules_dir: /usr/share/prosody-modules
+
 prosody_s2s_blacklist:
   - buycc.me
   - validcc-notifier.su
@@ -53,3 +55,5 @@ prosody_limits_c2s_burst: "2s"
 prosody_mam_default_archive_policy: "false"
 
 prosody_file_limit: 1000000
+
+
