@@ -1,11 +1,4 @@
 ---
-
-- name: Raise file limit
-  sysctl: 
-    name: fs.file-max
-    value: "{{ prosody_file_limit }}"
-    state: present
-   
 - name: Ensure repository key for Prosody is in place
   apt_key:
     url: https://prosody.im/files/prosody-debian-packages.key
