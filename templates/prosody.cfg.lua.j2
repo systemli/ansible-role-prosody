@@ -21,7 +21,7 @@
 -- Example: admins = { "user1@example.com", "user2@example.net" }
 admins = {
 {% for admin in prosody_admins %}
-	"{{ admin }}@{{prosody_vhost}}",
+	"{{ admin }}@{{ prosody_vhost }}",
 {% endfor %}
 }
 
@@ -248,7 +248,7 @@ Component "conference.{{ prosody_vhost }}" "muc"
 Component "pubsub.{{ prosody_vhost }}" "pubsub"
 
 -- Set up a SOCKS5 bytestream proxy for server-proxied file transfers:
---Component "proxy.example.com" "proxy65"
+Component "proxy.{{ prosody_vhost }}" "proxy65"
 
 ---Set up an external component (default component port is 5347)
 --
