@@ -20,6 +20,7 @@ prosody_mod_register_redirect_text: "To register please visit {{ prosody_mod_reg
 
 prosody_external_modules:
   - auto_activate_hosts
+  - blocking
   - c2s_conn_throttle
   - c2s_limit_sessions
   - carbons
@@ -27,6 +28,7 @@ prosody_external_modules:
   - csi
   - filter_chatstates
   - host_guard
+  - http_upload
   - lastlog
   - limits
   - list_inactive
@@ -36,7 +38,6 @@ prosody_external_modules:
   - reload_modules
   - register_redirect
   - register_web
-  - query_client_ver
   - s2s_auth_compat
   - smacks
   - throttle_presence
