@@ -108,6 +108,30 @@
     creates: /etc/prosody/certs/dh-{{ prosody_dhparam_length }}.pem
   notify: restart prosody
 
+- name: Push proxy TLS cert to /etc/prosody/certs/
+  copy:
+    content: "{{ prosody_proxy_ssl_cert }}"
+    dest: /etc/prosody/certs/proxy.pem
+    owner: root
+    group: prosody
+    mode: 0640
+  when: prosody_proxy_ssl_cert is defined
+  tags:
+    - certs-jabber
+  notify: reload prosody config
+
+- name: Push proxy TLS key to /etc/prosody/certs/
+  copy:
+    content: "{{ prosody_proxy_ssl_key }}"
+    dest: /etc/prosody/certs/proxy.key
+    owner: root
+    group: prosody
+    mode: 0640
+  when: prosody_proxy_ssl_key is defined
+  tags:
+    - certs-jabber
+  notify: reload prosody config
+
 - name: Start and enable prosody on boot
   service:
     name: prosody

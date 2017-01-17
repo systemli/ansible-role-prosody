@@ -249,6 +249,12 @@ Component "pubsub.{{ prosody_vhost }}" "pubsub"
 
 -- Set up a SOCKS5 bytestream proxy for server-proxied file transfers:
 Component "proxy.{{ prosody_vhost }}" "proxy65"
+{% if prosody_proxy_ssl_cert is defined and prosody_proxy_ssl_key is defined %}
+    ssl = {
+    	key = "/etc/prosody/certs/proxy.key";
+    	certificate = "/etc/prosody/certs/proxy.pem";
+    }
+{% endif %}
 
 ---Set up an external component (default component port is 5347)
 --
