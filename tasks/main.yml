@@ -1,6 +1,7 @@
 - include: prosody.yml
   tags:
     - prosody
+
 - include: monitoring.yml
   when: prosody_monitoring
   tags:

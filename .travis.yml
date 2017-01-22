@@ -1,15 +1,15 @@
 ---
 language: python
 python: "2.7"
-sudo: required
-dist: trusty
 
 notifications:
     webhooks: https://galaxy.ansible.com/api/v1/notifications/
 
 env:
-  - ANSIBLE_VERSION=1.9.4
-  - ANSIBLE_VERSION=2.0
+  - ANSIBLE_VERSION=1.9.6
+  - ANSIBLE_VERSION=2.0.2.0
+  - ANSIBLE_VERSION=2.1.4.0
+  - ANSIBLE_VERSION=2.2.1.0
 
 before_install:
   - sudo apt-get update -qq
@@ -23,16 +23,16 @@ install:
 
 script:
   # Check the role/playbook's syntax.
-  - ansible-playbook -i tests/inventory tests/test_travis.yml --syntax-check
+  - ansible-playbook -i tests/inventory tests/test.yml --syntax-check
 
   # Run the role/playbook with ansible-playbook.
-  - ansible-playbook -i tests/inventory tests/test_travis.yml --connection=local --sudo -vvvv
+  - ansible-playbook -i tests/inventory tests/test.yml --connection=local --sudo
 
   # Run the role/playbook again, checking to make sure it's idempotent.
   - >
-   ansible-playbook -i tests/inventory tests/test_travis.yml --connection=local --sudo
-   | grep -q 'changed=0.*failed=0'
-   && (echo 'Idempotence test: pass' && exit 0)
-   || (echo 'Idempotence test: fail' && exit 1)
+    ansible-playbook -i tests/inventory tests/test.yml --connection=local --sudo
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
 
 
