@@ -1,0 +1,6 @@
+---
+- hosts: all
+  roles:
+    - prosody
+  vars:
+    prosody_test: True
