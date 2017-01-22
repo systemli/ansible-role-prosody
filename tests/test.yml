@@ -1,7 +1,5 @@
 ---
 - hosts: localhost
-  become: yes
-  become_user: root
   roles:
     - role: ansible-role-prosody
   vars:
