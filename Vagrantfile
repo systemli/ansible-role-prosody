@@ -10,7 +10,7 @@ Vagrant.configure(2) do |config|
   config.vm.provision "ansible" do |ansible|
 
     # Playbook used to test role
-    ansible.playbook  = "tests/test_vagrant.yml"
+    ansible.playbook  = "vagrant.yml"
     ansible.verbose = "v"
 
   end
