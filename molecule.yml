@@ -1,0 +1,28 @@
+---
+molecule:
+  ignore_paths:
+    - .cache
+    - .git
+    - .molecule
+    - .tox
+    - .vagrant
+_disabled:
+  - ansible_lint
+ansible:
+  verbose: v
+dependency:
+  name: galaxy
+driver:
+  name: docker
+docker:
+  containers:
+    - name: ansible-role-prosody-debian
+      image: maint/debian-systemd
+      image_version: latest
+      privileged: True
+    - name: ansible-role-prosody-ubuntu
+      image: solita/ubuntu-systemd
+      image_version: latest
+      privileged: True
+verifier:
+  name: testinfra
