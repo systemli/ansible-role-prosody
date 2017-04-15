@@ -5,13 +5,10 @@ molecule:
     - .git
     - .molecule
     - .tox
-    - .vagrant
 _disabled:
   - ansible_lint
 ansible:
-  verbose: v
-dependency:
-  name: galaxy
+  playbook: tests/test.yml
 driver:
   name: docker
 docker:
@@ -24,5 +21,3 @@ docker:
       image: solita/ubuntu-systemd
       image_version: latest
       privileged: True
-verifier:
-  name: testinfra
