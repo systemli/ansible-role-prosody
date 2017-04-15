@@ -1,4 +1,11 @@
 ---
+- name: Ensure apt-key is available
+  apt:
+    pkg: "{{ item }}"
+  with_items:
+    - apt
+    - ca-certificates
+
 - name: Ensure repository key for Prosody is in place
   apt_key:
     url: https://prosody.im/files/prosody-debian-packages.key

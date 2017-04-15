@@ -1,6 +1,4 @@
 ---
-- hosts: localhost
+- hosts: all
   roles:
     - role: ansible-role-prosody
-  vars:
-    prosody_test: True
