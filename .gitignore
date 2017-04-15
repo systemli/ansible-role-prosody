@@ -1,1 +1,5 @@
+.cache
+.molecule
+.tox
 .vagrant
+tests/__pycache__
