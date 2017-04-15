@@ -6,7 +6,7 @@ prosody_debug_mode: False
 prosody_authentication: internal_hashed
 prosody_dhparam_length: 2048
 prosody_monitoring: True
-prosody_welcome_msg:  "Hello $username, welcome to the $host IM server!" 
+prosody_welcome_msg:  "Hello $username, welcome to the $host IM server!"
 prosody_test: False
 prosody_motd: False
 
@@ -58,4 +58,3 @@ prosody_mam_default_archive_policy: "false"
 prosody_http_upload_file_size_limit: 1048576 # 1MB
 prosody_http_upload_expire_after: 2592000 # 30 days in seconds
 prosody_http_upload_quota: 52428800 # 50MB
-
