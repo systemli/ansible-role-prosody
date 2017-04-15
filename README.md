@@ -5,13 +5,13 @@ ansible-role-prosody
 
 Install and maintain [Prosody](http://prosody.im/) from offical repo with Ansible.
 Per default, this role also installs monit and munin-node to monitor Prosody. 
-Contains tests for Travis CI and Vagrant.
+Contains tests for Travis CI and Molecule.
 
 Requirements
 ------------
 
 Debian or Ubuntu.
-Vagrant for testing.
+Molecule, Tox and Docker for testing.
 
 Role Variables
 --------------
@@ -24,8 +24,8 @@ prosody_debug_mode: False
 prosody_authentication: internal_hashed
 prosody_dhparam_length: 2048
 prosody_monitoring: True
-prosody_welcome_msg:  "Hello $username, welcome to the $host IM server!" 
-prosody_test: False # "True" disables host key check of git module
+prosody_welcome_msg:  "Hello $username, welcome to the $host IM server!"
+prosody_test: False
 prosody_motd: False
 
 prosody_custom_registration_theme: False
@@ -38,6 +38,7 @@ prosody_mod_register_redirect_text: "To register please visit {{ prosody_mod_reg
 
 prosody_external_modules:
   - auto_activate_hosts
+  - blocking
   - c2s_conn_throttle
   - c2s_limit_sessions
   - carbons
@@ -45,6 +46,7 @@ prosody_external_modules:
   - csi
   - filter_chatstates
   - host_guard
+  - http_upload
   - lastlog
   - limits
   - list_inactive
@@ -54,16 +56,26 @@ prosody_external_modules:
   - reload_modules
   - register_redirect
   - register_web
-  - query_client_ver
   - s2s_auth_compat
   - smacks
   - throttle_presence
+
+prosody_external_modules_dir: /usr/share/prosody-modules
 
 prosody_s2s_blacklist:
   - buycc.me
   - validcc-notifier.su
 
 prosody_blacklist: []
+
+prosody_limits_c2s_rate: "3kb/s"
+prosody_limits_c2s_burst: "2s"
+
+prosody_mam_default_archive_policy: "false"
+
+prosody_http_upload_file_size_limit: 1048576 # 1MB
+prosody_http_upload_expire_after: 2592000 # 30 days in seconds
+prosody_http_upload_quota: 52428800 # 50MB
 ```
 
 Download
