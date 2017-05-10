@@ -30,6 +30,7 @@ prosody_external_modules:
   - host_guard
   - http_upload
   - lastlog
+  - limit_auth
   - limits
   - list_inactive
   - log_sasl_mech
