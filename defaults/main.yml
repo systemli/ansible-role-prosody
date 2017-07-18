@@ -59,3 +59,5 @@ prosody_mam_default_archive_policy: "false"
 prosody_http_upload_file_size_limit: 1048576 # 1MB
 prosody_http_upload_expire_after: 2592000 # 30 days in seconds
 prosody_http_upload_quota: 52428800 # 50MB
+
+prosody_clean_inactive_users: false
