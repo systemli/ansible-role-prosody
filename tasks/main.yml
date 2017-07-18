@@ -6,3 +6,7 @@
   when: prosody_monitoring
   tags:
     - prosody
+
+- include: inactive.yml
+  tags:
+    - prosody
