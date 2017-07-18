@@ -24,6 +24,10 @@ prosody_debug_mode: False
 prosody_authentication: internal_hashed
 prosody_dhparam_length: 2048
 prosody_monitoring: True
+prosody_monitoring_packages:
+    - munin-node
+    - monit
+    - git
 prosody_welcome_msg:  "Hello $username, welcome to the $host IM server!"
 prosody_test: False
 prosody_motd: False
