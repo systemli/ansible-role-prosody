@@ -49,7 +49,7 @@ for full_username in $inactive_users; do
 
   if [ "$clean_users" = true ]; then
     # disable login
-    echo "return {}" > ${path}/accounts/${username}.dat
+    echo "return {}" > '${path}/accounts/${username}.dat'
 
     # clean user data
     # some use dat, other list format
@@ -62,7 +62,7 @@ for full_username in $inactive_users; do
 
     # clean inactive users from permanent rooms
     # unreliable, there is something stored in memory also
-    for room in $(grep -rl $full_username $conference_config_path); do
+    for room in $(grep -rl '$full_username' '$conference_config_path'); do
       sed -i "/${full_username}/d" $room
     done
   fi
