@@ -12,6 +12,7 @@
   cron:
     name: Clean inactive jabber users
     cron_file: prosody_clean_inactive_users
+    user: root
     special_time: monthly
     job: /usr/local/bin/prosody_inactive_users -c
   when: prosody_clean_inactive_users
