@@ -59,14 +59,8 @@ for full_username in $inactive_users; do
       rm -f ${path}/${folder}/${username}.dat;
       rm -f ${path}/${folder}/${username}.list;
     done
-
-    # clean inactive users from permanent rooms
-    # unreliable, there is something stored in memory also
-    for room in $(grep -rl "$full_username" "$conference_config_path"); do
-      sed -i "/${full_username}/d" $room
-    done
   fi
 done
 
-# TODO delete inactive rooms
+# TODO clean inactive users from permanent rooms & delete inactive rooms
 
