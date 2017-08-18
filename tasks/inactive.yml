@@ -14,5 +14,5 @@
     cron_file: prosody_clean_inactive_users
     user: root
     special_time: monthly
-    job: /usr/local/bin/prosody_inactive_users -c
+    job: /usr/local/bin/prosody_inactive_users --clean --no-list
   when: prosody_clean_inactive_users
