@@ -120,6 +120,9 @@ ssl = {
     {% endif %}
 	dhparam = "/etc/prosody/certs/dh-{{ prosody_dhparam_length }}.pem"
 }
+{% if prosody_legacy_ssl_ports is defined %}
+legacy_ssl_ports = {{ prosody_legacy_ssl_ports }}
+{% endif %}
 
 -- Force clients to use encrypted connections? This option will
 -- prevent clients from authenticating unless they are using encryption.

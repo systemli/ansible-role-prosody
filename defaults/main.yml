@@ -49,6 +49,8 @@ prosody_external_modules:
 
 prosody_external_modules_dir: /usr/share/prosody-modules
 
+prosody_legacy_ssl_ports: 5223
+
 prosody_s2s_blacklist:
   - buycc.me
   - validcc-notifier.su
