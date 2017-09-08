@@ -1,3 +1,4 @@
+---
 - name: reload prosody config
   service:
     name: prosody
