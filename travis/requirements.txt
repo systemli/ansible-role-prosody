@@ -1,2 +1,2 @@
 docker
-molecule==1.25.0
+molecule
