@@ -139,8 +139,7 @@
     - certs-jabber
   notify: reload prosody config
 
-- name: Start and enable prosody on boot
+- name: Enable prosody service
   service:
     name: prosody
-    state: started
     enabled: yes
