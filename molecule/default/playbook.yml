@@ -3,3 +3,5 @@
   hosts: all
   roles:
     - role: ansible-role-prosody
+  vars:
+    prosody_dhparam_length: 32
