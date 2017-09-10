@@ -19,13 +19,13 @@ platforms:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     command: /lib/systemd/systemd
-  - name: ubuntu-trusty
-    image: ubuntu
-    image_version: 16.04
-    privileged: "True"
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    command: /lib/systemd/systemd
+#  - name: ubuntu-trusty
+#    image: ubuntu
+#    image_version: 16.04
+#    privileged: "True"
+#    volumes:
+#      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+#    command: /lib/systemd/systemd
 provisioner:
   name: ansible
   options:
