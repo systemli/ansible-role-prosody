@@ -6,13 +6,13 @@
     dest: /usr/local/bin/prosody_inactive_users
     owner: root
     group: root
-    mode: 0740
+    mode: 0755
 
 - name: Enable cron job to clean inactive users
   cron:
     name: Clean inactive jabber users
     cron_file: prosody_clean_inactive_users
-    user: root
+    user: prosody
     special_time: monthly
     job: /usr/local/bin/prosody_inactive_users --clean --no-list
   when: prosody_clean_inactive_users
