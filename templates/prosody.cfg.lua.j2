@@ -253,7 +253,8 @@ VirtualHost "{{ prosody_onion_vhost }}"
 ---Set up a MUC (multi-user chat) room server on conference.example.com:
 Component "conference.{{ prosody_vhost }}" "muc"
 	 restrict_room_creation = "local"
-	 max_history_messages = 100
+	 default_history_messages = {{ prosody_default_history_messages }}
+	 max_history_messages = {{ prosody_max_history_messages }}
 Component "pubsub.{{ prosody_vhost }}" "pubsub"
 
 -- Set up a SOCKS5 bytestream proxy for server-proxied file transfers:
