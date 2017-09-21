@@ -209,9 +209,6 @@ limits = {
 }
 {% endif %}
 
-# plain http only locally
-http_interfaces = { localhost }
-
 {% if 'http_upload' in prosody_external_modules %}
 http_upload_file_size_limit = {{ prosody_http_upload_file_size_limit }}
 http_upload_expire_after = {{ prosody_http_upload_expire_after }}
