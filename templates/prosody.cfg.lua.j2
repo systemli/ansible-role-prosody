@@ -213,6 +213,9 @@ limits = {
 http_upload_file_size_limit = {{ prosody_http_upload_file_size_limit }}
 http_upload_expire_after = {{ prosody_http_upload_expire_after }}
 http_upload_quota = {{ prosody_http_upload_quota }}
+# Limit http interfaces to localhost
+http_interfaces = { "127.0.0.1" }
+
 
 {% endif %}
 {% if prosody_custom_registration_theme %}
