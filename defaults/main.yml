@@ -47,7 +47,7 @@ prosody_external_modules:
   - smacks
   - throttle_presence
 
-prosody_external_modules_dir: /usr/share/prosody-modules
+prosody_external_modules_dir: /usr/local/share/prosody-modules
 
 prosody_legacy_ssl_ports: 5223
 
