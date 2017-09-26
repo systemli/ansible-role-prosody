@@ -10,14 +10,14 @@
 - name: get latest version of prosody plugin for munin
   git:
     repo: git://github.com/jarus/munin-prosody.git
-    dest: /usr/share/munin-prosody/
+    dest: /usr/local/share/munin-prosody/
     accept_hostkey: "{{ prosody_test }}"
   tags:
     - munin-node
 
 - name: ensure munin prosody plugin is present
   file:
-    src: /usr/share/munin-prosody/prosody_
+    src: /usr/local/share/munin-prosody/prosody_
     dest: "/etc/munin/plugins/prosody_{{ item }}"
     state: link
     owner: root
