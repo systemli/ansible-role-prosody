@@ -77,20 +77,6 @@
     group: root
     mode: 0644
 
-- name: Enable external modules
-  file:
-    src: "{{ prosody_external_modules_dir }}/mod_{{ item }}/mod_{{ item }}.lua"
-    dest: "/usr/lib/prosody/modules/mod_{{ item }}.lua"
-    state: link
-  with_items: "{{ prosody_external_modules }}"
-  notify: reload prosody config
-
-- name: Get mod_register_web templates
-  file:
-    src: "{{ prosody_external_modules_dir }}/mod_register_web/templates"
-    dest: /usr/lib/prosody/modules/templates
-    state: link
-
 - name: Push TLS cert to /etc/prosody/certs/
   copy:
     content: "{{ prosody_ssl_cert }}"
