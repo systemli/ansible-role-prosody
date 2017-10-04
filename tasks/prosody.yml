@@ -22,6 +22,7 @@
   with_items:
     - prosody
     - mercurial
+    - lua-sec
     - lua-bitop
     - lua-event
     # compression disabled by default
