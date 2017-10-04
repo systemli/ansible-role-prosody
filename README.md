@@ -51,7 +51,6 @@ prosody_external_modules:
   - http_upload
   - lastlog
   - limit_auth
-  - limits
   - list_inactive
   - log_sasl_mech
   - mam
@@ -71,6 +70,7 @@ prosody_s2s_blacklist:
 
 prosody_blacklist: []
 
+prosody_limits: True
 prosody_limits_c2s_rate: "3kb/s"
 prosody_limits_c2s_burst: "2s"
 
