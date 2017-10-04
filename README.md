@@ -42,7 +42,6 @@ prosody_mod_register_redirect_text: "To register please visit {{ prosody_mod_reg
 
 prosody_external_modules:
   - auto_activate_hosts
-  - blocking
   - c2s_conn_throttle
   - c2s_limit_sessions
   - cloud_notify
