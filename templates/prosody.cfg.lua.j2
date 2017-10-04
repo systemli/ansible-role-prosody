@@ -68,6 +68,9 @@ modules_enabled = {
 		--"http_files"; -- Serve static files from a directory over HTTP
 
 	-- Other specific functionality
+{% if prosody_limits %}
+        "limits"; -- Enable rate-limiting module
+{% endif %}
 		--"groups"; -- Shared roster support
 		"announce"; -- Send announcement to all online users
 		"welcome"; -- Welcome users who register accounts
@@ -198,7 +201,7 @@ reload_modules = {
 {% endif %}
 
 ----------- Limits -----------
-{% if 'limits' in prosody_external_modules %}
+{% if prosody_limits %}
 limits = {
   c2s = {
     rate = "{{ prosody_limits_c2s_rate }}";
