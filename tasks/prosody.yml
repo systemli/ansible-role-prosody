@@ -25,13 +25,6 @@
     - lua-sec
     - lua-bitop
     - lua-event
-    # compression disabled by default
-    # - lua-zlib
-
-- name: Override init script (https://prosody.im/issues/issue/466)
-  copy:
-    src: prosody.init
-    dest: /etc/init.d/prosody
 
 - name: Apply patch from https://prosody.im/issues/issue/397
   patch:
