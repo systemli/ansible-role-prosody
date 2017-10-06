@@ -54,6 +54,8 @@ prosody_s2s_blacklist:
 
 prosody_blacklist: []
 
+prosody_file_limit: False
+
 prosody_limits: True
 prosody_limits_c2s_rate: "3kb/s"
 prosody_limits_c2s_burst: "2s"
