@@ -26,6 +26,13 @@
     - lua-bitop
     - lua-event
 
+- name: Increase file limit
+  lineinfile:
+    dest: /etc/init.d/prosody
+    line: "MAXFDS={{ prosody_file_limit }}"
+    regexp: "^MAXFDS="
+  when: prosody_file_limit
+
 - name: Apply patch from https://prosody.im/issues/issue/397
   patch:
     src: default_history_messages.diff
