@@ -1,10 +1,11 @@
 -- Prosody XMPP Server Configuration
 --
 -- Information on configuring Prosody can be found on our
--- website at http://prosody.im/doc/configure
+-- website at https://prosody.im/doc/configure
 --
 -- Tip: You can check that the syntax of this file is correct
--- when you have finished by running: luac -p prosody.cfg.lua
+-- when you have finished by running this command:
+--     prosodyctl check config
 -- If there are any errors, it will let you know what and where
 -- they are, otherwise it will keep quiet.
 --
@@ -17,7 +18,7 @@
 
 -- This is a (by default, empty) list of accounts that are admins
 -- for the server. Note that you must create the accounts separately
--- (see http://prosody.im/doc/creating_accounts for info)
+-- (see https://prosody.im/doc/creating_accounts for info)
 -- Example: admins = { "user1@example.com", "user2@example.net" }
 admins = {
 {% for admin in prosody_admins %}
@@ -26,14 +27,19 @@ admins = {
 }
 
 -- Enable use of libevent for better performance under high load
--- For more information see: http://prosody.im/doc/libevent
-use_libevent = true;
+-- For more information see: https://prosody.im/doc/libevent
+use_libevent = true
 
-plugin_paths = { "{{ prosody_external_modules_dir }}" }
+-- Prosody will always look in its source directory for modules, but
+-- this option allows you to specify additional locations where Prosody
+-- will look for modules first. For community modules, see https://modules.prosody.im/
+plugin_paths = {
+	"{{ prosody_external_modules_dir }}"
+}
 
 -- This is the list of modules Prosody will load on startup.
 -- It looks for mod_modulename.lua in the plugins folder, so make sure that exists too.
--- Documentation on modules can be found at: http://prosody.im/doc/modules
+-- Documentation for bundled modules can be found at: https://prosody.im/doc/modules
 modules_enabled = {
 
 	-- Generally required
@@ -42,22 +48,21 @@ modules_enabled = {
 		"tls"; -- Add support for secure TLS on c2s/s2s connections
 		"dialback"; -- s2s dialback support
 		"disco"; -- Service discovery
-		"posix"; -- POSIX functionality, sends server to background, enables syslog, etc.
 
 	-- Not essential, but recommended
+        	"carbons"; -- Keep multiple clients in sync
+		"pep"; -- Enables users to publish their mood, activity, playing music and more
 		"private"; -- Private XML storage (for room bookmarks, etc.)
+        	"blocklist"; -- Allow users to block communications with other users
 		"vcard"; -- Allow users to set vCards
-        "blocklist"; -- enables users to block specific users from contacting them
-        "carbons"; -- synchronized view of all conversations across all online devices
 
 	-- Nice to have
 		--"version"; -- Replies to server version requests
 		"uptime"; -- Report how long server has been running
 		"time"; -- Let others know the time here on this server
 		"ping"; -- Replies to XMPP pings with pongs
-		"pep"; -- Enables users to publish their mood, activity, playing music and more
 		"register"; -- Allow users to register on this server using a client and change passwords
-        --Hint: a replacement via mod_register_web is insufficient, users won't be able to change their passwords
+		--"mam"; -- Store messages in an archive and allow users to access it
 
 	-- Admin interfaces
 		"admin_adhoc"; -- Allows administration via an XMPP client that supports ad-hoc commands
@@ -65,23 +70,27 @@ modules_enabled = {
 
 	-- HTTP modules
 		"bosh"; -- Enable BOSH clients, aka "Jabber over HTTP"
+		--"websocket"; -- XMPP over WebSockets
 		--"http_files"; -- Serve static files from a directory over HTTP
 
 	-- Other specific functionality
 {% if prosody_limits %}
-        "limits"; -- Enable rate-limiting module
+	        "limits"; -- Enable bandwidth limiting for XMPP connections
 {% endif %}
 		--"groups"; -- Shared roster support
+		--"server_contact_info"; -- Publish contact information for this service
 		"announce"; -- Send announcement to all online users
 		"welcome"; -- Welcome users who register accounts
 		--"watchregistrations"; -- Alert admins of registrations
 		--"motd"; -- Send a message to users when they log in
 		--"legacyauth"; -- Legacy authentication. Only used by some old clients and bots.
+		--"proxy65"; -- Enables a file transfer proxy service which clients behind NAT can use
+
 	-- External
 {% for module in prosody_external_modules %}
 		"{{ module }}";
 {% endfor %}
-};
+}
 
 {% if prosody_motd %}
 motd_text = [[{{ prosody_motd }}]]
@@ -103,11 +112,12 @@ modules_disabled = {
 	-- "offline"; -- Store offline messages
 	-- "c2s"; -- Handle client connections
 	-- "s2s"; -- Handle server-to-server connections
-};
+	-- "posix"; -- POSIX functionality, sends server to background, enables syslog, etc.
+}
 
 -- Disable account creation by default, for security
--- For more information see http://prosody.im/doc/creating_accounts
--- allow_registration = true;
+-- For more information see https://prosody.im/doc/creating_accounts
+-- allow_registration = true
 
 -- These are the SSL/TLS-related settings. If you don't want
 -- to use SSL/TLS, you may comment or remove this
@@ -130,20 +140,27 @@ legacy_ssl_ports = {{ prosody_legacy_ssl_ports }}
 
 c2s_require_encryption = true
 
+-- Force servers to use encrypted connections? This option will
+-- prevent servers from authenticating unless they are using encryption.
+-- Note that this is different from authentication
+
+s2s_require_encryption = true
+
+
 -- Force certificate authentication for server-to-server connections?
 -- This provides ideal security, but requires servers you communicate
 -- with to support encryption AND present valid, trusted certificates.
 -- NOTE: Your version of LuaSec must support certificate verification!
--- For more information see http://prosody.im/doc/s2s#security
+-- For more information see https://prosody.im/doc/s2s#security
 
-s2s_require_encryption = true
 s2s_secure_auth = false
 
--- Many servers don't support encryption or have invalid or self-signed
--- certificates. You can list domains here that will not be required to
--- authenticate using certificates. They will be authenticated using DNS.
+-- Some servers have invalid or self-signed certificates. You can list
+-- remote domains here that will not be required to authenticate using
+-- certificates. They will be authenticated using DNS instead, even
+-- when s2s_secure_auth is enabled.
 
---s2s_insecure_domains = { "gmail.com" }
+--s2s_insecure_domains = { "insecure.example" }
 
 -- Even if you leave s2s_secure_auth disabled, you can still require valid
 -- certificates for some domains by specifying a list here.
@@ -157,7 +174,7 @@ pidfile = "/var/run/prosody/prosody.pid"
 -- use Prosody's configured data storage to store the authentication data.
 -- To allow Prosody to offer secure authentication mechanisms to clients, the
 -- default provider stores passwords in plaintext. If you do not trust your
--- server please see http://prosody.im/doc/modules/mod_auth_internal_hashed
+-- server please see https://prosody.im/doc/modules/mod_auth_internal_hashed
 -- for information about using the hashed backend.
 
 authentication = "{{ prosody_authentication }}"
@@ -165,7 +182,7 @@ authentication = "{{ prosody_authentication }}"
 -- Select the storage backend to use. By default Prosody uses flat files
 -- in its configured data directory, but it also supports more backends
 -- through modules. An "sql" backend is included by default, but requires
--- additional dependencies. See http://prosody.im/doc/storage for more info.
+-- additional dependencies. See https://prosody.im/doc/storage for more info.
 
 storage = "internal" -- Default is "internal"
 
@@ -174,22 +191,47 @@ storage = "internal" -- Default is "internal"
 --sql = { driver = "MySQL", database = "prosody", username = "prosody", password = "secret", host = "localhost" }
 --sql = { driver = "PostgreSQL", database = "prosody", username = "prosody", password = "secret", host = "localhost" }
 
--- Logging configuration
--- For advanced logging see http://prosody.im/doc/logging
-log = {
-    info = "*syslog"; -- Requires mod_posix to be loaded
-    error = "*syslog"; -- Requires mod_posix to be loaded
-  {% if prosody_debug_mode %}
-  debug = "*syslog"; -- Requires mod_posix to be loaded
-  {% endif %}
+-- Archiving configuration
+-- If mod_mam is enabled, Prosody will store a copy of every message. This
+-- is used to synchronize conversations between multiple clients, even if
+-- they are offline. This setting controls how long Prosody will keep
+-- messages in the archive before removing them.
 
---	info = "/var/log/prosody/prosody.log"; -- Change 'info' to 'debug' for verbose logging
---	error = "/var/log/prosody/prosody.err";
-}
+archive_expires_after = "{{ prosody_mam_archive_expires_after }}" -- Remove archived messages after 1 week
 
 {% if 'mam' in prosody_external_modules %}
 default_archive_policy = {{ prosody_mam_default_archive_policy }}
 {% endif %}
+
+-- You can also configure messages to be stored in-memory only. For more
+-- archiving options, see https://prosody.im/doc/modules/mod_mam
+
+
+-- Logging configuration
+-- For advanced logging see https://prosody.im/doc/logging
+log = {
+--	info = "/var/log/prosody/prosody.log"; -- Change 'info' to 'debug' for verbose logging
+--	error = "/var/log/prosody/prosody.err";
+	info = "*syslog"; -- Requires mod_posix to be loaded
+	error = "*syslog"; -- Requires mod_posix to be loaded
+	{% if prosody_debug_mode %}
+	debug = "*syslog"; -- Requires mod_posix to be loaded
+	{% endif %}
+}
+
+-- Uncomment to enable statistics
+-- For more info see https://prosody.im/doc/statistics
+-- statistics = "internal"
+
+-- Certificates
+-- Every virtual host and component needs a certificate so that clients and
+-- servers can securely verify its identity. Prosody will automatically load
+-- certificates/keys from the directory specified here.
+-- For more information, including how to use 'prosodyctl' to auto-import certificates
+-- (from e.g. Let's Encrypt) see https://prosody.im/doc/certificates
+
+-- Location of directory to find certificates in (relative to main config file):
+certificates = "certs"
 
 {% if 'reload_modules' in prosody_external_modules %}
 -- reload modules on configuration change
@@ -232,17 +274,10 @@ register_web_template = "{{ prosody_custom_registration_theme_path }}"
 -- You need to add a VirtualHost entry for each domain you wish Prosody to serve.
 -- Settings under each VirtualHost entry apply *only* to that host.
 
-VirtualHost "example.com"
-	enabled = false -- Remove this line to enable this host
+VirtualHost "localhost"
 
-	-- Assign this host a certificate for TLS, otherwise it would use the one
-	-- set in the global section (if any).
-	-- Note that old-style SSL on port 5223 only supports one certificate, and will always
-	-- use the global one.
-	ssl = {
-		key = "/etc/prosody/certs/example.com.key";
-		certificate = "/etc/prosody/certs/example.com.crt";
-	}
+--VirtualHost "example.com"
+--	certificate = "/path/to/example.crt"
 
 VirtualHost "{{ prosody_vhost }}"
 {% if prosody_onion_vhost is defined %}
@@ -252,7 +287,7 @@ VirtualHost "{{ prosody_onion_vhost }}"
 ------ Components ------
 -- You can specify components to add hosts that provide special services,
 -- like multi-user conferences, and transports.
--- For more information on components, see http://prosody.im/doc/components
+-- For more information on components, see https://prosody.im/doc/components
 
 ---Set up a MUC (multi-user chat) room server on conference.example.com:
 Component "conference.{{ prosody_vhost }}" "muc"
@@ -260,6 +295,15 @@ Component "conference.{{ prosody_vhost }}" "muc"
 	 default_history_messages = {{ prosody_default_history_messages }}
 	 max_history_messages = {{ prosody_max_history_messages }}
 Component "pubsub.{{ prosody_vhost }}" "pubsub"
+
+---Set up an external component (default component port is 5347)
+--
+-- External components allow adding various services, such as gateways/
+-- transports to other networks like ICQ, MSN and Yahoo. For more info
+-- see: https://prosody.im/doc/components#adding_an_external_component
+--
+--Component "gateway.example.com"
+--      component_secret = "password"
 
 -- Set up a SOCKS5 bytestream proxy for server-proxied file transfers:
 Component "proxy.{{ prosody_vhost }}" "proxy65"
@@ -269,15 +313,6 @@ Component "proxy.{{ prosody_vhost }}" "proxy65"
     	certificate = "/etc/prosody/certs/proxy.pem";
     }
 {% endif %}
-
----Set up an external component (default component port is 5347)
---
--- External components allow adding various services, such as gateways/
--- transports to other networks like ICQ, MSN and Yahoo. For more info
--- see: http://prosody.im/doc/components#adding_an_external_component
---
---Component "gateway.example.com"
---	component_secret = "password"
 
 s2s_pin_fingerprints = true
 
