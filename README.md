@@ -32,6 +32,9 @@ prosody_welcome_msg:  "Hello $username, welcome to the $host IM server!"
 prosody_test: False
 prosody_motd: False
 
+# https://prosody.im/doc/setting_up_bosh#cross-domain_issues
+prosody_cors: False
+
 prosody_custom_registration_theme: False
 prosody_custom_registration_theme_repo: "https://github.com/beli3ver/Prosody-Web-Registration-Theme.git"
 prosody_custom_registration_theme_path: "/etc/prosody/register-templates/Prosody-Web-Registration-Theme"
