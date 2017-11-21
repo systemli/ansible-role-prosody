@@ -320,6 +320,12 @@ s2s_trusted_fingerprints = {
 
 }
 
+{% if prosody_cors %}
+-- enable cross-domain requests
+-- https://prosody.im/doc/setting_up_bosh#cross-domain_issues
+cross_domain_bosh = true
+
+{% endif %}
 host_guard_blockall = {
 {% for host in prosody_s2s_blacklist %}
 	"{{ host }}",
