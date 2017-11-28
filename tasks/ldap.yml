@@ -1,0 +1,37 @@
+---
+
+# kudos: https://blogs.mafia-server.net/nur-bahnhof/2013/12/prosody-authentification-ldapactivedirectory/
+
+- name: Install ldap dependencies
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - sasl2-bin
+    - libsasl2-modules-ldap
+    - lua-cyrussasl
+
+- name: Configure saslauthd
+  copy:
+    src: saslauthd
+    dest: /etc/default/saslauthd
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart saslauthd
+
+- name: Configure ldap details
+  template:
+    src: saslauthd.conf.j2
+    dest: /etc/saslauthd.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart saslauthd
+
+- name: Add prosody to sasl group
+  user:
+    name: prosody
+    groups: sasl
+    append: True
+  notify: restart prosody
+    

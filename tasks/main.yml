@@ -10,3 +10,9 @@
 - include: inactive.yml
   tags:
     - prosody
+
+- include: ldap.yml
+  when: prosody_authentication == "cyrus"
+  tags:
+    - prosody
+    - ldap

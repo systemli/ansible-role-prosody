@@ -3,6 +3,7 @@ prosody_vhost: localhost
 
 prosody_admins: ['admin']
 prosody_debug_mode: False
+# use "cyrus" to activate ldap auth
 prosody_authentication: internal_hashed
 prosody_dhparam_length: 2048
 prosody_monitoring: True
@@ -75,4 +76,6 @@ prosody_clean_inactive_users: false
 # #397
 prosody_max_history_messages: 100
 prosody_default_history_messages: 20
+
+prosody_ldap_filter: (sAMAccountName=%u)
 
