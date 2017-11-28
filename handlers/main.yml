@@ -18,3 +18,8 @@
   service:
     name: monit
     state: restarted
+
+- name: restart saslauthd
+  service:
+    name: saslauthd
+    state: restarted
