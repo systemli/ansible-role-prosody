@@ -2,7 +2,8 @@
 prosody_vhost: localhost
 
 prosody_admins: ['admin']
-prosody_debug_mode: False
+# supported levels are: "debug", "info", "warn", "error". 
+prosody_log_level: info
 # use "cyrus" to activate ldap auth
 prosody_authentication: internal_hashed
 prosody_dhparam_length: 2048
