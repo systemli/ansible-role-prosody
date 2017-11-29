@@ -36,10 +36,10 @@
     group: root
     mode: 0755
 
-- name: Create SASL XMPP config
+- name: Create SASL prosody config
   copy:
-    src: xmpp.conf
-    dest: /etc/sasl/xmpp.conf 
+    src: prosody.conf
+    dest: /etc/sasl/prosody.conf 
     owner: root
     group: root
     mode: 0644
