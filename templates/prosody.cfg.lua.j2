@@ -210,7 +210,7 @@ default_archive_policy = {{ prosody_mam_default_archive_policy }}
 -- Logging configuration
 -- For advanced logging see https://prosody.im/doc/logging
 log = {
-	{% prosody_log_level %} = "*syslog"; -- Requires mod_posix to be loaded
+	{{ prosody_log_level }} = "*syslog"; -- Requires mod_posix to be loaded
 }
 
 -- Uncomment to enable statistics
