@@ -58,6 +58,7 @@ prosody_external_modules:
   - log_sasl_mech
   - mam
   - motd_once
+  - omemo_all_access
   - reload_modules
   - register_redirect
   - register_web
