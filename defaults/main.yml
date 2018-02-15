@@ -41,6 +41,7 @@ prosody_external_modules:
   - list_inactive
   - log_sasl_mech
   - mam
+  - mam_muc
   - motd_once
   - omemo_all_access
   - reload_modules

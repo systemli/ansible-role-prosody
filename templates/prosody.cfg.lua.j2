@@ -184,7 +184,17 @@ authentication = "{{ prosody_authentication }}"
 -- through modules. An "sql" backend is included by default, but requires
 -- additional dependencies. See https://prosody.im/doc/storage for more info.
 
-storage = "internal" -- Default is "internal"
+default_storage = "internal" -- Default is "internal"
+
+storage = {
+	archive = "memory" -- Store MAM msgs in memory only for privacy reasons
+{% if 'mam' in prosody_external_modules %}
+	archive2 = "memory" -- Store MAM msgs in memory only for privacy reasons
+{% endif %}
+{% if 'mam_muc' in prosody_external_modules %}
+	muc_log = "memory" -- Store MAM_MUC msgs in memory only for privacy reasons
+{% endif %}
+}
 
 -- For the "sql" backend, you can uncomment *one* of the below to configure:
 --sql = { driver = "SQLite3", database = "prosody.sqlite" } -- Default. 'database' is the filename.
@@ -205,6 +215,12 @@ default_archive_policy = {{ prosody_mam_default_archive_policy }}
 
 -- You can also configure messages to be stored in-memory only. For more
 -- archiving options, see https://prosody.im/doc/modules/mod_mam
+
+{% if 'mam_muc' in prosody_external_modules %}
+muc_log_by_default = false -- Disable logging by default (can be enabled in room config)
+muc_log_all_rooms = false -- set to true to force logging of all rooms
+max_history_messages = 20 -- Largest number of messages allowed to be retrieved when joining a romm
+{% endif %}
 
 
 -- Logging configuration
