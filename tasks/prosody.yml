@@ -62,22 +62,6 @@
     repo: https://hg.prosody.im/prosody-modules/
     dest: "{{ prosody_external_modules_dir }}"
 
-- name: Create directory mod_motd_once
-  file:
-    path: "{{ prosody_external_modules_dir }}/mod_motd_once"
-    owner: root
-    group: root
-    mode: 0755
-    state: directory
-
-- name: Copy working mod_motd_once
-  copy:
-    src: mod_motd_once.lua
-    dest: "{{ prosody_external_modules_dir }}/mod_motd_once/mod_motd_once.lua"
-    owner: root
-    group: root
-    mode: 0644
-
 - name: Push TLS cert to /etc/prosody/certs/
   copy:
     content: "{{ prosody_ssl_cert }}"

@@ -93,7 +93,15 @@ modules_enabled = {
 }
 
 {% if prosody_motd %}
-motd_text = [[{{ prosody_motd }}]]
+motd_sequential_messages = {
+{% if prosody_motd is string %}
+  [[{{ prosody_motd }}]],
+{% else %}
+{% for message in prosody_motd %}
+  [[{{ message }}]],
+{% endfor %}
+{% endif %}
+}
 {% endif %}
 
 {% if prosody_welcome_msg %}
