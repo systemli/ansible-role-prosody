@@ -22,7 +22,7 @@
     state: link
     owner: root
     group: root
-    mode: 0755
+    mode: 0777
   with_items:
     - c2s
     - s2s
