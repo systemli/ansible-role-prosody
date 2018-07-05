@@ -305,7 +305,6 @@ Component "conference.{{ prosody_vhost }}" "muc"
 		"mam_muc"; -- Enable MAM in MUCs, required for OMEMO in groups
 	}
 	restrict_room_creation = "local"
-	default_history_messages = {{ prosody_default_history_messages }}
 	muc_log_by_default = false -- Disable logging by default (can be enabled in room config)
 	muc_log_all_rooms = false -- set to true to force logging of all rooms
 	max_history_messages = {{ prosody_max_history_messages }}

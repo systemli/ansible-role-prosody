@@ -33,11 +33,6 @@
     regexp: "^MAXFDS="
   when: prosody_file_limit
 
-- name: Apply patch from https://prosody.im/issues/issue/397
-  patch:
-    src: default_history_messages.diff
-    basedir: /usr/lib/prosody/modules/muc
-
 - name: Get latest registration theme
   git:
     repo: "{{ prosody_custom_registration_theme_repo }}"
