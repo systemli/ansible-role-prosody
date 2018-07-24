@@ -215,10 +215,7 @@ storage = {
 -- messages in the archive before removing them.
 
 archive_expires_after = "{{ prosody_mam_archive_expires_after }}" -- Remove archived messages after 1 week
-
-{% if 'mam' in prosody_external_modules %}
 default_archive_policy = {{ prosody_mam_default_archive_policy }}
-{% endif %}
 
 -- You can also configure messages to be stored in-memory only. For more
 -- archiving options, see https://prosody.im/doc/modules/mod_mam
