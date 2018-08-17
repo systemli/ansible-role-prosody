@@ -50,7 +50,6 @@ modules_enabled = {
 		"disco"; -- Service discovery
 
 	-- Not essential, but recommended
-        	"carbons"; -- Keep multiple clients in sync
 		"pep"; -- Enables users to publish their mood, activity, playing music and more
 		"private"; -- Private XML storage (for room bookmarks, etc.)
         	"blocklist"; -- Allow users to block communications with other users
@@ -62,7 +61,6 @@ modules_enabled = {
 		"time"; -- Let others know the time here on this server
 		"ping"; -- Replies to XMPP pings with pongs
 		"register"; -- Allow users to register on this server using a client and change passwords
-		--"mam"; -- Store messages in an archive and allow users to access it
 
 	-- Admin interfaces
 		"admin_adhoc"; -- Allows administration via an XMPP client that supports ad-hoc commands
@@ -86,6 +84,12 @@ modules_enabled = {
 		--"legacyauth"; -- Legacy authentication. Only used by some old clients and bots.
 		--"proxy65"; -- Enables a file transfer proxy service which clients behind NAT can use
 
+	-- Core Modules
+{% for module in prosody_modules %}
+		"{{ module }}";
+{% endfor %}
+
+
 	-- External
 {% for module in prosody_external_modules %}
 		"{{ module }}";
@@ -93,7 +97,15 @@ modules_enabled = {
 }
 
 {% if prosody_motd %}
-motd_text = [[{{ prosody_motd }}]]
+motd_sequential_messages = {
+{% if prosody_motd is string %}
+  [[{{ prosody_motd }}]],
+{% else %}
+{% for message in prosody_motd %}
+  [[{{ message }}]],
+{% endfor %}
+{% endif %}
+}
 {% endif %}
 
 {% if prosody_welcome_msg %}
@@ -184,7 +196,12 @@ authentication = "{{ prosody_authentication }}"
 -- through modules. An "sql" backend is included by default, but requires
 -- additional dependencies. See https://prosody.im/doc/storage for more info.
 
-storage = "internal" -- Default is "internal"
+default_storage = "internal" -- Default is "internal"
+
+storage = {
+	archive = "memory", -- Store MAM msgs in memory only for privacy reasons
+	archive2 = "memory", -- we're apparently still using mod_mam from prosody-modules 
+}
 
 -- For the "sql" backend, you can uncomment *one* of the below to configure:
 --sql = { driver = "SQLite3", database = "prosody.sqlite" } -- Default. 'database' is the filename.
@@ -198,10 +215,7 @@ storage = "internal" -- Default is "internal"
 -- messages in the archive before removing them.
 
 archive_expires_after = "{{ prosody_mam_archive_expires_after }}" -- Remove archived messages after 1 week
-
-{% if 'mam' in prosody_external_modules %}
 default_archive_policy = {{ prosody_mam_default_archive_policy }}
-{% endif %}
 
 -- You can also configure messages to be stored in-memory only. For more
 -- archiving options, see https://prosody.im/doc/modules/mod_mam
@@ -285,9 +299,10 @@ VirtualHost "{{ prosody_onion_vhost }}"
 
 ---Set up a MUC (multi-user chat) room server on conference.example.com:
 Component "conference.{{ prosody_vhost }}" "muc"
-	 restrict_room_creation = "local"
-	 default_history_messages = {{ prosody_default_history_messages }}
-	 max_history_messages = {{ prosody_max_history_messages }}
+	restrict_room_creation = "local"
+	muc_log_by_default = false -- Disable logging by default (can be enabled in room config)
+	muc_log_all_rooms = false -- set to true to force logging of all rooms
+	max_history_messages = {{ prosody_max_history_messages }}
 Component "pubsub.{{ prosody_vhost }}" "pubsub"
 
 ---Set up an external component (default component port is 5347)

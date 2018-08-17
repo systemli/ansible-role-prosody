@@ -43,6 +43,10 @@ prosody_mod_register_redirect_registration_whitelist: ""
 prosody_mod_register_redirect_registration_url: "https://localhost:5281/register_web"
 prosody_mod_register_redirect_text: "To register please visit {{ prosody_mod_register_redirect_registration_url}}"
 
+prosody_modules:
+  - carbons # Keep multiple clients in sync
+  - mam # Store messages in an archive and allow users to access it
+
 prosody_external_modules:
   - auto_activate_hosts
   - c2s_conn_throttle
@@ -56,8 +60,8 @@ prosody_external_modules:
   - limit_auth
   - list_inactive
   - log_sasl_mech
-  - mam
-  - motd_once
+  - motd_sequential
+  - omemo_all_access
   - reload_modules
   - register_redirect
   - register_web
