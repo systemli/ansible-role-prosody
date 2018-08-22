@@ -8,13 +8,12 @@ ansible-role-prosody
 
 Install and maintain [Prosody](http://prosody.im/) from offical repo with Ansible.
 Per default, this role also installs monit and munin-node to monitor Prosody. 
-Contains tests for Travis CI and Molecule.
+Contains tests for Travis CI.
 
 Requirements
 ------------
 
 Debian or Ubuntu.
-Molecule, Tox and Docker for testing.
 
 Role Variables
 --------------
