@@ -1,6 +1,9 @@
 ansible-role-prosody
 =========
-[![Build Status](https://travis-ci.org/systemli/ansible-role-prosody.svg?branch=master)](https://travis-ci.org/systemli/ansible-role-prosody) [![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-prosody-blue.svg)](https://galaxy.ansible.com/systemli/prosody/) [![IM observatory](https://check.messaging.one/badge.php?domain=jabber.systemli.org)](https://check.messaging.one/result.php?domain=jabber.systemli.org&amp;type=client)
+[![Build Status](https://travis-ci.org/systemli/ansible-role-prosody.svg?branch=master)](https://travis-ci.org/systemli/ansible-role-prosody)
+[![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-prosody-blue.svg)](https://galaxy.ansible.com/systemli/prosody/)
+[![IM observatory](https://check.messaging.one/badge.php?domain=jabber.systemli.org)](https://check.messaging.one/result.php?domain=jabber.systemli.org&amp;type=client)
+<a href='https://compliance.conversations.im/server/jabber.systemli.org'><img src='https://compliance.conversations.im/badge/jabber.systemli.org'></a> 
 
 
 Install and maintain [Prosody](http://prosody.im/) from offical repo with Ansible.
