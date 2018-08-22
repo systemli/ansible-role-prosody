@@ -46,6 +46,8 @@ prosody_mod_register_redirect_text: "To register please visit {{ prosody_mod_reg
 prosody_modules:
   - carbons # Keep multiple clients in sync
   - mam # Store messages in an archive and allow users to access it
+  - pep_vcard_avatar # XEP-0398: User Avatar to vCard-Based Avatars Conversion
+
 
 prosody_external_modules:
   - auto_activate_hosts
