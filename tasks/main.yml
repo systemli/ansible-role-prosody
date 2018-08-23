@@ -16,3 +16,8 @@
   tags:
     - prosody
     - ldap
+
+- include: web.yml
+  when: prosody_web_dir|default() and prosody_web_user|default()
+  tags:
+    - web

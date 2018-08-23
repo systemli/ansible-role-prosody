@@ -1,0 +1,17 @@
+---
+
+- name: create .well-known
+  file:
+    path: "{{ prosody_web_dir }}/.well-known"
+    state: directory
+    owner: "{{ prosody_web_user }}"
+    group: "{{ prosody_web_user }}"
+    mode: 0644
+
+- name: Create .well-known/host-meta.json
+  template:
+    src: host-meta.json.j2
+    dest: "{{ prosody_web_dir }}/.well-known/host-meta.json"
+    owner: "{{ prosody_web_user }}"
+    group: "{{ prosody_web_user }}"
+    mode: 0644
