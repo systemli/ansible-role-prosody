@@ -86,6 +86,7 @@
   args:
     creates: /etc/prosody/certs/dh-{{ prosody_dhparam_length }}.pem
   notify: restart prosody
+  when: not __testing|default()
 
 - name: Push proxy TLS cert to /etc/prosody/certs/
   copy:

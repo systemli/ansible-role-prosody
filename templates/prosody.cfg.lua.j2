@@ -140,7 +140,9 @@ ssl = {
 	key = "/etc/prosody/certs/localhost.key";
 	certificate = "/etc/prosody/certs/localhost.crt";
     {% endif %}
+    {% if not __testing|default() %}
 	dhparam = "/etc/prosody/certs/dh-{{ prosody_dhparam_length }}.pem"
+    {% endif %}
 }
 {% if prosody_legacy_ssl_ports is defined %}
 legacy_ssl_ports = {{ prosody_legacy_ssl_ports }}
