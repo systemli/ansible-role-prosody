@@ -279,6 +279,21 @@ register_web_template = "{{ prosody_custom_registration_theme_path }}"
 
 {% endif %}
 
+{% if prosody_cors %}
+-- enable cross-domain requests
+-- https://prosody.im/doc/setting_up_bosh#cross-domain_issues
+cross_domain_bosh = { "{{ prosody_vhost }}" }
+cross_domain_websocket = { "{{ prosody_vhost }}" }
+
+{% endif %}
+
+{% if 's2s_blacklist' in prosody_external_modules %}
+-- Blacklist
+s2s_blacklist = {
+{% for host in prosody_s2s_blacklist %}
+	"{{ host }}",
+{% endfor %}
+}
 ----------- Virtual hosts -----------
 -- You need to add a VirtualHost entry for each domain you wish Prosody to serve.
 -- Settings under each VirtualHost entry apply *only* to that host.
@@ -321,21 +336,3 @@ Component "proxy.{{ prosody_vhost }}" "proxy65"
     	certificate = "/etc/prosody/certs/proxy.pem";
     }
 {% endif %}
-
-s2s_pin_fingerprints = true
-
-s2s_trusted_fingerprints = {
-
-}
-
-{% if prosody_cors %}
--- enable cross-domain requests
--- https://prosody.im/doc/setting_up_bosh#cross-domain_issues
-cross_domain_bosh = true
-
-{% endif %}
-host_guard_blockall = {
-{% for host in prosody_s2s_blacklist %}
-	"{{ host }}",
-{% endfor %}
-}

@@ -58,7 +58,6 @@ prosody_external_modules:
   - cloud_notify
   - csi
   - filter_chatstates
-  - host_guard
   - http_upload
   - lastlog
   - limit_auth
@@ -70,6 +69,7 @@ prosody_external_modules:
   - register_redirect
   - register_web
   - s2s_auth_compat
+  - s2s_blacklist
   - smacks
   - throttle_presence
 
