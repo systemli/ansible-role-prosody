@@ -284,16 +284,16 @@ register_web_template = "{{ prosody_custom_registration_theme_path }}"
 -- https://prosody.im/doc/setting_up_bosh#cross-domain_issues
 cross_domain_bosh = { "{{ prosody_vhost }}" }
 cross_domain_websocket = { "{{ prosody_vhost }}" }
-
 {% endif %}
 
 {% if 's2s_blacklist' in prosody_external_modules %}
--- Blacklist
 s2s_blacklist = {
 {% for host in prosody_s2s_blacklist %}
 	"{{ host }}",
 {% endfor %}
 }
+{% endif %}
+
 ----------- Virtual hosts -----------
 -- You need to add a VirtualHost entry for each domain you wish Prosody to serve.
 -- Settings under each VirtualHost entry apply *only* to that host.
