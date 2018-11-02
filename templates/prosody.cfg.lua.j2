@@ -284,8 +284,8 @@ register_web_template = "{{ prosody_custom_registration_theme_path }}"
 {% if prosody_cors %}
 -- enable cross-domain requests
 -- https://prosody.im/doc/setting_up_bosh#cross-domain_issues
-cross_domain_bosh = { https://"{{ prosody_vhost }}" }
-cross_domain_websocket = { https://"{{ prosody_vhost }}" }
+cross_domain_bosh = { "https://{{ prosody_vhost }}" }
+cross_domain_websocket = { "https://{{ prosody_vhost }}" }
 {% endif %}
 
 {% if 's2s_blacklist' in prosody_external_modules %}
