@@ -28,7 +28,9 @@ admins = {
 
 -- Enable use of libevent for better performance under high load
 -- For more information see: https://prosody.im/doc/libevent
+{% if ansible_distribution_major_version|int > 9 %}
 use_libevent = true
+{% endif %}
 
 -- Prosody will always look in its source directory for modules, but
 -- this option allows you to specify additional locations where Prosody
@@ -49,12 +51,6 @@ modules_enabled = {
 		"dialback"; -- s2s dialback support
 		"disco"; -- Service discovery
 
-	-- Not essential, but recommended
-		"pep"; -- Enables users to publish their mood, activity, playing music and more
-		"private"; -- Private XML storage (for room bookmarks, etc.)
-        	"blocklist"; -- Allow users to block communications with other users
-		"vcard"; -- Allow users to set vCards
-
 	-- Nice to have
 		--"version"; -- Replies to server version requests
 		"uptime"; -- Report how long server has been running
@@ -62,12 +58,7 @@ modules_enabled = {
 		"ping"; -- Replies to XMPP pings with pongs
 		"register"; -- Allow users to register on this server using a client and change passwords
 
-	-- Admin interfaces
-		"admin_adhoc"; -- Allows administration via an XMPP client that supports ad-hoc commands
-		"admin_telnet"; -- Opens telnet console interface on localhost port 5582
-
 	-- HTTP modules
-		"bosh"; -- Enable BOSH clients, aka "Jabber over HTTP"
 		--"http_files"; -- Serve static files from a directory over HTTP
 
 	-- Other specific functionality
@@ -76,8 +67,6 @@ modules_enabled = {
 {% endif %}
 		--"groups"; -- Shared roster support
 		--"server_contact_info"; -- Publish contact information for this service
-		"announce"; -- Send announcement to all online users
-		"welcome"; -- Welcome users who register accounts
 		--"watchregistrations"; -- Alert admins of registrations
 		--"motd"; -- Send a message to users when they log in
 		--"legacyauth"; -- Legacy authentication. Only used by some old clients and bots.
@@ -155,16 +144,10 @@ c2s_require_encryption = true
 
 -- Force servers to use encrypted connections? This option will
 -- prevent servers from authenticating unless they are using encryption.
--- Note that this is different from authentication
 
 s2s_require_encryption = true
 
-
 -- Force certificate authentication for server-to-server connections?
--- This provides ideal security, but requires servers you communicate
--- with to support encryption AND present valid, trusted certificates.
--- NOTE: Your version of LuaSec must support certificate verification!
--- For more information see https://prosody.im/doc/s2s#security
 
 s2s_secure_auth = false
 
@@ -175,7 +158,7 @@ s2s_secure_auth = false
 
 --s2s_insecure_domains = { "insecure.example" }
 
--- Even if you leave s2s_secure_auth disabled, you can still require valid
+-- Even if you disable s2s_secure_auth, you can still require valid
 -- certificates for some domains by specifying a list here.
 
 --s2s_secure_domains = { "jabber.org" }
@@ -185,10 +168,6 @@ pidfile = "/var/run/prosody/prosody.pid"
 
 -- Select the authentication backend to use. The 'internal' providers
 -- use Prosody's configured data storage to store the authentication data.
--- To allow Prosody to offer secure authentication mechanisms to clients, the
--- default provider stores passwords in plaintext. If you do not trust your
--- server please see https://prosody.im/doc/modules/mod_auth_internal_hashed
--- for information about using the hashed backend.
 
 authentication = "{{ prosody_authentication }}"
 
@@ -209,23 +188,24 @@ storage = {
 --sql = { driver = "MySQL", database = "prosody", username = "prosody", password = "secret", host = "localhost" }
 --sql = { driver = "PostgreSQL", database = "prosody", username = "prosody", password = "secret", host = "localhost" }
 
+
 -- Archiving configuration
 -- If mod_mam is enabled, Prosody will store a copy of every message. This
 -- is used to synchronize conversations between multiple clients, even if
 -- they are offline. This setting controls how long Prosody will keep
 -- messages in the archive before removing them.
 
-archive_expires_after = "{{ prosody_mam_archive_expires_after }}" -- Remove archived messages after 1 week
+archive_expires_after = "{{ prosody_mam_archive_expires_after }}" -- Remove archived messages after ?
 default_archive_policy = {{ prosody_mam_default_archive_policy }}
 
 -- You can also configure messages to be stored in-memory only. For more
 -- archiving options, see https://prosody.im/doc/modules/mod_mam
 
-
 -- Logging configuration
 -- For advanced logging see https://prosody.im/doc/logging
 log = {
 	{{ prosody_log_level }} = "*syslog"; -- Requires mod_posix to be loaded
+       -- "*console"; -- Log to the console, useful for debugging with daemonize=false
 }
 
 -- Uncomment to enable statistics
@@ -296,6 +276,9 @@ s2s_blacklist = {
 }
 {% endif %}
 
+-- HTTPS currently only supports a single certificate, specify it here:
+--https_certificate = "/etc/prosody/certs/localhost.crt"
+
 ----------- Virtual hosts -----------
 -- You need to add a VirtualHost entry for each domain you wish Prosody to serve.
 -- Settings under each VirtualHost entry apply *only* to that host.
@@ -315,6 +298,8 @@ VirtualHost "{{ prosody_onion_vhost }}"
 
 ---Set up a MUC (multi-user chat) room server on conference.example.com:
 Component "conference.{{ prosody_vhost }}" "muc"
+--- Store MUC messages in an archive and allow users to access it
+--modules_enabled = { "muc_mam" }
 	restrict_room_creation = "local"
 	muc_log_by_default = false -- Disable logging by default (can be enabled in room config)
 	muc_log_all_rooms = false -- set to true to force logging of all rooms
@@ -328,7 +313,7 @@ Component "pubsub.{{ prosody_vhost }}" "pubsub"
 -- see: https://prosody.im/doc/components#adding_an_external_component
 --
 --Component "gateway.example.com"
---      component_secret = "password"
+--     component_secret = "password"
 
 -- Set up a SOCKS5 bytestream proxy for server-proxied file transfers:
 Component "proxy.{{ prosody_vhost }}" "proxy65"
