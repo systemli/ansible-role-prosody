@@ -9,7 +9,7 @@
 
 - name: get latest version of prosody plugin for munin
   git:
-    repo: git://github.com/jarus/munin-prosody.git
+    repo: https://github.com/t2d/munin-prosody.git
     dest: /usr/local/share/munin-prosody/
     accept_hostkey: "{{ prosody_test }}"
   tags:
