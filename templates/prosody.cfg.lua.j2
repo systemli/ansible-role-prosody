@@ -66,7 +66,6 @@ modules_enabled = {
 	        "limits"; -- Enable bandwidth limiting for XMPP connections
 {% endif %}
 		--"groups"; -- Shared roster support
-		--"server_contact_info"; -- Publish contact information for this service
 		--"watchregistrations"; -- Alert admins of registrations
 		--"motd"; -- Send a message to users when they log in
 		--"legacyauth"; -- Legacy authentication. Only used by some old clients and bots.
@@ -275,6 +274,13 @@ s2s_blacklist = {
 {% endfor %}
 }
 {% endif %}
+
+------ Contact Info ------
+contact_info = {
+{% for contact in prosody_contacts %}
+  {{ contact.name }} = { "{{ contact.address }}" };
+{% endfor %}
+};
 
 -- HTTPS currently only supports a single certificate, specify it here:
 --https_certificate = "/etc/prosody/certs/localhost.crt"

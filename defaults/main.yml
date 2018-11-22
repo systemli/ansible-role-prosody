@@ -2,6 +2,9 @@
 prosody_vhost: localhost
 
 prosody_admins: ['admin']
+prosody_contact:
+  - { name: abuse, address: "xmpp:admin@{{ prosody_vhost }}" }
+  - { name: admin, address: "xmpp:admin@{{ prosody_vhost }}" }
 # supported levels are: "debug", "info", "warn", "error". 
 prosody_log_level: info
 # use "cyrus" to activate ldap auth
@@ -41,6 +44,7 @@ prosody_modules:
   - pep # Enables users to publish their avatar, mood, activity, playing music and more
   - pep_vcard_avatar # XEP-0398: User Avatar to vCard-Based Avatars Conversion
   - private # Private XML storage (for room bookmarks, etc.)
+  - server_contact_info # Publish contact information for this service
   - vcard4 # new vards standard
   - vcard_legacy # Allow users to set vCards
   - welcome # Welcome users who register accounts
