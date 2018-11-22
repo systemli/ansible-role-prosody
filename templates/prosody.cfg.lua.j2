@@ -62,14 +62,17 @@ modules_enabled = {
 		--"http_files"; -- Serve static files from a directory over HTTP
 
 	-- Other specific functionality
-{% if prosody_limits %}
-	        "limits"; -- Enable bandwidth limiting for XMPP connections
-{% endif %}
 		--"groups"; -- Shared roster support
 		--"watchregistrations"; -- Alert admins of registrations
 		--"motd"; -- Send a message to users when they log in
 		--"legacyauth"; -- Legacy authentication. Only used by some old clients and bots.
 		--"proxy65"; -- Enables a file transfer proxy service which clients behind NAT can use
+{% if prosody_limits %}
+	    "limits"; -- Enable bandwidth limiting for XMPP connections
+{% endif %}
+{% if prosody_monitoring %}
+	    "munin";
+{% endif %}
 
 	-- Core Modules
 {% for module in prosody_modules %}
@@ -209,7 +212,7 @@ log = {
 
 -- Uncomment to enable statistics
 -- For more info see https://prosody.im/doc/statistics
--- statistics = "internal"
+statistics = "internal"
 
 -- Certificates
 -- Every virtual host and component needs a certificate so that clients and
@@ -281,6 +284,11 @@ contact_info = {
   {{ contact.name }} = { "{{ contact.address }}" };
 {% endfor %}
 };
+
+{% if prosody_monitoring %}
+------ Monitoring ------
+munin_ports = { 4950 }
+{% endif %}
 
 -- HTTPS currently only supports a single certificate, specify it here:
 --https_certificate = "/etc/prosody/certs/localhost.crt"
