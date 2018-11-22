@@ -5,7 +5,7 @@ driver:
   name: docker
 lint:
   name: yamllint
-  enabled: False
+  enabled: false
 platforms:
   - name: instance
     image: "geerlingguy/docker-${MOLECULE_DISTRO:-debian9}-ansible:latest"
@@ -20,7 +20,7 @@ provisioner:
     skip-tags: molecule_test_skip
   lint:
     name: ansible-lint
-    enabled: False
+    enabled: false
 scenario:
   name: default
 verifier:

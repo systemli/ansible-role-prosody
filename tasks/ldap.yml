@@ -39,7 +39,7 @@
 - name: Create SASL prosody config
   copy:
     src: prosody.conf
-    dest: /etc/sasl/prosody.conf 
+    dest: /etc/sasl/prosody.conf
     owner: root
     group: root
     mode: 0644
@@ -49,6 +49,5 @@
   user:
     name: prosody
     groups: sasl
-    append: True
+    append: true
   notify: restart prosody
-
