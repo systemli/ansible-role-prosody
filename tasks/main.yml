@@ -6,6 +6,7 @@
   when: prosody_monitoring
   tags:
     - prosody
+    - molecule_test_skip
 
 - include: inactive.yml
   tags:
@@ -18,6 +19,6 @@
     - ldap
 
 - include: web.yml
-  when: prosody_web_dir|default() and prosody_web_user|default()
+  when: prosody_web_dir|default(False) and prosody_web_user|default(False)
   tags:
     - web

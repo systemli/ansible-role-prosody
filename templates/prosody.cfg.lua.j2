@@ -131,7 +131,7 @@ ssl = {
 	key = "/etc/prosody/certs/localhost.key";
 	certificate = "/etc/prosody/certs/localhost.crt";
     {% endif %}
-    {% if not __testing|default() %}
+    {% if not __testing|default(False) %}
 	dhparam = "/etc/prosody/certs/dh-{{ prosody_dhparam_length }}.pem"
     {% endif %}
 }
