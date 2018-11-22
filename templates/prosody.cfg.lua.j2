@@ -305,7 +305,7 @@ VirtualHost "{{ prosody_onion_vhost }}"
 ---Set up a MUC (multi-user chat) room server on conference.example.com:
 Component "conference.{{ prosody_vhost }}" "muc"
 --- Store MUC messages in an archive and allow users to access it
---modules_enabled = { "muc_mam" }
+modules_enabled = { "muc_mam" }
 	restrict_room_creation = "local"
 	muc_log_by_default = false -- Disable logging by default (can be enabled in room config)
 	muc_log_all_rooms = false -- set to true to force logging of all rooms
