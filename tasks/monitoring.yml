@@ -11,7 +11,7 @@
   git:
     repo: https://github.com/t2d/munin-prosody.git
     dest: /usr/local/share/munin-prosody/
-    accept_hostkey: "{{ prosody_test }}"
+    accept_hostkey: "{{ __testing|default(False) }}"
   tags:
     - munin-node
 
