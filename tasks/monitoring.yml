@@ -27,7 +27,6 @@
     - c2s
     - s2s
     - mem
-    - presence
     - uptime
     - users
   notify: restart munin-node
