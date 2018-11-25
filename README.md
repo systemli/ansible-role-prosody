@@ -95,16 +95,23 @@ prosody_external_modules:
 
 prosody_external_modules_dir: /usr/share/prosody-modules
 
+prosody_muc_modules:
+  - muc_mam  # Store MUC messages in an archive and allow users to access it
+  - vcard_muc  # adds the ability to set vCard for MUC rooms
+
 prosody_s2s_blacklist:
   - buycc.me
   - validcc-notifier.su
 
 prosody_blacklist: []
 
+prosody_file_limit: false
+
 prosody_limits: True
 prosody_limits_c2s_rate: "3kb/s"
 prosody_limits_c2s_burst: "2s"
 
+prosody_mam_archive_expires_after: "1w"
 prosody_mam_default_archive_policy: "false"
 
 prosody_http_upload_file_size_limit: 1048576 # 1MB
@@ -112,6 +119,10 @@ prosody_http_upload_expire_after: 2592000 # 30 days in seconds
 prosody_http_upload_quota: 52428800 # 50MB
 
 prosody_clean_inactive_users: false
+
+prosody_max_history_messages: 100
+
+prosody_ldap_filter: (sAMAccountName=%u)
 ```
 
 Download

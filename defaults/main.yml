@@ -72,6 +72,10 @@ prosody_external_modules:
 
 prosody_external_modules_dir: /usr/local/share/prosody-modules
 
+prosody_muc_modules:
+  - muc_mam  # Store MUC messages in an archive and allow users to access it
+  - vcard_muc  # adds the ability to set vCard for MUC rooms
+
 prosody_legacy_ssl_ports: 5223
 
 prosody_s2s_blacklist:
