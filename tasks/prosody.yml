@@ -25,10 +25,10 @@
     - lua-sec
     - lua-bitop
 
-- name: Install luaevent
+- name: Install lua-event
   apt:
-    pkg: luarocks
-  when: ansible_distribution_major_version|int > 9
+    pkg: lua-event
+  when: prosody_libevent
 
 - name: Increase file limit
   lineinfile:

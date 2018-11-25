@@ -1,5 +1,19 @@
 ---
 
+- name: Check if debian testing is enabled
+  command: grep -qr "debian/ testing main" /etc/apt
+  register: prosody_debian_testing
+  check_mode: False
+  changed_when: False
+  failed_when: False
+  when: prosody_libevent is undefined
+
+- set_fact:
+    prosody_libevent: True
+  when: prosody_libevent is undefined and
+    (ansible_distribution_major_version|int > 9 or
+    (ansible_distribution_major_version|int == 9 and prosody_debian_testing.rc == 0))
+
 - include: prosody.yml
   tags:
     - prosody
