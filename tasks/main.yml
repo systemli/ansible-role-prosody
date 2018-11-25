@@ -8,6 +8,20 @@
   failed_when: False
   when: prosody_libevent is undefined
 
+- name: Pin lua-event from testing
+  blockinfile:
+    path: /etc/apt/preferences.d/apt-pinning-profile.pref
+    content: |
+      Package: lua-event
+      Pin: release a=testing
+      Pin-Priority: 600
+      
+      Package: libevent-2.1-6
+      Pin: release a=testing
+      Pin-Priority: 600
+  when: prosody_libevent is undefined and
+    (ansible_distribution_major_version|int == 9 and prosody_debian_testing.rc == 0)
+
 - set_fact:
     prosody_libevent: True
   when: prosody_libevent is undefined and
