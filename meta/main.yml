@@ -11,10 +11,9 @@ galaxy_info:
     - jabber
     - monitoring
   platforms:
-    - name: Ubuntu
-      versions:
-        - all
     - name: Debian
       versions:
-        - all
+        - jessie
+        - stretch
+        - buster
 dependencies: []

@@ -28,7 +28,7 @@
 - name: Install lua-event
   apt:
     pkg: lua-event
-  when: prosody_libevent
+  when: prosody_libevent|default(False)
 
 - name: Increase file limit
   lineinfile:

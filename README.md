@@ -13,7 +13,9 @@ Contains tests for Travis CI, Molecule and Vagrant.
 Requirements
 ------------
 
-Debian or Ubuntu.
+Debian 8,9,10. Other versions of Debian/Ubuntu might be supported as well, but aren't tested.
+
+To use `lua-event`, the testing repo needs to be enable on Debian 9.
 
 Role Variables
 --------------
