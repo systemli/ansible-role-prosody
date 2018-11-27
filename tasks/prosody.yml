@@ -18,17 +18,7 @@
 
 - name: Ensure required packages are present
   apt:
-    pkg: "{{ item }}"
-  with_items:
-    - prosody
-    - mercurial
-    - lua-sec
-    - lua-bitop
-
-- name: Install lua-event
-  apt:
-    pkg: lua-event
-  when: prosody_libevent|default(False)
+    pkg: "{{ prosody_packages }}"
 
 - name: Increase file limit
   lineinfile:

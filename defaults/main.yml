@@ -102,3 +102,10 @@ prosody_clean_inactive_users: false
 prosody_max_history_messages: 100
 
 prosody_ldap_filter: (sAMAccountName=%u)
+
+prosody_packages:
+    - prosody
+    - mercurial
+    - lua-sec
+    - lua-bitop
+    - lua-event
