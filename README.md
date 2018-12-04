@@ -138,25 +138,44 @@ Download latest release with `ansible-galaxy`
 Example Playbook
 ----------------
 
-    - hosts: servers
-      roles:
-        - systemli.prosody
-      vars:
-        prosody_vhost: example.net
-        prosody_ssl_key: |
-          -----BEGIN PRIVATE KEY-----
-            ...
-          -----END PRIVATE KEY-----
-        prosody_ssl_cert: |
-          -----BEGIN CERTIFICATE-----
-            ...
-          -----END CERTIFICATE-----
-        prosody_onion_vhost: x5tno6mwkncu4m2h.onion
-
+```
+- hosts: servers
+  roles:
+    - systemli.prosody
+  vars:
+    prosody_vhost: example.net
+    prosody_ssl_key: |
+      -----BEGIN PRIVATE KEY-----
+        ...
+      -----END PRIVATE KEY-----
+    prosody_ssl_cert: |
+      -----BEGIN CERTIFICATE-----
+        ...
+      -----END CERTIFICATE-----
+    prosody_onion_vhost: x5tno6mwkncu4m2h.onion
+```
 
 You would need a configured Tor onion service for this.
 Look at https://github.com/systemli/ansible-role-hidden-service
 
+You can also combine it with [systemli.letsencrypt](https://github.com/systemli/ansible-role-letsencrypt/) to automatically configure certs.
+
+```
+- hosts: servers
+  roles:
+    - systemli.letsencrypt
+    - systemli.prosody
+  vars:
+    prosody_vhost: example.net
+    letsencrypt_cert:
+      name: example.net
+      domains:
+        - example.net
+        - conference.example.net
+        - pubsub.example.net
+      challenge: dns
+      renew_hook: "/usr/bin/prosodyctl --root cert import /etc/letsencrypt/live/example.net/fullchain.pem"
+```
 
 License
 -------
