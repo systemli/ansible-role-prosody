@@ -31,6 +31,8 @@ prosody_contacts:
 prosody_log_level: info
 # use "cyrus" to activate ldap auth
 prosody_authentication: internal_hashed
+# https://prosody.im/doc/certificates#automatic_location
+prosody_certificates: /etc/prosody/certs
 prosody_dhparam_length: 2048
 prosody_monitoring: True
 prosody_monitoring_packages:
@@ -54,22 +56,23 @@ prosody_mod_register_redirect_registration_url: "https://localhost:5281/register
 prosody_mod_register_redirect_text: "To register please visit {{ prosody_mod_register_redirect_registration_url}}"
 
 prosody_modules:
-  - admin_adhoc # Allows administration via an XMPP client that supports ad-hoc commands
-  - admin_telnet # Opens telnet console interface on localhost port 5582
-  - announce # Send announcement to all online users
-  - blocklist # Allow users to block communications with other users
-  - bosh # Enable BOSH clients, aka "Jabber over HTTP"
-  - carbons # Keep multiple clients in sync
-  - csi_simple # traffic optimizations
-  - mam # Store messages in an archive and allow users to access it
-  - pep # Enables users to publish their avatar, mood, activity, playing music and more
-  - pep_vcard_avatar # XEP-0398: User Avatar to vCard-Based Avatars Conversion
-  - private # Private XML storage (for room bookmarks, etc.)
-  - server_contact_info # Publish contact information for this service
-  - vcard4 # new vards standard
-  - vcard_legacy # Allow users to set vCards
-  - welcome # Welcome users who register accounts
-  - websocket # XMPP over WebSockets
+  - admin_adhoc  # Allows administration via an XMPP client that supports ad-hoc commands
+  - admin_telnet  # Opens telnet console interface on localhost port 5582
+  - announce  # Send announcement to all online users
+  - blocklist  # Allow users to block communications with other users
+  - bosh  # Enable BOSH clients, aka "Jabber over HTTP"
+  - carbons  # Keep multiple clients in sync
+  - csi_simple  # traffic optimizations
+  - mam  # Store messages in an archive and allow users to access it
+  - pep  # Enables users to publish their avatar, mood, activity, playing music and more
+  - pep_vcard_avatar  # XEP-0398: User Avatar to vCard-Based Avatars Conversion
+  - private  # Private XML storage (for room bookmarks, etc.)
+  - proxy65 # Enables a file transfer proxy service which clients behind NAT can use
+  - server_contact_info  # Publish contact information for this service
+  - vcard4  # new vards standard
+  - vcard_legacy  # Allow users to set vCards
+  - welcome  # Welcome users who register accounts
+  - websocket  # XMPP over WebSockets
 
 prosody_external_modules:
   - auto_activate_hosts

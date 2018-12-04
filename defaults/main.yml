@@ -9,6 +9,8 @@ prosody_contacts:
 prosody_log_level: info
 # use "cyrus" to activate ldap auth
 prosody_authentication: internal_hashed
+# https://prosody.im/doc/certificates#automatic_location
+prosody_certificates: /etc/prosody/certs
 prosody_dhparam_length: 2048
 prosody_monitoring: true
 prosody_monitoring_packages:
@@ -43,6 +45,7 @@ prosody_modules:
   - pep  # Enables users to publish their avatar, mood, activity, playing music and more
   - pep_vcard_avatar  # XEP-0398: User Avatar to vCard-Based Avatars Conversion
   - private  # Private XML storage (for room bookmarks, etc.)
+  - proxy65 # Enables a file transfer proxy service which clients behind NAT can use
   - server_contact_info  # Publish contact information for this service
   - vcard4  # new vards standard
   - vcard_legacy  # Allow users to set vCards

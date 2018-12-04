@@ -66,7 +66,6 @@ modules_enabled = {
 		--"watchregistrations"; -- Alert admins of registrations
 		--"motd"; -- Send a message to users when they log in
 		--"legacyauth"; -- Legacy authentication. Only used by some old clients and bots.
-		--"proxy65"; -- Enables a file transfer proxy service which clients behind NAT can use
 {% if prosody_limits %}
 	    "limits"; -- Enable bandwidth limiting for XMPP connections
 {% endif %}
@@ -123,18 +122,16 @@ modules_disabled = {
 
 -- These are the SSL/TLS-related settings. If you don't want
 -- to use SSL/TLS, you may comment or remove this
+certificates = "{{ prosody_certificates }}"
+{% if prosody_ssl_cert is defined and prosody_ssl_key is defined %}
 ssl = {
-    {% if prosody_ssl_cert is defined and prosody_ssl_key is defined %}
 	key = "/etc/prosody/certs/jabber.key";
 	certificate = "/etc/prosody/certs/jabber.pem";
-    {% else %}
-	key = "/etc/prosody/certs/localhost.key";
-	certificate = "/etc/prosody/certs/localhost.crt";
-    {% endif %}
     {% if not __testing|default(False) %}
 	dhparam = "/etc/prosody/certs/dh-{{ prosody_dhparam_length }}.pem"
     {% endif %}
 }
+{% endif %}
 {% if prosody_legacy_ssl_ports is defined %}
 legacy_ssl_ports = {{ prosody_legacy_ssl_ports }}
 {% endif %}
