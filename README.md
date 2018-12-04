@@ -156,7 +156,7 @@ Example Playbook
 ```
 
 You would need a configured Tor onion service for this.
-Look at https://github.com/systemli/ansible-role-hidden-service
+Look at [systemli.onion](https://github.com/systemli/ansible-role-onion).
 
 You can also combine it with [systemli.letsencrypt](https://github.com/systemli/ansible-role-letsencrypt/) to automatically configure certs.
 
