@@ -122,7 +122,6 @@ modules_disabled = {
 
 -- These are the SSL/TLS-related settings. If you don't want
 -- to use SSL/TLS, you may comment or remove this
-certificates = "{{ prosody_certificates }}"
 {% if prosody_ssl_cert is defined and prosody_ssl_key is defined %}
 ssl = {
 	key = "/etc/prosody/certs/jabber.key";

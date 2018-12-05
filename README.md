@@ -31,8 +31,6 @@ prosody_contacts:
 prosody_log_level: info
 # use "cyrus" to activate ldap auth
 prosody_authentication: internal_hashed
-# https://prosody.im/doc/certificates#automatic_location
-prosody_certificates: /etc/prosody/certs
 prosody_dhparam_length: 2048
 prosody_monitoring: True
 prosody_monitoring_packages:
