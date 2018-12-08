@@ -83,6 +83,9 @@ modules_enabled = {
 {% for module in prosody_external_modules %}
 		"{{ module }}";
 {% endfor %}
+{% if prosody_motd and not prosody_motd is string %}
+		"motd_sequential";
+{% endif %}
 }
 
 {% if prosody_motd %}
@@ -226,6 +229,9 @@ reload_modules = {
 {% for module in prosody_external_modules %}
   "{{ module }}",
 {% endfor %}
+{% if prosody_motd and not prosody_motd is string %}
+  "motd_sequential",
+{% endif %}
 }
 {% endif %}
 

@@ -39,7 +39,11 @@ prosody_monitoring_packages:
     - git
 prosody_welcome_msg: "Hello $username, welcome to the $host IM server!"
 
-# mod_motd_sequential is a variant of mod_motd that lets you specify a sequence of MOTD messages instead of a single static one. Each message is only sent once and the module keeps track of who as seen which message
+# Set either a string, or a list of strings. If a list is given, the external
+# module "motd_sequential" will be activated and used automatically.
+# motd_sequential is a variant of mod_motd, that lets you specify a sequence
+# of MOTD messages instead of a single static one. Each message is only sent
+# once and the module keeps track of who as seen which message.
 prosody_motd: []
 
 # https://prosody.im/doc/setting_up_bosh#cross-domain_issues
@@ -84,7 +88,6 @@ prosody_external_modules:
   - limit_auth
   - list_inactive
   - log_sasl_mech
-  - motd_sequential
   - omemo_all_access
   - reload_modules
   - register_redirect
