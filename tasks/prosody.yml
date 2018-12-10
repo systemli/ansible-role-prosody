@@ -6,7 +6,7 @@
     - apt
     - ca-certificates
 
-- name: Ensure apt_preferences include file for deb.nodesource.com is present
+- name: Ensure apt_preferences include file for packages.prosody.im is present
   copy:
     src: apt/preferences.d/packages.prosody.im.pref
     dest: /etc/apt/preferences.d/packages.prosody.im.pref
