@@ -6,6 +6,14 @@
     - apt
     - ca-certificates
 
+- name: Ensure apt_preferences include file for deb.nodesource.com is present
+  copy:
+    src: apt/preferences.d/packages.prosody.im.pref
+    dest: /etc/apt/preferences.d/packages.prosody.im.pref
+    mode: 0644
+    owner: root
+    group: root
+
 - name: Ensure repository key for Prosody is in place
   apt_key:
     url: https://prosody.im/files/prosody-debian-packages.key
