@@ -336,7 +336,6 @@ Component "pubsub.{{ prosody_vhost }}" "pubsub"
 
 -- Set up a SOCKS5 bytestream proxy for server-proxied file transfers:
 Component "proxy.{{ prosody_vhost }}" "proxy65"
-    proxy65_address = "{{ prosody_vhost }}"
     proxy65_acl = { "{{ prosody_vhost }}" }
 {% if prosody_proxy_ssl_cert is defined and prosody_proxy_ssl_key is defined %}
     ssl = {
