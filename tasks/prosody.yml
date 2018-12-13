@@ -1,10 +1,7 @@
 ---
 - name: Ensure apt-key is available
   apt:
-    pkg: "{{ item }}"
-  with_items:
-    - apt
-    - ca-certificates
+    pkg: "{{ prosody_repo_packages }}"
 
 - name: Ensure apt_preferences include file for packages.prosody.im is present
   copy:

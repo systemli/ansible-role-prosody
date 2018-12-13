@@ -4,11 +4,7 @@
 
 - name: Install ldap dependencies
   apt:
-    name: "{{ item }}"
-  with_items:
-    - sasl2-bin
-    - libsasl2-modules-ldap
-    - lua-cyrussasl
+    name: "{{ prosody_ldap_packages }}"
 
 - name: Configure saslauthd
   copy:

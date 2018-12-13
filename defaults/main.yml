@@ -12,11 +12,6 @@ prosody_log_level: info
 # use "cyrus" to activate ldap auth
 prosody_authentication: internal_hashed
 prosody_dhparam_length: 2048
-prosody_monitoring: true
-prosody_monitoring_packages:
-  - munin-node
-  - monit
-  - git
 prosody_welcome_msg: "Hello $username, welcome to the $host IM server!"
 
 # Set either a string, or a list of strings. If a list is given, the external
@@ -107,11 +102,27 @@ prosody_http_upload_quota: 52428800  # 50MB
 
 prosody_clean_inactive_users: false
 
+prosody_packages:
+  - prosody
+  - mercurial
+  - lua-sec
+  - lua-bitop
+  - lua-event
+
+prosody_repo_packages:
+  - apt
+  - ca-certificates
+
+# ldap
+prosody_ldap_packages:
+  - sasl2-bin
+  - libsasl2-modules-ldap
+  - lua-cyrussasl
 prosody_ldap_filter: (sAMAccountName=%u)
 
-prosody_packages:
-    - prosody
-    - mercurial
-    - lua-sec
-    - lua-bitop
-    - lua-event
+# monitoring
+prosody_monitoring: true
+prosody_monitoring_packages:
+  - munin-node
+  - monit
+  - git
