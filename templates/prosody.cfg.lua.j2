@@ -296,7 +296,7 @@ munin_ports = { 4950 }
 -- just one proxy for all virtual hosts
 -- Set up a SOCKS5 bytestream proxy for server-proxied file transfers:
 Component "{{ prosody_proxy }}" "proxy65"
-    proxy65_acl = { "{{ prosody_virtual_hosts|map('name')|join(', ') }}" }
+    proxy65_acl = { "{{ prosody_virtual_hosts|map(attribute='name')|join(', ') }}" }
 {% if prosody_proxy_ssl_cert is defined and prosody_proxy_ssl_key is defined %}
     ssl = {
         key = "/etc/prosody/certs/proxy.key";
