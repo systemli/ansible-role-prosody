@@ -94,16 +94,18 @@ prosody_limits: true
 prosody_limits_c2s_rate: "3kb/s"
 prosody_limits_c2s_burst: "2s"
 
+# storage policies
 prosody_mam_archive_expires_after: "1w"
 prosody_mam_default_archive_policy: "false"
+prosody_muc_log_by_default: true
+prosody_max_history_messages: 100
 
+# http upload settings
 prosody_http_upload_file_size_limit: 1048576  # 1MB
 prosody_http_upload_expire_after: 2592000  # 30 days in seconds
 prosody_http_upload_quota: 52428800  # 50MB
 
 prosody_clean_inactive_users: false
-
-prosody_max_history_messages: 100
 
 prosody_ldap_filter: (sAMAccountName=%u)
 
