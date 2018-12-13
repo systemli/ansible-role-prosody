@@ -125,15 +125,15 @@ modules_disabled = {
 
 -- These are the SSL/TLS-related settings. If you don't want
 -- to use SSL/TLS, you may comment or remove this
-{% if prosody_ssl_cert is defined and prosody_ssl_key is defined %}
 ssl = {
+{% if prosody_ssl_cert is defined and prosody_ssl_key is defined %}
 	key = "/etc/prosody/certs/jabber.key";
 	certificate = "/etc/prosody/certs/jabber.pem";
-    {% if not __testing|default(False) %}
-	dhparam = "/etc/prosody/certs/dh-{{ prosody_dhparam_length }}.pem"
-    {% endif %}
-}
 {% endif %}
+{% if not __testing|default(False) %}
+	dhparam = "/etc/prosody/certs/dh-{{ prosody_dhparam_length }}.pem"
+{% endif %}
+}
 {% if prosody_legacy_ssl_ports is defined %}
 legacy_ssl_ports = {{ prosody_legacy_ssl_ports }}
 {% endif %}
