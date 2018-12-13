@@ -125,11 +125,13 @@ modules_disabled = {
 
 -- These are the SSL/TLS-related settings. If you don't want
 -- to use SSL/TLS, you may comment or remove this
-{% if not __testing|default(False) %}
 ssl = {
-	dhparam = "/etc/prosody/certs/dh-{{ prosody_dhparam_length }}.pem"
-}
+    certificate = "/etc/prosody/certs/{{ prosody_vhost }}.crt"
+    key = "/etc/prosody/certs/{{ prosody_vhost }}.key"
+{% if not __testing|default(False) %}
+    dhparam = "/etc/prosody/certs/dh-{{ prosody_dhparam_length }}.pem"
 {% endif %}
+}
 {% if prosody_legacy_ssl_ports is defined %}
 legacy_ssl_ports = {{ prosody_legacy_ssl_ports }}
 {% endif %}

@@ -175,6 +175,7 @@ You can also combine it with [systemli.letsencrypt](https://github.com/systemli/
       domains:
         - example.net
         - conference.example.net
+        - proxy.example.net
         - pubsub.example.net
       challenge: dns
       renew_hook: "/usr/bin/prosodyctl --root cert import /etc/letsencrypt/live/example.net/fullchain.pem"
