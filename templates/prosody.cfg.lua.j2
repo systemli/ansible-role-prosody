@@ -126,8 +126,8 @@ modules_disabled = {
 -- These are the SSL/TLS-related settings. If you don't want
 -- to use SSL/TLS, you may comment or remove this
 ssl = {
-	certificate = "/etc/prosody/certs/{{ prosody_vhost }}.crt"
-	key = "/etc/prosody/certs/{{ prosody_vhost }}.key"
+	certificate = "/etc/prosody/certs/{{ prosody_vhost }}.crt";
+	key = "/etc/prosody/certs/{{ prosody_vhost }}.key";
 {% if not __testing|default(False) %}
 	dhparam = "/etc/prosody/certs/dh-{{ prosody_dhparam_length }}.pem"
 {% endif %}
