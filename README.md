@@ -22,8 +22,10 @@ Role Variables
 
 ```
 prosody_vhost: localhost
-
+prosody_virtual_hosts:
+  - name: "{{ prosody_vhost }}"
 prosody_admins: ['admin']
+prosody_proxy: "proxy.{{ prosody_vhost }}"
 prosody_contacts:
   - { name: abuse, address: "xmpp:admin@{{ prosody_vhost }}" }
   - { name: admin, address: "xmpp:admin@{{ prosody_vhost }}" }
@@ -142,16 +144,18 @@ Example Playbook
   roles:
     - systemli.prosody
   vars:
-    prosody_vhost: example.net
-    prosody_ssl_key: |
-      -----BEGIN PRIVATE KEY-----
-        ...
-      -----END PRIVATE KEY-----
-    prosody_ssl_cert: |
-      -----BEGIN CERTIFICATE-----
-        ...
-      -----END CERTIFICATE-----
-    prosody_onion_vhost: x5tno6mwkncu4m2h.onion
+    prosody_virtual_hosts:
+      - name: example.net
+        key: |
+          -----BEGIN PRIVATE KEY-----
+            ...
+          -----END PRIVATE KEY-----
+        cert: |
+            -----BEGIN CERTIFICATE-----
+              ...
+            -----END CERTIFICATE-----
+      - name: x5tno6mwkncu4m2h.onion
+        admins: ["admin@x5tno6mwkncu4m2h.onion"]
 ```
 
 You would need a configured Tor onion service for this.

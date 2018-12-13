@@ -1,7 +1,9 @@
 ---
 prosody_vhost: localhost
-
+prosody_virtual_hosts:
+  - name: "{{ prosody_vhost }}"
 prosody_admins: ['admin']
+prosody_proxy: "proxy.{{ prosody_vhost }}"
 prosody_contacts:
   - {name: abuse, address: "xmpp:admin@{{ prosody_vhost }}"}
   - {name: admin, address: "xmpp:admin@{{ prosody_vhost }}"}

@@ -1,0 +1,25 @@
+---
+
+- name: "Push TLS cert of {{ item.name }} to /etc/prosody/certs/"
+  copy:
+    content: "{{ item.cert }}"
+    dest: "/etc/prosody/certs/{{ item.name }}.crt"
+    owner: root
+    group: prosody
+    mode: 0640
+  when: item.cert is defined
+  tags:
+    - certs-jabber
+  notify: reload prosody config
+
+- name: "Push TLS key of {{ item.name }} to /etc/prosody/certs/"
+  copy:
+    content: "{{ item.key }}"
+    dest: "/etc/prosody/certs/{{ item.name }}.key"
+    owner: root
+    group: prosody
+    mode: 0640
+  when: item.key is defined
+  tags:
+    - certs-jabber
+  notify: reload prosody config

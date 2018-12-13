@@ -59,29 +59,10 @@
     repo: https://hg.prosody.im/prosody-modules/
     dest: "{{ prosody_external_modules_dir }}"
 
-- name: Push TLS cert to /etc/prosody/certs/
-  copy:
-    content: "{{ prosody_ssl_cert }}"
-    dest: /etc/prosody/certs/jabber.pem
-    owner: root
-    group: prosody
-    mode: 0640
-  when: prosody_ssl_cert is defined
+- include_tasks: tls.yml
+  loop: "{{ prosody_virtual_hosts }}"
   tags:
     - certs-jabber
-  notify: reload prosody config
-
-- name: Push TLS key to /etc/prosody/certs/
-  copy:
-    content: "{{ prosody_ssl_key }}"
-    dest: /etc/prosody/certs/jabber.key
-    owner: root
-    group: prosody
-    mode: 0640
-  when: prosody_ssl_key is defined
-  tags:
-    - certs-jabber
-  notify: reload prosody config
 
 - name: Create parameters for Diffie–Hellman (could take a while)
   command: "openssl dhparam -out /etc/prosody/certs/dh-{{ prosody_dhparam_length }}.pem {{ prosody_dhparam_length }}"

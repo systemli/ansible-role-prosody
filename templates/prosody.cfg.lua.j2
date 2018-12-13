@@ -125,15 +125,11 @@ modules_disabled = {
 
 -- These are the SSL/TLS-related settings. If you don't want
 -- to use SSL/TLS, you may comment or remove this
-ssl = {
-{% if prosody_ssl_cert is defined and prosody_ssl_key is defined %}
-	key = "/etc/prosody/certs/jabber.key";
-	certificate = "/etc/prosody/certs/jabber.pem";
-{% endif %}
 {% if not __testing|default(False) %}
+ssl = {
 	dhparam = "/etc/prosody/certs/dh-{{ prosody_dhparam_length }}.pem"
-{% endif %}
 }
+{% endif %}
 {% if prosody_legacy_ssl_ports is defined %}
 legacy_ssl_ports = {{ prosody_legacy_ssl_ports }}
 {% endif %}
@@ -295,6 +291,17 @@ munin_ports = { 4950 }
 -- HTTPS currently only supports a single certificate, specify it here:
 --https_certificate = "/etc/prosody/certs/localhost.crt"
 
+-- just one proxy for all virtual hosts
+-- Set up a SOCKS5 bytestream proxy for server-proxied file transfers:
+Component "{{ prosody_proxy }}" "proxy65"
+    proxy65_acl = { "{{ prosody_virtual_hosts|map('name')|join(', ') }}" }
+{% if prosody_proxy_ssl_cert is defined and prosody_proxy_ssl_key is defined %}
+    ssl = {
+        key = "/etc/prosody/certs/proxy.key";
+        certificate = "/etc/prosody/certs/proxy.pem";
+    }
+{% endif %}
+
 ----------- Virtual hosts -----------
 -- You need to add a VirtualHost entry for each domain you wish Prosody to serve.
 -- Settings under each VirtualHost entry apply *only* to that host.
@@ -302,44 +309,42 @@ munin_ports = { 4950 }
 --VirtualHost "example.com"
 --	certificate = "/path/to/example.crt"
 
-VirtualHost "{{ prosody_vhost }}"
-{% if prosody_onion_vhost is defined %}
-VirtualHost "{{ prosody_onion_vhost }}"
+{% for vhost in prosody_virtual_hosts %}
+VirtualHost {{ vhost.name }}
+{% if vhost.cert is defined and vhost.key is defined %}
+  ssl = {
+    certificate = "{{ vhost.name }}.crt";
+    key = "{{ vhost.name }}.key";
+  }
 {% endif %}
+{% if vhost.admins is defined %}
+  admins = {
+{% for admin in vhost.admins %}
+    "{{ admin }}",
+{% endfor %}
+  }
+{% endif %}
+{% endfor %}
 
 ------ Components ------
 -- You can specify components to add hosts that provide special services,
 -- like multi-user conferences, and transports.
 -- For more information on components, see https://prosody.im/doc/components
 
----Set up a MUC (multi-user chat) room server on conference.example.com:
-Component "conference.{{ prosody_vhost }}" "muc"
+{% for vhost in prosody_virtual_hosts %}
+---Set up a MUC (multi-user chat) room server:
+Component "conference.{{ vhost.name }}" "muc"
     modules_enabled = {
 {% for module in prosody_muc_modules %}
 		"{{ module }}";
 {% endfor %}
     }
 	restrict_room_creation = "local"
-	muc_log_by_default = {{ prosody_mam_default_archive_policy }} -- Disable logging by default (can be enabled in room config)
+    -- Disable logging by default (can be enabled in room config)
+	muc_log_by_default = {{ prosody_mam_default_archive_policy }}
 	muc_log_all_rooms = false -- set to true to force logging of all rooms
 	max_history_messages = {{ prosody_max_history_messages }}
-Component "pubsub.{{ prosody_vhost }}" "pubsub"
 
----Set up an external component (default component port is 5347)
---
--- External components allow adding various services, such as gateways/
--- transports to other networks like ICQ, MSN and Yahoo. For more info
--- see: https://prosody.im/doc/components#adding_an_external_component
---
---Component "gateway.example.com"
---     component_secret = "password"
+Component "pubsub.{{ vhost.name }}" "pubsub"
 
--- Set up a SOCKS5 bytestream proxy for server-proxied file transfers:
-Component "proxy.{{ prosody_vhost }}" "proxy65"
-    proxy65_acl = { "{{ prosody_vhost }}" }
-{% if prosody_proxy_ssl_cert is defined and prosody_proxy_ssl_key is defined %}
-    ssl = {
-    	key = "/etc/prosody/certs/proxy.key";
-    	certificate = "/etc/prosody/certs/proxy.pem";
-    }
-{% endif %}
+{% endfor %}
