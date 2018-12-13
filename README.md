@@ -178,7 +178,7 @@ You can also combine it with [systemli.letsencrypt](https://github.com/systemli/
         - proxy.example.net
         - pubsub.example.net
       challenge: dns
-      renew_hook: "/usr/bin/prosodyctl --root cert import /etc/letsencrypt/live/example.net/fullchain.pem"
+      renew_hook: "/usr/bin/prosodyctl --root cert import /etc/letsencrypt/live/"
 ```
 
 License
