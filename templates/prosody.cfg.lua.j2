@@ -67,10 +67,10 @@ modules_enabled = {
 		--"motd"; -- Send a message to users when they log in
 		--"legacyauth"; -- Legacy authentication. Only used by some old clients and bots.
 {% if prosody_limits %}
-	    "limits"; -- Enable bandwidth limiting for XMPP connections
+		"limits"; -- Enable bandwidth limiting for XMPP connections
 {% endif %}
 {% if prosody_monitoring %}
-	    "munin";
+		"munin";
 {% endif %}
 
 	-- Core Modules
@@ -91,10 +91,10 @@ modules_enabled = {
 {% if prosody_motd %}
 motd_sequential_messages = {
 {% if prosody_motd is string %}
-  [[{{ prosody_motd }}]],
+	[[{{ prosody_motd }}]],
 {% else %}
 {% for message in prosody_motd %}
-  [[{{ message }}]],
+	[[{{ message }}]],
 {% endfor %}
 {% endif %}
 }
@@ -126,10 +126,10 @@ modules_disabled = {
 -- These are the SSL/TLS-related settings. If you don't want
 -- to use SSL/TLS, you may comment or remove this
 ssl = {
-    certificate = "/etc/prosody/certs/{{ prosody_vhost }}.crt"
-    key = "/etc/prosody/certs/{{ prosody_vhost }}.key"
+	certificate = "/etc/prosody/certs/{{ prosody_vhost }}.crt"
+	key = "/etc/prosody/certs/{{ prosody_vhost }}.key"
 {% if not __testing|default(False) %}
-    dhparam = "/etc/prosody/certs/dh-{{ prosody_dhparam_length }}.pem"
+	dhparam = "/etc/prosody/certs/dh-{{ prosody_dhparam_length }}.pem"
 {% endif %}
 }
 {% if prosody_legacy_ssl_ports is defined %}
@@ -204,7 +204,7 @@ default_archive_policy = {{ prosody_mam_default_archive_policy }}
 -- For advanced logging see https://prosody.im/doc/logging
 log = {
 	{{ prosody_log_level }} = "*syslog"; -- Requires mod_posix to be loaded
-       -- "*console"; -- Log to the console, useful for debugging with daemonize=false
+	-- "*console"; -- Log to the console, useful for debugging with daemonize=false
 }
 
 -- Uncomment to enable statistics
@@ -225,10 +225,10 @@ certificates = "certs"
 -- reload modules on configuration change
 reload_modules = {
 {% for module in prosody_external_modules %}
-  "{{ module }}",
+	"{{ module }}",
 {% endfor %}
 {% if prosody_motd and not prosody_motd is string %}
-  "motd_sequential",
+	"motd_sequential",
 {% endif %}
 }
 {% endif %}
@@ -236,10 +236,10 @@ reload_modules = {
 ----------- Limits -----------
 {% if prosody_limits %}
 limits = {
-  c2s = {
-    rate = "{{ prosody_limits_c2s_rate }}";
-    burst = "{{ prosody_limits_c2s_burst }}";
-  };
+	c2s = {
+		rate = "{{ prosody_limits_c2s_rate }}";
+		burst = "{{ prosody_limits_c2s_burst }}";
+	};
 }
 {% endif %}
 
@@ -281,7 +281,7 @@ s2s_blacklist = {
 ------ Contact Info ------
 contact_info = {
 {% for contact in prosody_contacts %}
-  {{ contact.name }} = { "{{ contact.address }}" };
+	{{ contact.name }} = { "{{ contact.address }}" };
 {% endfor %}
 };
 
@@ -293,17 +293,6 @@ munin_ports = { 4950 }
 -- HTTPS currently only supports a single certificate, specify it here:
 --https_certificate = "/etc/prosody/certs/localhost.crt"
 
--- just one proxy for all virtual hosts
--- Set up a SOCKS5 bytestream proxy for server-proxied file transfers:
-Component "{{ prosody_proxy }}" "proxy65"
-    proxy65_acl = { "{{ prosody_virtual_hosts|map(attribute='name')|join(', ') }}" }
-{% if prosody_proxy_ssl_cert is defined and prosody_proxy_ssl_key is defined %}
-    ssl = {
-        key = "/etc/prosody/certs/proxy.key";
-        certificate = "/etc/prosody/certs/proxy.pem";
-    }
-{% endif %}
-
 ----------- Virtual hosts -----------
 -- You need to add a VirtualHost entry for each domain you wish Prosody to serve.
 -- Settings under each VirtualHost entry apply *only* to that host.
@@ -312,19 +301,19 @@ Component "{{ prosody_proxy }}" "proxy65"
 --	certificate = "/path/to/example.crt"
 
 {% for vhost in prosody_virtual_hosts %}
-VirtualHost {{ vhost.name }}
+VirtualHost "{{ vhost.name }}"
 {% if vhost.cert is defined and vhost.key is defined %}
-  ssl = {
-    certificate = "{{ vhost.name }}.crt";
-    key = "{{ vhost.name }}.key";
-  }
+	ssl = {
+		certificate = "{{ vhost.name }}.crt";
+		key = "{{ vhost.name }}.key";
+	}
 {% endif %}
 {% if vhost.admins is defined %}
-  admins = {
+	admins = {
 {% for admin in vhost.admins %}
-    "{{ admin }}",
+		"{{ admin }}",
 {% endfor %}
-  }
+	}
 {% endif %}
 {% endfor %}
 
@@ -336,13 +325,13 @@ VirtualHost {{ vhost.name }}
 {% for vhost in prosody_virtual_hosts %}
 ---Set up a MUC (multi-user chat) room server:
 Component "conference.{{ vhost.name }}" "muc"
-    modules_enabled = {
+	modules_enabled = {
 {% for module in prosody_muc_modules %}
 		"{{ module }}";
 {% endfor %}
-    }
+	}
 	restrict_room_creation = "local"
-    -- Disable logging by default (can be enabled in room config)
+	-- Disable logging by default (can be enabled in room config)
 	muc_log_by_default = {{ prosody_mam_default_archive_policy }}
 	muc_log_all_rooms = false -- set to true to force logging of all rooms
 	max_history_messages = {{ prosody_max_history_messages }}
@@ -350,3 +339,14 @@ Component "conference.{{ vhost.name }}" "muc"
 Component "pubsub.{{ vhost.name }}" "pubsub"
 
 {% endfor %}
+-- Set up a SOCKS5 bytestream proxy for server-proxied file transfers:
+Component "{{ prosody_proxy }}" "proxy65"
+    proxy65_acl = { "{{ prosody_virtual_hosts|map(attribute='name')|join(', ') }}" }
+{% if prosody_proxy_ssl_cert is defined and prosody_proxy_ssl_key is defined %}
+	ssl = {
+		key = "/etc/prosody/certs/proxy.key";
+		certificate = "/etc/prosody/certs/proxy.pem";
+	}
+{% endif %}
+
+# vim: autoindent noexpandtab tabstop=4 shiftwidth=4
