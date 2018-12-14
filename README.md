@@ -7,8 +7,8 @@ ansible-role-prosody
 
 
 Install and maintain [Prosody](http://prosody.im/) from offical repo with Ansible.
-Per default, this role also installs monit and munin-node to monitor Prosody. 
-Contains tests for Travis CI, Molecule and Vagrant.
+Per default, this role also installs monit and munin-node to monitor Prosody.
+Tested with Molecule, Docker, Vagrant and TravisCI.
 
 Requirements
 ------------
@@ -200,6 +200,15 @@ You can also combine it with [systemli.letsencrypt](https://github.com/systemli/
       challenge: dns
       renew_hook: "/usr/bin/prosodyctl --root cert import /etc/letsencrypt/live/"
 ```
+
+Tests
+-----
+
+Run local tests with
+```
+molecule test -s vagrant
+```
+Requires Molecule, Vagrant and `python-vagrant` to be installed.
 
 License
 -------
