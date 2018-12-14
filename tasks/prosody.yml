@@ -57,7 +57,7 @@
     dest: "{{ prosody_external_modules_dir }}"
 
 - include_tasks: tls.yml
-  loop: "{{ prosody_virtual_hosts }}"
+  with_items: "{{ prosody_virtual_hosts }}"
   tags:
     - certs-jabber
 
