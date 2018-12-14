@@ -8,7 +8,7 @@
   when: prosody_monitoring
   tags:
     - prosody
-    - molecule_test_skip
+    - molecule-notest
 
 - include: inactive.yml
   tags:
