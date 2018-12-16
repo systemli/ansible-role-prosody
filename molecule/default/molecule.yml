@@ -21,14 +21,6 @@ provisioner:
     name: ansible-lint
     enabled: false
 
-lint:
-  name: yamllint
-  options:
-    config-data:
-      extends: default
-      rules:
-        line-length:
-          max: 120
 verifier:
   name: goss
   lint:
