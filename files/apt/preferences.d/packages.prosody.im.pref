@@ -10,3 +10,7 @@ Pin-Priority: 100
 Package: prosody
 Pin: origin "packages.prosody.im"
 Pin-Priority: 500
+
+Package: lua-*
+Pin: origin "packages.prosody.im"
+Pin-Priority: 500
