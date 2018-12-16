@@ -1,0 +1,32 @@
+---
+scenario:
+  name: docker
+
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint:
+  name: yamllint
+  enabled: false
+platforms:
+  - name: instance
+    image: "geerlingguy/docker-${MOLECULE_DISTRO:-debian9}-ansible:latest"
+    command: ${MOLECULE_DOCKER_COMMAND:-""}
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+    enabled: false
+  playbooks:
+    converge: ../default/playbook.yml
+    verify: ../default/verify.yml
+verifier:
+  name: goss
+  directory: ../default/tests/
+  lint:
+    name: yamllint

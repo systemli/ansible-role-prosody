@@ -203,7 +203,7 @@ Tests
 
 Run local tests with
 ```
-molecule test -s vagrant
+molecule test
 ```
 Requires Molecule, Vagrant and `python-vagrant` to be installed.
 
