@@ -56,7 +56,6 @@ prosody_external_modules:
   - c2s_limit_sessions
   - cloud_notify
   - filter_chatstates
-  - http_upload
   - lastlog
   - limit_auth
   - list_inactive
