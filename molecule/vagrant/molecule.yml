@@ -7,7 +7,7 @@ driver:
   provider:
     name: virtualbox
 platforms:
-  - name: vagrant
+  - name: stretch64
     box: debian/stretch64
     memory: 512
     cpus: 2
