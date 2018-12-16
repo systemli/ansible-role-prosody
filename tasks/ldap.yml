@@ -1,6 +1,7 @@
 ---
 
-# kudos: https://blogs.mafia-server.net/nur-bahnhof/2013/12/prosody-authentification-ldapactivedirectory/ and https://wiki.debian.org/InstallingProsody#Cyrus_SASL_with_LDAP
+# kudos: https://blogs.mafia-server.net/nur-bahnhof/2013/12/prosody-authentification-ldapactivedirectory/
+# and https://wiki.debian.org/InstallingProsody#Cyrus_SASL_with_LDAP
 
 - name: Install ldap dependencies
   apt:
