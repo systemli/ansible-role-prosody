@@ -77,6 +77,7 @@ prosody_external_modules:
   - cloud_notify
   - csi
   - filter_chatstates
+  - http_upload
   - lastlog
   - limit_auth
   - list_inactive
