@@ -22,6 +22,7 @@ provisioner:
     enabled: false
   playbooks:
     converge: ../default/playbook.yml
+    verify: ../default/verify.yml
 
 lint:
   name: yamllint
@@ -31,3 +32,8 @@ lint:
       rules:
         line-length:
           max: 120
+verifier:
+  name: goss
+  directory: ../default/tests/
+  lint:
+    name: yamllint

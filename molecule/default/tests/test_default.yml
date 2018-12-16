@@ -1,0 +1,20 @@
+---
+
+package:
+  prosody:
+    installed: true
+
+service:
+  prosody:
+    enabled: true
+    running: true
+
+command:
+  prosodyctl check | grep -v libevent:
+    exit-status: 0
+
+  prosodyctl about:
+    exit-status: 0
+    stdout:
+      - Prosody 0.11
+      - Lua 5.2
