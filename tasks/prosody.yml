@@ -24,13 +24,25 @@
 - name: Ensure required packages are present
   apt:
     pkg: "{{ prosody_packages }}"
+  notify:
+    - stop init.d prosody
 
-- name: Increase file limit
-  lineinfile:
-    dest: /etc/init.d/prosody
-    line: "MAXFDS={{ prosody_file_limit }}"
-    regexp: "^MAXFDS="
-  when: prosody_file_limit
+- name: Copy systemd service file
+  template:
+    src: prosody.service.j2
+    dest: /etc/systemd/system/prosody.service
+    mode: 0644
+    owner: root
+    group: root
+  notify:
+    - reload systemd
+    - stop prosody
+    - start prosody
+
+- name: delete init.d startup file
+  file:
+    state: absent
+    path: /etc/init.d/prosody
 
 - name: Get latest registration theme
   git:
@@ -80,6 +92,14 @@
     - certs-jabber
   notify: reload prosody config
 
+- name: Change ownership of generic key file of no custom is used
+  file:
+    path: /etc/prosody/certs/localhost.key
+    owner: root
+    group: prosody
+    mode: 0640
+  when: prosody_proxy_ssl_cert is not defined
+
 - name: Push proxy TLS key to /etc/prosody/certs/
   copy:
     content: "{{ prosody_proxy_ssl_key }}"
@@ -93,6 +113,6 @@
   notify: reload prosody config
 
 - name: Enable prosody service
-  service:
+  systemd:
     name: prosody
     enabled: true

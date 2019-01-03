@@ -165,6 +165,9 @@ s2s_secure_auth = false
 -- Required for init scripts and prosodyctl
 pidfile = "/var/run/prosody/prosody.pid"
 
+-- let systemd daemonize the server
+daemonize = false
+
 -- Select the authentication backend to use. The 'internal' providers
 -- use Prosody's configured data storage to store the authentication data.
 

@@ -63,3 +63,6 @@ molecule/*/.molecule
 .tox
 .vagrant
 tests/__pycache__
+
+# Git files
+.gitconfig
