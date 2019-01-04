@@ -33,11 +33,6 @@
     name: munin-node
     state: restarted
 
-- name: restart monit
-  service:
-    name: monit
-    state: restarted
-
 - name: restart saslauthd
   service:
     name: saslauthd

@@ -124,5 +124,4 @@ prosody_ldap_filter: (sAMAccountName=%u)
 prosody_monitoring: true
 prosody_monitoring_packages:
   - munin-node
-  - monit
   - git
