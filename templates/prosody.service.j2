@@ -1,4 +1,4 @@
-# this file is from /usr/local/share/prosody-modules/misc/systemd/
+# This file is from /usr/local/share/prosody-modules/misc/systemd/
 
 [Unit]
 ### see man systemd.unit
@@ -18,6 +18,9 @@ PIDFile=/var/run/prosody/prosody.pid
 ExecStart=/usr/bin/prosody
 
 ExecReload=/bin/kill -HUP $MAINPID
+
+RuntimeDirectory=prosody
+RuntimeDirectoryMode=0750
 
 # Restart on crashes
 Restart=on-abnormal
@@ -43,7 +46,7 @@ StandardInput=null
 StandardOutput=journal
 StandardError=inherit
 
-# This usually defaults to 4000 or so
+# This usually defaults to 4096 with systemd on Debian Stretch
 # LimitNOFILE=20000
 
 {% if prosody_file_limit %}
@@ -72,7 +75,5 @@ LimitNOFILE={{ prosody_file_limit }}
 # ProtectControlGroups=true
 # SystemCallFilter=
 
-# This should break LuaJIT
-# MemoryDenyWriteExecute=true
-
-
+[Install]
+WantedBy=multi-user.target

@@ -92,7 +92,7 @@
     - certs-jabber
   notify: reload prosody config
 
-- name: Change ownership of generic key file of no custom is used
+- name: Change ownership of generic key file if no custom is used
   file:
     path: /etc/prosody/certs/localhost.key
     owner: root
