@@ -1,8 +1,7 @@
 ---
 - name: Install monitoring dependencies
   apt:
-    name: "{{ item }}"
-  with_items: "{{ prosody_monitoring_packages }}"
+    name: "{{ prosody_monitoring_packages }}"
   tags:
     - munin-node
     - monit

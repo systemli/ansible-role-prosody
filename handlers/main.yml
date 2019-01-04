@@ -1,13 +1,32 @@
 ---
-- name: reload prosody config
+- name: stop init.d prosody
   service:
+    name: prosody
+    state: stopped
+
+- name: reload systemd
+  systemd:
+    daemon_reload: true
+
+- name: reload prosody config
+  systemd:
     name: prosody
     state: reloaded
 
 - name: restart prosody
-  service:
+  systemd:
     name: prosody
     state: restarted
+
+- name: stop prosody
+  systemd:
+    name: prosody
+    state: stopped
+
+- name: start prosody
+  systemd:
+    name: prosody
+    state: started
 
 - name: restart munin-node
   service:
