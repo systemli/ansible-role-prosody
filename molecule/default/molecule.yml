@@ -8,7 +8,7 @@ driver:
     name: virtualbox
 
 platforms:
-  - name: prosody_stretch64
+  - name: prosody-stretch64
     box: debian/stretch64
     memory: 512
     cpus: 2
