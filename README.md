@@ -25,8 +25,8 @@ prosody_virtual_hosts:
 prosody_admins: ['admin']
 prosody_proxy: "proxy.{{ prosody_vhost }}"
 prosody_contacts:
-  - { name: abuse, address: "xmpp:admin@{{ prosody_vhost }}" }
-  - { name: admin, address: "xmpp:admin@{{ prosody_vhost }}" }
+  - {name: abuse, address: "xmpp:admin@{{ prosody_vhost }}"}
+  - {name: admin, address: "xmpp:admin@{{ prosody_vhost }}"}
 # supported levels are: "debug", "info", "warn", "error". 
 prosody_log_level: info
 # use "cyrus" to activate ldap auth
@@ -61,9 +61,10 @@ prosody_modules:
   - carbons  # Keep multiple clients in sync
   - csi_simple  # traffic optimizations
   - mam  # Store messages in an archive and allow users to access it
-  - pep  # Enables users to publish their avatar, mood, activity, playing music and more
+  - pep  # Allow users to publish their avatar, mood, activity, playing music and more (needed for OMEMO)
   - pep_vcard_avatar  # XEP-0398: User Avatar to vCard-Based Avatars Conversion
   - private  # Private XML storage (for room bookmarks, etc.)
+  - roster  # Allow users to keep and manage friend lists
   - server_contact_info  # Publish contact information for this service
   - vcard4  # new vards standard
   - vcard_legacy  # Allow users to set vCards
@@ -75,14 +76,12 @@ prosody_external_modules:
   - c2s_conn_throttle
   - c2s_limit_sessions
   - cloud_notify
-  - csi
   - filter_chatstates
   - http_upload
   - lastlog
   - limit_auth
   - list_inactive
   - log_sasl_mech
-  - omemo_all_access
   - reload_modules
   - register_redirect
   - register_web
@@ -90,11 +89,13 @@ prosody_external_modules:
   - s2s_blacklist
   - smacks
 
-prosody_external_modules_dir: /usr/share/prosody-modules
+prosody_external_modules_dir: /usr/local/share/prosody-modules
 
 prosody_muc_modules:
   - muc_mam  # Store MUC messages in an archive and allow users to access it
   - vcard_muc  # adds the ability to set vCard for MUC rooms
+
+prosody_legacy_ssl_ports: 5223
 
 prosody_s2s_blacklist:
   - buycc.me

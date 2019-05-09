@@ -22,9 +22,9 @@ prosody_welcome_msg: "Hello $username, welcome to the $host IM server!"
 prosody_motd: []
 
 # https://prosody.im/doc/setting_up_bosh#cross-domain_issues
-prosody_cors: false
+prosody_cors: False
 
-prosody_custom_registration_theme: false
+prosody_custom_registration_theme: False
 prosody_custom_registration_theme_repo: "https://github.com/beli3ver/Prosody-Web-Registration-Theme.git"
 prosody_custom_registration_theme_path: "/etc/prosody/register-templates/Prosody-Web-Registration-Theme"
 
@@ -44,7 +44,7 @@ prosody_modules:
   - pep  # Allow users to publish their avatar, mood, activity, playing music and more (needed for OMEMO)
   - pep_vcard_avatar  # XEP-0398: User Avatar to vCard-Based Avatars Conversion
   - private  # Private XML storage (for room bookmarks, etc.)
-  - roster # Allow users to keep and manage friend lists
+  - roster  # Allow users to keep and manage friend lists
   - server_contact_info  # Publish contact information for this service
   - vcard4  # new vards standard
   - vcard_legacy  # Allow users to set vCards
