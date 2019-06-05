@@ -108,6 +108,9 @@ welcome_message = "{{ prosody_welcome_msg }}"
 registration_whitelist = { "{{ prosody_mod_register_redirect_registration_whitelist }}" }
 registration_url = "{{ prosody_mod_register_redirect_registration_url }}"
 registration_text = "{{ prosody_mod_register_redirect_text }}"
+
+-- Registration Throttling
+min_seconds_between_registrations = {{ prosody_mod_register_min_seconds_between_registrations }}
 {% endif %}
 
 -- These modules are auto-loaded, but should you want
