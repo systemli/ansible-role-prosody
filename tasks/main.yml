@@ -23,4 +23,10 @@
 - include: web.yml
   when: prosody_web_dir|default(False) and prosody_web_user|default(False)
   tags:
+    - prosody
     - web
+
+- include: goss.yml
+  tags:
+    - prosody
+    - goss
