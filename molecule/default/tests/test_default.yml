@@ -10,7 +10,7 @@ service:
     running: true
 
 command:
-  prosodyctl check | grep -v libevent:
+  prosodyctl check config | grep -v libevent:
     exit-status: 0
 
   prosodyctl about:
