@@ -90,6 +90,7 @@ prosody_external_modules:
   - s2s_auth_compat
   - s2s_blacklist
   - smacks
+  - smacks_offline
 
 prosody_external_modules_dir: /usr/local/share/prosody-modules
 
