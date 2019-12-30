@@ -12,13 +12,14 @@
     group: root
 
 - name: Ensure repository key for Prosody is in place
-  apt_key:
+  get_url:
     url: https://prosody.im/files/prosody-debian-packages.key
-    state: present
+    dest: /usr/share/keyrings/prosody-debian-packages.key
+    checksum: sha256:3649accb0b4f4ebe5d690261811f2877b22b121c3117d9d0a3b8cd88ba6835c4
 
 - name: Add Prosody repository
   apt_repository:
-    repo: "deb {{ 'https' if ansible_distribution == 'Debian' and ansible_distribution_major_version|int >= 10 else 'http' }}://packages.prosody.im/debian {{ ansible_distribution_release }} main"
+    repo: "deb [signed-by=/usr/share/keyrings/prosody-debian-packages.key] {{ 'https' if ansible_distribution == 'Debian' and ansible_distribution_major_version|int >= 10 else 'http' }}://packages.prosody.im/debian {{ ansible_distribution_release }} main"
     update_cache: true
 
 - name: Ensure required packages are present

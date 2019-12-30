@@ -1,5 +1,6 @@
 ---
 galaxy_info:
+  role_name: prosody
   author: systemli
   description: |
     Install and maintain Prosody from offical repo with Ansible.
@@ -16,7 +17,6 @@ galaxy_info:
   platforms:
     - name: Debian
       versions:
-        - jessie
         - stretch
         - buster
 dependencies: []
