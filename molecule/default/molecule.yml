@@ -1,6 +1,4 @@
 ---
-scenario:
-  name: default
 driver:
   name: vagrant
   provider:
@@ -8,13 +6,9 @@ driver:
 platforms:
   - name: prosody-buster64
     box: debian/buster64
+lint: yamllint .
 provisioner:
   name: ansible
   become: true
-  lint:
-    name: ansible-lint
-    enabled: false
 verifier:
   name: goss
-  lint:
-    name: yamllint

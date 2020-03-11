@@ -1,6 +1,4 @@
 ---
-scenario:
-  name: docker
 driver:
   name: docker
 platforms:
@@ -11,16 +9,12 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
     pre_build_image: true
+lint: yamllint .
 provisioner:
   name: ansible
-  lint:
-    name: ansible-lint
-    enabled: false
   playbooks:
-    converge: ../default/playbook.yml
+    converge: ../default/converge.yml
     verify: ../default/verify.yml
 verifier:
   name: goss
   directory: ../default/tests/
-  lint:
-    name: yamllint
