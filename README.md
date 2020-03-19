@@ -76,7 +76,6 @@ prosody_modules:
 prosody_external_modules:
   - auto_activate_hosts
   - c2s_conn_throttle
-  - c2s_limit_sessions
   - cloud_notify
   - filter_chatstates
   - http_upload
