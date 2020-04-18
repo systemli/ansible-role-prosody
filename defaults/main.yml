@@ -39,6 +39,7 @@ prosody_modules:
   - admin_telnet  # Opens telnet console interface on localhost port 5582
   - announce  # Send announcement to all online users
   - blocklist  # Allow users to block communications with other users
+  - bookmarks  # XEP-0411
   - bosh  # Enable BOSH clients, aka "Jabber over HTTP"
   - carbons  # Keep multiple clients in sync
   - csi_simple  # traffic optimizations
