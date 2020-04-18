@@ -89,6 +89,9 @@ modules_enabled = {
 {% if prosody_external_services is defined %}
 		"extdisco";
 {% endif %}
+{% if prosody_turncredentials_host is defined and prosody_turncredentials_secret is defined%}
+		"turncredentials";
+{% endif %}
 }
 
 {% if prosody_motd %}
@@ -131,6 +134,10 @@ external_services = {
 }
 {% endif %}
 
+{% if prosody_turncredentials_host is defined and prosody_turncredentials_secret is defined %}
+turncredentials_host = "{{ prosody_turncredentials_host }}"
+turncredentials_secret = "{{ prosody_turncredentials_secret }}"
+{% endif %}
 
 -- Registration Throttling
 min_seconds_between_registrations = {{ prosody_mod_register_min_seconds_between_registrations }}
