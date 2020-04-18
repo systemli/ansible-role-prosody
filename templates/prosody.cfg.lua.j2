@@ -86,6 +86,9 @@ modules_enabled = {
 {% if prosody_motd and not prosody_motd is string %}
 		"motd_sequential";
 {% endif %}
+{% if prosody_external_services is defined %}
+		"extdisco";
+{% endif %}
 }
 
 {% if prosody_motd %}
@@ -108,6 +111,26 @@ welcome_message = "{{ prosody_welcome_msg }}"
 registration_whitelist = { "{{ prosody_mod_register_redirect_registration_whitelist }}" }
 registration_url = "{{ prosody_mod_register_redirect_registration_url }}"
 registration_text = "{{ prosody_mod_register_redirect_text }}"
+
+{% if prosody_external_services is defined %}
+external_services = {
+{% for service in prosody_external_services %}
+    ["{{ service.uri }}"] = {
+{% if service.name is defined %}
+        name="{{ service.name }}";
+{% endif %}
+        port="{{ service.port }}";
+        transport="{{ service.transport }}";
+        type="{{ service.type }}";
+{% if service.username is defined %}
+        username="{{ service.username }}";
+        password="{{ service.guest }}";
+{% endif %}
+    };
+{% endfor %}
+}
+{% endif %}
+
 
 -- Registration Throttling
 min_seconds_between_registrations = {{ prosody_mod_register_min_seconds_between_registrations }}
