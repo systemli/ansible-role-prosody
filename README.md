@@ -20,6 +20,11 @@ Role Variables
 
 see `defaults/main.yml`
 
+Dependencies
+------------
+
+ - [systemli.apt_repositories](https://galaxy.ansible.com/systemli/apt_repositories)
+
 Download
 --------
 
