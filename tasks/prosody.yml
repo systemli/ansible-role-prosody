@@ -1,26 +1,4 @@
 ---
-- name: Ensure apt-key is available
-  apt:
-    pkg: "{{ prosody_repo_packages }}"
-
-- name: Ensure apt_preferences include file for packages.prosody.im is present
-  copy:
-    src: apt/preferences.d/packages.prosody.im.pref
-    dest: /etc/apt/preferences.d/packages.prosody.im.pref
-    mode: 0644
-    owner: root
-    group: root
-
-- name: Ensure repository key for Prosody is in place
-  get_url:
-    url: https://prosody.im/files/prosody-debian-packages.key
-    dest: /usr/share/keyrings/prosody-debian-packages.key
-    checksum: sha256:3649accb0b4f4ebe5d690261811f2877b22b121c3117d9d0a3b8cd88ba6835c4
-
-- name: Add Prosody repository
-  apt_repository:
-    repo: "deb [signed-by=/usr/share/keyrings/prosody-debian-packages.key] {{ 'https' if ansible_distribution == 'Debian' and ansible_distribution_major_version|int >= 10 else 'http' }}://packages.prosody.im/debian {{ ansible_distribution_release }} main"
-    update_cache: true
 
 - name: Ensure required packages are present
   apt:

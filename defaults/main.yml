@@ -112,10 +112,6 @@ prosody_packages:
   - lua-bitop
   - lua-event
 
-prosody_repo_packages:
-  - apt
-  - ca-certificates
-
 # ldap
 prosody_ldap_packages:
   - sasl2-bin
