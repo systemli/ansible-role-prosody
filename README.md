@@ -13,7 +13,7 @@ Tested with Molecule, Docker, Vagrant and TravisCI.
 Requirements
 ------------
 
-Debian 8,9,10. Other versions of Debian/Ubuntu might be supported as well, but aren't tested.
+Debian 10 or 9. Other versions of Debian/Ubuntu might be supported as well, but aren't tested.
 
 Role Variables
 --------------
