@@ -161,8 +161,8 @@ modules_disabled = {
 ssl = {
 	certificate = "/etc/prosody/certs/{{ prosody_vhost }}.crt";
 	key = "/etc/prosody/certs/{{ prosody_vhost }}.key";
-    -- only most secure TLS versions
-    protocol = "tlsv1_2+";
+	-- only most secure TLS versions
+	protocol = "tlsv1_2+";
 {% if not __testing|default(False) %}
 	dhparam = "/etc/prosody/certs/dh-{{ prosody_dhparam_length }}.pem"
 {% endif %}

@@ -26,6 +26,7 @@
   git:
     repo: "{{ prosody_custom_registration_theme_repo }}"
     dest: "{{ prosody_custom_registration_theme_path }}"
+    version: master
   when: prosody_custom_registration_theme
 
 - name: Configure Prosody
@@ -41,7 +42,7 @@
 #   command: prosodyctl register {{ item.name }} {{ prosody_virtual_domain }} {{ item.password }}
 #   with_items: prosody_accounts
 
-- name: Get latest prosody modules
+- name: Get latest prosody modules  # noqa 402
   hg:
     repo: https://hg.prosody.im/prosody-modules/
     dest: "{{ prosody_external_modules_dir }}"

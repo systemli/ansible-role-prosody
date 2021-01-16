@@ -9,6 +9,7 @@
   git:
     repo: https://github.com/t2d/munin-prosody.git
     dest: /usr/local/share/munin-prosody/
+    version: master
     accept_hostkey: "{{ __testing|default(False) }}"
   tags:
     - munin-node

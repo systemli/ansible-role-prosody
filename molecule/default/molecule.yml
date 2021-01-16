@@ -6,7 +6,10 @@ driver:
 platforms:
   - name: prosody-buster64
     box: debian/buster64
-lint: yamllint .
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
 provisioner:
   name: ansible
   become: true
