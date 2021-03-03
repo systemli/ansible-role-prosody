@@ -82,6 +82,7 @@ prosody_legacy_ssl_ports: 5223
 
 prosody_s2s_blacklist:
   - buycc.me
+  - default.rs
   - validcc-notifier.su
 
 prosody_blacklist: []
