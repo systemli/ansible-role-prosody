@@ -19,10 +19,3 @@ galaxy_info:
       versions:
         - stretch
         - buster
-dependencies:
-  - role: systemli.apt_repositories
-    vars:
-      apt_repositories:
-        - preset: prosody
-      apt_repositories_absent:
-        - packages_prosody_im_debian.list
