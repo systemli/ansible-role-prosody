@@ -17,7 +17,6 @@ galaxy_info:
   platforms:
     - name: Debian
       versions:
-        - stretch
         - buster
 dependencies:
   - role: systemli.apt_repositories
