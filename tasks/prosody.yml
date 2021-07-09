@@ -3,6 +3,7 @@
 - name: Ensure required packages are present
   apt:
     pkg: "{{ prosody_packages }}"
+    cache_valid_time: 600
   notify:
     - stop init.d prosody
 
