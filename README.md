@@ -10,6 +10,8 @@ Install and maintain [Prosody](http://prosody.im/) from offical repo with Ansibl
 Per default, this role also installs munin-node to monitor Prosody.
 Tested with Molecule, Docker, Vagrant and TravisCI.
 
+[Deploying Prosody using orcharhino](https://docs.orcharhino.com/or/docs/sources/usage_guides/deploying_an_internal_application_guide.html)
+
 Requirements
 ------------
 
