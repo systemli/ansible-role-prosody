@@ -17,6 +17,7 @@ galaxy_info:
   platforms:
     - name: Debian
       versions:
+        - bullseye
         - buster
 dependencies:
   - role: systemli.apt_repositories

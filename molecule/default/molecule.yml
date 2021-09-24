@@ -4,6 +4,8 @@ driver:
   provider:
     name: virtualbox
 platforms:
+  - name: prosody-bullseye64
+    box: debian/bullseye64
   - name: prosody-buster64
     box: debian/buster64
 lint: |
