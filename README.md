@@ -3,10 +3,10 @@ ansible-role-prosody
 [![Build Status](https://github.com/systemli/ansible-role-prosody/workflows/Integration/badge.svg?branch=master)](https://github.com/systemli/ansible-role-prosody/actions?query=workflow%3AIntegration)
 [![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-prosody-blue.svg)](https://galaxy.ansible.com/systemli/prosody/)
 [![IM observatory](https://check.messaging.one/badge.php?domain=jabber.systemli.org)](https://check.messaging.one/result.php?domain=jabber.systemli.org&amp;type=client)
-<a href='https://compliance.conversations.im/server/jabber.systemli.org'><img src='https://compliance.conversations.im/badge/jabber.systemli.org'></a> 
+<a href='https://compliance.conversations.im/server/jabber.systemli.org'><img src='https://compliance.conversations.im/badge/jabber.systemli.org'></a>
 
 
-Install and maintain [Prosody](http://prosody.im/) from offical repo with Ansible.
+Install and maintain [Prosody](http://prosody.im/) from official repo with Ansible.
 Per default, this role also installs munin-node to monitor Prosody.
 Tested with Molecule, Docker, Vagrant and TravisCI.
 
