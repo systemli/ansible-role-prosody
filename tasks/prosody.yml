@@ -92,7 +92,8 @@
     - certs-jabber
   notify: reload prosody config
 
-- meta: flush_handlers
+- name: Flush handlers
+  meta: flush_handlers
 
 - name: Enable prosody service
   systemd:
