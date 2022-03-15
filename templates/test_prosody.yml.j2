@@ -18,5 +18,6 @@ command:
   prosodyctl about:
     exit-status: 0
     stdout:
-      - Prosody 0.11
-      - Lua 5.2
+      {% for __test in prosody_goss_prosodyctl_about_versions -%}
+      - {{ __test }}
+      {% endfor -%}

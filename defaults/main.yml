@@ -125,3 +125,8 @@ prosody_monitoring: true
 prosody_monitoring_packages:
   - munin-node
   - git
+
+# goss tests
+prosody_goss_prosodyctl_about_versions:
+  - Prosody 0.12
+  - Lua 5.2
