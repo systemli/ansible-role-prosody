@@ -92,7 +92,9 @@ To update vars in tests run
 j2 --customize ~/custom-j2.py templates/test_prosody.yml.j2 defaults/main.yml > molecule/default/tests/test_default.yml
 ```
 
-```python custom-j2.py
+```python
+# ~/custom-j2.py
+
 def j2_environment_params():
     """ Extra parameters for the Jinja2 Environment """
     # Jinja2 Environment configuration
