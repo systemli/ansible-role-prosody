@@ -29,7 +29,7 @@ admins = {
 -- Enable use of libevent for better performance under high load
 -- For more information see: https://prosody.im/doc/libevent
 {% if prosody_libevent|default(True) %}
-use_libevent = true
+network_backend = "event"
 {% endif %}
 
 -- Prosody will always look in its source directory for modules, but
@@ -111,7 +111,7 @@ welcome_message = "{{ prosody_welcome_msg }}"
 {% endif %}
 
 {% if 'register_redirect' in prosody_external_modules %}
-registration_whitelist = { "{{ prosody_mod_register_redirect_registration_whitelist }}" }
++registration_allowlist = { "{{ prosody_mod_register_redirect_registration_allowlist }}" }
 registration_url = "{{ prosody_mod_register_redirect_registration_url }}"
 registration_text = "{{ prosody_mod_register_redirect_text }}"
 
@@ -199,9 +199,6 @@ s2s_secure_auth = false
 
 -- Required for init scripts and prosodyctl
 pidfile = "/var/run/prosody/prosody.pid"
-
--- let systemd daemonize the server
-daemonize = false
 
 -- Select the authentication backend to use. The 'internal' providers
 -- use Prosody's configured data storage to store the authentication data.
@@ -299,13 +296,6 @@ http_default_host = "{{ prosody_vhost }}"
 -- Register Web Template files
 register_web_template = "{{ prosody_custom_registration_theme_path }}"
 
-{% endif %}
-
-{% if prosody_cors %}
--- enable cross-domain requests
--- https://prosody.im/doc/setting_up_bosh#cross-domain_issues
-cross_domain_bosh = { "https://{{ prosody_vhost }}" }
-cross_domain_websocket = { "https://{{ prosody_vhost }}" }
 {% endif %}
 
 {% if 's2s_blacklist' in prosody_external_modules %}
