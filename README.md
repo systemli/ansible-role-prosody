@@ -7,8 +7,7 @@ ansible-role-prosody
 
 
 Install and maintain [Prosody](http://prosody.im/) from official repo with Ansible.
-Per default, this role also installs munin-node to monitor Prosody.
-Tested with Molecule, Docker, Vagrant and TravisCI.
+Tested with Molecule, Docker and Vagrant.
 
 Requirements
 ------------
