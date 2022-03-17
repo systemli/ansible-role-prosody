@@ -119,9 +119,10 @@ prosody_ldap_filter: (sAMAccountName=%u)
 
 # monitoring
 prosody_monitoring: true
-prosody_monitoring_packages:
-  - munin-node
-  - git
+## add prometheus server IP address here:
+prosody_openmetrics_allow_ips: '"127.0.0.1", "::1"'
+## add prometheus server IP address here:
+prosody_http_interfaces: '"127.0.0.1", "::1"'
 
 # goss tests
 prosody_goss_prosodyctl_about_versions:

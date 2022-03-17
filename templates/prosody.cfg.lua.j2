@@ -70,7 +70,7 @@ modules_enabled = {
 		"limits"; -- Enable bandwidth limiting for XMPP connections
 {% endif %}
 {% if prosody_monitoring %}
-		"munin";
+		"http_openmetrics";
 {% endif %}
 
 	-- Core Modules
@@ -242,10 +242,6 @@ log = {
 	-- "*console"; -- Log to the console, useful for debugging with daemonize=false
 }
 
--- Uncomment to enable statistics
--- For more info see https://prosody.im/doc/statistics
-statistics = "internal"
-
 -- Certificates
 -- Every virtual host and component needs a certificate so that clients and
 -- servers can securely verify its identity. Prosody will automatically load
@@ -286,7 +282,7 @@ http_upload_quota = {{ prosody_http_upload_quota }}
 
 -- http config
 -- Limit http interfaces to localhost
-http_interfaces = { "127.0.0.1" }
+http_interfaces = { {{ prosody_http_interfaces }} }
 http_default_host = "{{ prosody_vhost }}"
 
 {% if prosody_custom_registration_theme %}
@@ -315,7 +311,10 @@ contact_info = {
 
 {% if prosody_monitoring %}
 ------ Monitoring ------
-munin_ports = { 4950 }
+-- https://prosody.im/doc/modules/mod_http_openmetrics
+statistics = "internal"
+statistics_interval = "manual"
+openmetrics_allow_ips = { {{ prosody_openmetrics_allow_ips }} }
 {% endif %}
 
 -- HTTPS currently only supports a single certificate, specify it here:
