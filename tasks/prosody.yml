@@ -4,24 +4,6 @@
   apt:
     pkg: "{{ prosody_packages }}"
     cache_valid_time: 600
-  notify:
-    - stop init.d prosody
-
-- name: delete init.d startup file
-  file:
-    state: absent
-    path: /etc/init.d/prosody
-
-- name: Copy systemd service file
-  template:
-    src: prosody.service.j2
-    dest: /etc/systemd/system/prosody.service
-    mode: 0644
-    owner: root
-    group: root
-  notify:
-    - reload systemd
-    - restart prosody
 
 - name: Get latest registration theme
   git:
