@@ -167,8 +167,8 @@ ssl = {
 	dhparam = "/etc/prosody/certs/dh-{{ prosody_dhparam_length }}.pem"
 {% endif %}
 }
-{% if prosody_legacy_ssl_ports is defined %}
-legacy_ssl_ports = {{ prosody_legacy_ssl_ports }}
+{% if prosody_c2s_direct_tls_ports is defined %}
+c2s_direct_tls_ports = {{ prosody_c2s_direct_tls_ports }}
 {% endif %}
 
 -- Force clients to use encrypted connections? This option will
