@@ -86,6 +86,25 @@ molecule test
 ```
 Requires Molecule, Vagrant and `python-vagrant` to be installed.
 
+To update vars in tests run
+
+```bash
+j2 --customize ~/custom-j2.py templates/test_prosody.yml.j2 defaults/main.yml > molecule/default/tests/test_default.yml
+```
+
+```python
+# ~/custom-j2.py
+
+def j2_environment_params():
+    """ Extra parameters for the Jinja2 Environment """
+    # Jinja2 Environment configuration
+    # http://jinja.pocoo.org/docs/2.10/api/#jinja2.Environment
+    return dict(
+        # Remove whitespace around blocks
+        trim_blocks=True,
+    )
+```
+
 License
 -------
 
