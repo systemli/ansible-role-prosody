@@ -122,7 +122,8 @@ prosody_ldap_filter: (sAMAccountName=%u)
 prosody_monitoring: true
 ## add prometheus server IP address here:
 prosody_openmetrics_allow_ips: '"127.0.0.1", "::1"'
-## add prometheus server IP address here:
+## add IP addresses of interfaces on which to listen
+## (e. g. for being scraped by prometheus):
 prosody_http_interfaces: '"127.0.0.1", "::1"'
 
 # goss tests
