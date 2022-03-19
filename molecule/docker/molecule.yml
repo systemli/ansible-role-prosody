@@ -26,4 +26,4 @@ provisioner:
 verifier:
   name: goss
   directory: ../default/tests/
-  enabled: false
+  enabled: true
