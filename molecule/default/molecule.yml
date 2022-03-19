@@ -1,8 +1,6 @@
 ---
 driver:
   name: vagrant
-  provider:
-    name: virtualbox
 platforms:
   - name: prosody-bullseye64
     box: debian/bullseye64
