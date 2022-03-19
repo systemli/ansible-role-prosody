@@ -109,6 +109,7 @@ prosody_packages:
   - lua-bitop
   - lua-event
   - lua-unbound
+  - lua5.2
 
 # ldap
 prosody_ldap_packages:
