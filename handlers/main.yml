@@ -24,11 +24,6 @@
     name: prosody
     state: started
 
-- name: restart munin-node
-  service:
-    name: munin-node
-    state: restarted
-
 - name: restart saslauthd
   service:
     name: saslauthd
