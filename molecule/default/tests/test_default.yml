@@ -10,9 +10,8 @@ service:
     running: true
 
 command:
-
   prosodyctl about:
     exit-status: 0
     stdout:
       - Prosody 0.12
-      - Lua 5.2
+      - Lua 5.4

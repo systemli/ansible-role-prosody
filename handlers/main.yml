@@ -1,5 +1,11 @@
 ---
 
+- name: update lua alternatives
+  community.general.alternatives:
+    name: lua-interpreter
+    link: /usr/bin/lua
+    path: "/usr/bin/lua{{ prosody_lua_version }}"
+
 - name: reload systemd
   systemd:
     daemon_reload: true

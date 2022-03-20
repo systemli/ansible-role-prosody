@@ -1,5 +1,13 @@
 ---
 
+- name: Ensure selected lua version is present
+  apt:
+    pkg: "lua{{ prosody_lua_version }}"
+    cache_valid_time: 600
+  notify: 
+    - update lua alternatives
+    - restart prosody 
+
 - name: Ensure required packages are present
   apt:
     pkg: "{{ prosody_packages }}"
