@@ -1,5 +1,18 @@
 ---
 
+- name: Ensure selected lua version is present
+  apt:
+    pkg: "lua{{ prosody_lua_version }}"
+    cache_valid_time: 600
+  register: __prosody_lua_installed
+
+- name: Ensure selected lua version is used
+  community.general.alternatives:
+    name: lua-interpreter
+    link: /usr/bin/lua
+    path: "/usr/bin/lua{{ prosody_lua_version }}"
+  when: __prosody_lua_installed.changed
+
 - name: Ensure required packages are present
   apt:
     pkg: "{{ prosody_packages }}"

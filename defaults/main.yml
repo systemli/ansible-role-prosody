@@ -110,7 +110,8 @@ prosody_packages:
   - lua-sec
   - lua-bitop
   - lua-unbound
-  - lua5.2
+
+prosody_lua_version: "5.4"
 
 # ldap
 prosody_ldap_packages:
@@ -130,4 +131,4 @@ prosody_http_interfaces: '"127.0.0.1", "::1"'
 # goss tests
 prosody_goss_prosodyctl_about_versions:
   - Prosody 0.12
-  - Lua 5.2
+  - Lua {{ prosody_lua_version }}
