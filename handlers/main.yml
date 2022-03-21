@@ -19,6 +19,7 @@
   systemd:
     name: prosody
     state: restarted
+    daemon_reload: yes
 
 - name: stop prosody
   systemd:

@@ -16,6 +16,8 @@ prosody_welcome_msg: "Hello $username, welcome to the $host IM server!"
 
 prosody_network_backend: '"epoll"'
 
+prosody_file_descriptor_limit: 10000
+
 # Set either a string, or a list of strings. If a list is given, the external
 # module "motd_sequential" will be activated and used automatically.
 # motd_sequential is a variant of mod_motd, that lets you specify a sequence

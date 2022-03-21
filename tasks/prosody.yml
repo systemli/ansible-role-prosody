@@ -13,6 +13,20 @@
     pkg: "{{ prosody_packages }}"
     cache_valid_time: 600
 
+- name: ensure prosody systemd drop-in dir exists
+  file:
+    path: "/etc/systemd/system/prosody.service.d"
+    state: directory
+    mode: 0755
+
+- name: ensure prosody file descriptor limit is set
+  template:
+    src: "10-fd-limit.conf.j2"
+    dest: "/etc/systemd/system/prosody.service.d/10-fd-limit.conf"
+    mode: 0444
+  notify:
+    - restart prosody
+
 - name: Get latest registration theme
   git:
     repo: "{{ prosody_custom_registration_theme_repo }}"
