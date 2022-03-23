@@ -50,6 +50,7 @@ prosody_modules:
   - private  # Private XML storage (for room bookmarks, etc.)
   - roster  # Allow users to keep and manage friend lists
   - server_contact_info  # Publish contact information for this service
+  - tombstones # keep a record of accounts deleted accounts, ensure former contacts are aware, prevent re-registration
   - vcard4  # new vards standard
   - vcard_legacy  # Allow users to set vCards
   - welcome  # Welcome users who register accounts

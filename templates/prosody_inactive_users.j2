@@ -5,13 +5,6 @@
 # set variables
 declare -r older_than=2years
 declare -r domain={{ prosody_vhost }}
-declare -r conference_domain=conference.{{ prosody_vhost }}
-
-# calculate other variables
-declare -r domain_rewritten=$(echo $domain | sed 's/\./%2e/g')
-declare -r conference_domain_rewritten=$(echo ${conference_domain} | sed 's/\./%2e/g')
-declare -r path=/var/lib/prosody/${domain_rewritten}
-declare -r conference_config_path=/var/lib/prosody/${conference_domain_rewritten}/config/
 
 # set argument defaults
 list_users=true
@@ -39,28 +32,17 @@ done
 inactive_users=$(/usr/bin/prosodyctl mod_list_inactive ${domain} ${older_than})
 
 # iterate users
-for full_username in $inactive_users; do
-  username=$(echo $full_username | cut -d '@' -f 1)
+for username in $inactive_users; do
 
   # list users
   if [ "$list_users" = true ]; then
-    echo $username
+    echo "${username}"
   fi
 
   if [ "$clean_users" = true ]; then
-    # disable login
-    echo "return {}" > "${path}/accounts/${username}.dat"
-
-    # clean user data
-    # some use dat, other list format
-    # don't clean accounts, we only want to block
-    # don't clean lastlog, so we can access info later again
-    for folder in $(ls ${path} | grep -vE 'accounts|lastlog'); do
-      rm -f ${path}/${folder}/${username}.dat;
-      rm -f ${path}/${folder}/${username}.list;
-    done
+    # delete user
+    /usr/bin/prosodyctl shell user delete "${username}"
   fi
 done
 
 # TODO clean inactive users from permanent rooms & delete inactive rooms
-
