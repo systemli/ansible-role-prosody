@@ -45,7 +45,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Publish to Ansible Galaxy
-        uses: t2d/galaxy-action@2.0.0
+        uses: t2d/galaxy-action@2.1.0
         with:
           galaxy_api_key: ${{ secrets.galaxy_api_key }}
+          git_branch: main
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
