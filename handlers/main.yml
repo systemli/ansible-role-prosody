@@ -19,7 +19,7 @@
   ansible.builtin.systemd:
     name: prosody
     state: restarted
-    daemon_reload: yes
+    daemon_reload: true
 
 - name: stop prosody
   ansible.builtin.systemd:
