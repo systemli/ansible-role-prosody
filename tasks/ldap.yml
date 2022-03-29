@@ -4,11 +4,11 @@
 # and https://wiki.debian.org/InstallingProsody#Cyrus_SASL_with_LDAP
 
 - name: Install ldap dependencies
-  apt:
+  ansible.builtin.apt:
     name: "{{ prosody_ldap_packages }}"
 
 - name: Configure saslauthd
-  copy:
+  ansible.builtin.copy:
     src: saslauthd
     dest: /etc/default/saslauthd
     owner: root
@@ -17,7 +17,7 @@
   notify: restart saslauthd
 
 - name: Configure ldap details
-  template:
+  ansible.builtin.template:
     src: saslauthd.conf.j2
     dest: /etc/saslauthd.conf
     owner: root
@@ -26,7 +26,7 @@
   notify: restart saslauthd
 
 - name: Create sasl directory
-  file:
+  ansible.builtin.file:
     dest: /etc/sasl
     state: directory
     owner: root
@@ -34,7 +34,7 @@
     mode: 0755
 
 - name: Create SASL prosody config
-  copy:
+  ansible.builtin.copy:
     src: prosody.conf
     dest: /etc/sasl/prosody.conf
     owner: root
@@ -43,7 +43,7 @@
   notify: restart saslauthd
 
 - name: Add prosody to sasl group
-  user:
+  ansible.builtin.user:
     name: prosody
     groups: sasl
     append: true

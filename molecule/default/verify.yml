@@ -15,19 +15,19 @@
     goss_format: documentation
   tasks:
     - name: Download and install Goss
-      get_url:
+      ansible.builtin.get_url:
         url: "https://github.com/aelsabbahy/goss/releases/download/{{ goss_version }}/goss-linux-{{ goss_arch }}"
         dest: "{{ goss_bin }}"
         checksum: "sha256:{{ goss_sha256sum }}"
         mode: 0755
 
     - name: Create Molecule directory for test files  # noqa 208
-      file:
+      ansible.builtin.file:
         path: "{{ goss_test_directory }}"
         state: directory
 
     - name: Find Goss tests on localhost
-      find:
+      ansible.builtin.find:
         paths: "{{ lookup('env', 'MOLECULE_VERIFIER_TEST_DIRECTORY') }}"
         patterns:
           - "test[-.\\w]*.yml"
@@ -41,34 +41,34 @@
       become: false
 
     - name: debug
-      debug:
+      ansible.builtin.debug:
         msg: "{{ test_files.files }}"
         verbosity: 3
 
     - name: Copy Goss tests to remote  # noqa 208
-      copy:
+      ansible.builtin.copy:
         src: "{{ item.path }}"
         dest: "{{ goss_test_directory }}/{{ item.path | basename }}"
       with_items:
         - "{{ test_files.files }}"
 
     - name: Register test files
-      shell: "ls {{ goss_test_directory }}/test_*.yml"  # noqa 301
+      ansible.builtin.shell: "ls {{ goss_test_directory }}/test_*.yml"  # noqa 301
       register: test_files
 
     - name: Execute Goss tests
-      command: "{{ goss_bin }} -g {{ item }} validate --format {{ goss_format }}"  # noqa 301
+      ansible.builtin.command: "{{ goss_bin }} -g {{ item }} validate --format {{ goss_format }}"  # noqa 301
       register: test_results
       with_items: "{{ test_files.stdout_lines }}"
       failed_when: false
 
     - name: Display details about the Goss results
-      debug:
+      ansible.builtin.debug:
         msg: "{{ item.stdout_lines }}"
       with_items: "{{ test_results.results }}"
 
     - name: Fail when tests fail
-      fail:
+      ansible.builtin.fail:
         msg: "Goss failed to validate"
       when: item.rc != 0
       with_items: "{{ test_results.results }}"

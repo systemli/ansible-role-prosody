@@ -1,7 +1,7 @@
 ---
 
 - name: Copy script to list inactive users
-  template:
+  ansible.builtin.template:
     src: prosody_inactive_users.j2
     dest: /usr/local/bin/prosody_inactive_users
     owner: root
@@ -9,9 +9,9 @@
     mode: 0755
 
 - name: Enable cron job to clean inactive users
-  cron:
+  ansible.builtin.cron:
     name: Clean inactive jabber users
-    cron_file: prosody_clean_inactive_users
+    cron: prosody_clean_inactive_users
     user: prosody
     special_time: monthly
     job: /usr/local/bin/prosody_inactive_users --clean --no-list
