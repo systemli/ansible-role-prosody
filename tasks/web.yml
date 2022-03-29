@@ -1,7 +1,7 @@
 ---
 
 - name: create .well-known
-  file:
+  ansible.builtin.file:
     path: "{{ prosody_web_dir }}/.well-known"
     state: directory
     owner: "{{ prosody_web_user }}"
@@ -9,7 +9,7 @@
     mode: 0755
 
 - name: Create .well-known/host-meta.json
-  template:
+  ansible.builtin.template:
     src: host-meta.json.j2
     dest: "{{ prosody_web_dir }}/.well-known/host-meta.json"
     owner: "{{ prosody_web_user }}"

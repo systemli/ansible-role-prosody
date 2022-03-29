@@ -1,7 +1,7 @@
 ---
 
 - name: Ensure selected lua version is present
-  apt:
+  ansible.builtin.apt:
     pkg: "lua{{ prosody_lua_version }}"
     cache_valid_time: 600
   notify: 
@@ -9,18 +9,18 @@
     - restart prosody 
 
 - name: Ensure required packages are present
-  apt:
+  ansible.builtin.apt:
     pkg: "{{ prosody_packages }}"
     cache_valid_time: 600
 
 - name: ensure prosody systemd drop-in dir exists
-  file:
+  ansible.builtin.file:
     path: "/etc/systemd/system/prosody.service.d"
     state: directory
     mode: 0755
 
 - name: ensure prosody file descriptor limit is set
-  template:
+  ansible.builtin.template:
     src: "10-fd-limit.conf.j2"
     dest: "/etc/systemd/system/prosody.service.d/10-fd-limit.conf"
     mode: 0444
@@ -28,14 +28,14 @@
     - restart prosody
 
 - name: Get latest registration theme
-  git:
+  ansible.builtin.git:
     repo: "{{ prosody_custom_registration_theme_repo }}"
     dest: "{{ prosody_custom_registration_theme_path }}"
     version: master
   when: prosody_custom_registration_theme
 
 - name: Configure Prosody
-  template:
+  ansible.builtin.template:
     src: prosody.cfg.lua.j2
     dest: /etc/prosody/prosody.cfg.lua
     owner: root
@@ -44,7 +44,7 @@
   notify: reload prosody config
 
 # - name: Create Prosody accounts
-#   command: prosodyctl register {{ item.name }} {{ prosody_virtual_domain }} {{ item.password }}
+#   ansible.builtin.command: prosodyctl register {{ item.name }} {{ prosody_virtual_domain }} {{ item.password }}
 #   with_items: prosody_accounts
 
 - name: Get latest prosody modules  # noqa 402
@@ -58,14 +58,14 @@
     - certs-jabber
 
 - name: Create parameters for Diffie–Hellman (could take a while)
-  command: "openssl dhparam -out /etc/prosody/certs/dh-{{ prosody_dhparam_length }}.pem {{ prosody_dhparam_length }}"
+  ansible.builtin.command: "openssl dhparam -out /etc/prosody/certs/dh-{{ prosody_dhparam_length }}.pem {{ prosody_dhparam_length }}"
   args:
     creates: /etc/prosody/certs/dh-{{ prosody_dhparam_length }}.pem
   notify: restart prosody
   when: not __testing|default()
 
 - name: Push proxy TLS cert to /etc/prosody/certs/
-  copy:
+  ansible.builtin.copy:
     content: "{{ prosody_proxy_ssl_cert }}"
     dest: /etc/prosody/certs/proxy.pem
     owner: root
@@ -77,7 +77,7 @@
   notify: reload prosody config
 
 - name: Change ownership of generic key file if no custom is used
-  file:
+  ansible.builtin.file:
     path: /etc/prosody/certs/localhost.key
     owner: root
     group: prosody
@@ -85,7 +85,7 @@
   when: prosody_proxy_ssl_cert is not defined
 
 - name: Push proxy TLS key to /etc/prosody/certs/
-  copy:
+  ansible.builtin.copy:
     content: "{{ prosody_proxy_ssl_key }}"
     dest: /etc/prosody/certs/proxy.key
     owner: root
@@ -97,9 +97,9 @@
   notify: reload prosody config
 
 - name: Flush handlers
-  meta: flush_handlers
+  ansible.builtin.meta: flush_handlers
 
 - name: Enable prosody service
-  systemd:
+  ansible.builtin.systemd:
     name: prosody
     enabled: true

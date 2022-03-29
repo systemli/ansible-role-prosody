@@ -1,13 +1,13 @@
 ---
 
 - name: Check is goss test directory exists
-  stat:
+  ansible.builtin.stat:
     path: "{{ goss_test_directory }}"
   when: goss_test_directory is defined
   register: dir
 
 - name: Copy goss tests
-  template:
+  ansible.builtin.template:
     src: "test_{{ item }}.yml.j2"
     dest: "{{ goss_test_directory }}/test_{{ item }}.yml"
     owner: root
