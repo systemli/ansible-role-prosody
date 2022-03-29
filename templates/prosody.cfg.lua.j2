@@ -30,12 +30,8 @@ admins = {
 -- For more information see: https://prosody.im/doc/network_backend
 network_backend = {{ prosody_network_backend }}
 
--- Prosody will always look in its source directory for modules, but
--- this option allows you to specify additional locations where Prosody
--- will look for modules first. For community modules, see https://modules.prosody.im/
-plugin_paths = {
-	"{{ prosody_external_modules_dir }}"
-}
+-- server to load communit modules from
+plugin_server = "{{ prosody_plugin_server }}"
 
 -- This is the list of modules Prosody will load on startup.
 -- It looks for mod_modulename.lua in the plugins folder, so make sure that exists too.
@@ -91,7 +87,6 @@ modules_enabled = {
 		"turncredentials";
 {% endif %}
 }
-
 {% if prosody_motd %}
 motd_sequential_messages = {
 {% if prosody_motd is string %}
@@ -353,6 +348,9 @@ Component "conference.{{ vhost.name }}" "muc"
 	modules_enabled = {
 {% for module in prosody_muc_modules %}
 		"{{ module }}";
+{% endfor %}
+{% for module in prosody_muc_modules_extra %}
+                "{{ module }}";
 {% endfor %}
 	}
 	restrict_room_creation = "local"

@@ -2,11 +2,14 @@
 
 - name: Ensure selected lua version is present
   ansible.builtin.apt:
-    pkg: "lua{{ prosody_lua_version }}"
+    pkg: "{{ item }}"
     cache_valid_time: 600
-  notify: 
+  loop:
+    - "lua{{ prosody_lua_version }}"
+    - "liblua{{ prosody_lua_version }}-dev"
+  notify:
     - update lua alternatives
-    - restart prosody 
+    - restart prosody
 
 - name: Ensure required packages are present
   ansible.builtin.apt:
@@ -43,14 +46,36 @@
     mode: 0640
   notify: reload prosody config
 
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers
+
 # - name: Create Prosody accounts
 #   ansible.builtin.command: prosodyctl register {{ item.name }} {{ prosody_virtual_domain }} {{ item.password }}
 #   with_items: prosody_accounts
 
-- name: Get latest prosody modules  # noqa 402
-  hg:
-    repo: https://hg.prosody.im/prosody-modules/
-    dest: "{{ prosody_external_modules_dir }}"
+- name: get installed prosody modules
+  ansible.builtin.command: prosodyctl list
+  changed_when: false
+  register: __prosody_installed_modules
+
+- name: ensure prosody modules are present
+  ansible.builtin.command: prosodyctl install mod_{{ item }}
+  loop: "{{ prosody_external_modules + prosody_muc_modules_extra | flatten(levels=1) }}"
+  when: __prosody_installed_modules.stdout_lines is not search(item)
+  notify:
+    - restart prosody
+
+- name: get outdated prosody modules
+  ansible.builtin.command: prosodyctl list --outdated
+  changed_when: false
+  register: __prosody_outdated_modules
+
+- name: ensure prosody modules are not outdated
+  ansible.builtin.command: prosodyctl install mod_{{ item }}
+  loop: "{{ prosody_external_modules + prosody_muc_modules_extra | flatten(levels=1) }}"
+  when: __prosody_outdated_modules.stdout_lines is search(item)
+  notify:
+    - restart prosody
 
 - include_tasks: tls.yml
   with_items: "{{ prosody_virtual_hosts }}"

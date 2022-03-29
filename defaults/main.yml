@@ -1,4 +1,5 @@
 ---
+
 prosody_vhost: localhost
 prosody_virtual_hosts:
   - name: "{{ prosody_vhost }}"
@@ -14,8 +15,10 @@ prosody_authentication: internal_hashed
 prosody_dhparam_length: 2048
 prosody_welcome_msg: "Hello $username, welcome to the $host IM server!"
 
+# https://prosody.im/doc/network_backend
 prosody_network_backend: '"epoll"'
 
+# https://prosody.im/doc/public_servers#scalability
 prosody_file_descriptor_limit: 10000
 
 # Set either a string, or a list of strings. If a list is given, the external
@@ -25,7 +28,7 @@ prosody_file_descriptor_limit: 10000
 # once and the module keeps track of who as seen which message.
 prosody_motd: []
 
-prosody_custom_registration_theme: False
+prosody_custom_registration_theme: false
 prosody_custom_registration_theme_repo: "https://github.com/beli3ver/Prosody-Web-Registration-Theme.git"
 prosody_custom_registration_theme_path: "/etc/prosody/register-templates/Prosody-Web-Registration-Theme"
 
@@ -35,6 +38,8 @@ prosody_mod_register_redirect_text: "To register please visit {{ prosody_mod_reg
 
 prosody_mod_register_min_seconds_between_registrations: 300  # requires a restart of the prosody server or module reload
 
+# prosody core modules
+# https://prosody.im/doc/modules
 prosody_modules:
   - admin_adhoc  # Allows administration via an XMPP client that supports ad-hoc commands
   - admin_telnet  # Opens telnet console interface on localhost port 5582
@@ -50,12 +55,15 @@ prosody_modules:
   - private  # Private XML storage (for room bookmarks, etc.)
   - roster  # Allow users to keep and manage friend lists
   - server_contact_info  # Publish contact information for this service
+  - smacks # allow clients to resume connection to server
   - tombstones # keep a record of accounts deleted accounts, ensure former contacts are aware, prevent re-registration
   - vcard4  # new vards standard
   - vcard_legacy  # Allow users to set vCards
   - welcome  # Welcome users who register accounts
   - websocket  # XMPP over WebSockets
 
+# Community modules which will be installed with plugin installer
+# see: https://prosody.im/doc/plugin_installer
 prosody_external_modules:
   - auto_activate_hosts
   - c2s_conn_throttle
@@ -71,12 +79,16 @@ prosody_external_modules:
   - register_web
   - s2s_auth_compat
   - s2s_blacklist
-  - smacks
+  - pep_vcard_avatar
 
-prosody_external_modules_dir: /usr/local/share/prosody-modules
+prosody_plugin_server: "https://modules.prosody.im/rocks/"
 
 prosody_muc_modules:
   - muc_mam  # Store MUC messages in an archive and allow users to access it
+
+# Community muc modules which will be installed with plugin installer
+# see: https://prosody.im/doc/plugin_installer
+prosody_muc_modules_extra:
   - vcard_muc  # adds the ability to set vCard for MUC rooms
 
 prosody_c2s_direct_tls_ports: 5223
@@ -109,10 +121,10 @@ prosody_clean_inactive_users: false
 
 prosody_packages:
   - prosody
-  - mercurial
   - lua-sec
   - lua-bitop
   - lua-unbound
+  - luarocks
 
 prosody_lua_version: "5.4"
 
@@ -123,10 +135,13 @@ prosody_ldap_packages:
   - lua-cyrussasl
 prosody_ldap_filter: (sAMAccountName=%u)
 
-# monitoring
+# monitoring with openmetrics endpoint
+# see: https://prosody.im/doc/modules/mod_http_openmetrics
 prosody_monitoring: true
+
 ## add prometheus server IP address here:
 prosody_openmetrics_allow_ips: '"127.0.0.1", "::1"'
+
 ## add IP addresses of interfaces on which to listen
 ## (e. g. for being scraped by prometheus):
 prosody_http_interfaces: '"127.0.0.1", "::1"'
