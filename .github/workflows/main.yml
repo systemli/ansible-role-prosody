@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Publish to Ansible Galaxy
-        uses: t2d/galaxy-action@2.1.0
+        uses: robertdebock/galaxy-action@1.2.0
         with:
           galaxy_api_key: ${{ secrets.galaxy_api_key }}
           git_branch: main
