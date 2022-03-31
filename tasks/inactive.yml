@@ -11,7 +11,7 @@
 - name: Enable cron job to clean inactive users
   ansible.builtin.cron:
     name: Clean inactive jabber users
-    cron: prosody_clean_inactive_users
+    cron_file: prosody_clean_inactive_users
     user: prosody
     special_time: monthly
     job: /usr/local/bin/prosody_inactive_users --clean --no-list
