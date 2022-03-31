@@ -81,6 +81,11 @@ prosody_external_modules:
   - s2s_blacklist
   - pep_vcard_avatar
 
+# set to false if external modules should not be updated
+prosody_update_external_modules: true
+# exclude individual external modules from updates
+prosody_update_external_modules_ignore: []
+
 prosody_plugin_server: "https://modules.prosody.im/rocks/"
 
 prosody_muc_modules:
