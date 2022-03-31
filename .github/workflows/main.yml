@@ -49,4 +49,4 @@ jobs:
         with:
           galaxy_api_key: ${{ secrets.galaxy_api_key }}
           git_branch: main
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main' || contains(github.ref, 'refs/tags/')
