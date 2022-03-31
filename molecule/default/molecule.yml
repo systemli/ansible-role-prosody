@@ -13,5 +13,17 @@ lint: |
 provisioner:
   name: ansible
   become: true
+  inventory:
+    group_vars:
+      all:
+        prosody_motd: [Hello]
+        prosody_clean_inactive_users: true
+        prosody_turncredentials_host: turn0.example.org
+        prosody_turncredentials_secret: "secret"
+        prosody_external_services:
+          - uri: turn0.example.org
+            port: 3478
+            transport: udp
+            type: stun
 verifier:
   name: goss

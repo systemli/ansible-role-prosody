@@ -56,24 +56,36 @@
 - name: get installed prosody modules
   ansible.builtin.command: prosodyctl list
   changed_when: false
+  check_mode: false
   register: __prosody_installed_modules
+
+- name: assemble external module list to install and enable
+  ansible.builtin.set_fact: __prosody_extra_modules="{{ __prosody_extra_modules | default([]) + prosody_external_modules | default([]) + prosody_muc_modules_extra | default([]) }}{% if prosody_motd and not prosody_motd is string %} + [ 'motd_sequential']{% endif %}{% if prosody_external_services is defined %} + ['extdisco'] {% endif %}{% if prosody_turncredentials_host is defined and prosody_turncredentials_secret is defined %} + ['turncredentials']{% endif %}"
 
 - name: ensure prosody modules are present
   ansible.builtin.command: prosodyctl install mod_{{ item }}
-  loop: "{{ prosody_external_modules + prosody_muc_modules_extra | flatten(levels=1) }}"
-  when: __prosody_installed_modules.stdout_lines is not search(item)
+  loop: "{{ __prosody_extra_modules | flatten(levels=1) }}"
+  when:
+    - __prosody_installed_modules.stdout_lines is not search(item)
+    - __prosody_extra_modules
   notify:
     - restart prosody
 
 - name: get outdated prosody modules
   ansible.builtin.command: prosodyctl list --outdated
   changed_when: false
+  check_mode: false
   register: __prosody_outdated_modules
+  when: prosody_update_external_modules
 
 - name: ensure prosody modules are not outdated
   ansible.builtin.command: prosodyctl install mod_{{ item }}
-  loop: "{{ prosody_external_modules + prosody_muc_modules_extra | flatten(levels=1) }}"
-  when: __prosody_outdated_modules.stdout_lines is search(item)
+  loop: "{{ __prosody_extra_modules | flatten(levels=1) }}"
+  when:
+    - __prosody_outdated_modules.stdout_lines | default() is search(item)
+    - __prosody_extra_modules
+    - prosody_update_external_modules
+    - prosody_update_external_modules_ignore is not search(item)
   notify:
     - restart prosody
 
