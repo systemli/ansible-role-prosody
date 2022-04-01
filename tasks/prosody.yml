@@ -60,7 +60,18 @@
   register: __prosody_installed_modules
 
 - name: assemble external module list to install and enable
-  ansible.builtin.set_fact: __prosody_extra_modules="{{ __prosody_extra_modules | default([]) + prosody_external_modules | default([]) + prosody_muc_modules_extra | default([]) }}{% if prosody_motd and not prosody_motd is string %} + [ 'motd_sequential']{% endif %}{% if prosody_external_services is defined %} + ['extdisco'] {% endif %}{% if prosody_turncredentials_host is defined and prosody_turncredentials_secret is defined %} + ['turncredentials']{% endif %}"
+  ansible.builtin.set_fact:
+    __prosody_extra_modules: >-
+     {{ __prosody_extra_modules | default([])
+     + prosody_external_modules | default([])
+     + prosody_muc_modules_extra | default([]) }}
+     {% if prosody_motd and not prosody_motd is string %}
+     + [ 'motd_sequential']{% endif %}
+     {% if prosody_external_services is defined %}
+     + ['extdisco'] {% endif %}
+     {% if prosody_turncredentials_host is defined
+     and prosody_turncredentials_secret is defined %}
+     + ['turncredentials']{% endif %}
 
 - name: ensure prosody modules are present
   ansible.builtin.command: prosodyctl install mod_{{ item }}
