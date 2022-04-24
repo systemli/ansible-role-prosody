@@ -286,6 +286,13 @@ register_web_template = "{{ prosody_custom_registration_theme_path }}"
 
 {% endif %}
 
+{% if prosody_captcha_options %}
+------ register_web captcha configuration ------
+captcha_options = {
+{{ prosody_captcha_options }}
+}
+{% endif %}
+
 {% if 's2s_blacklist' in prosody_external_modules %}
 s2s_blacklist = {
 {% for host in prosody_s2s_blacklist %}
