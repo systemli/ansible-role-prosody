@@ -7,8 +7,7 @@ galaxy_info:
     Tested with Molecule, Docker and Vagrant.
   company: systemli.org
   license: GPLv3
-  min_ansible_version: 2.4
-  github_branch: main
+  min_ansible_version: "2.4"
   galaxy_tags:
     - networking
     - xmpp
