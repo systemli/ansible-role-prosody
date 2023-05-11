@@ -1,5 +1,4 @@
 ---
-
 - name: Check is goss test directory exists
   ansible.builtin.stat:
     path: "{{ goss_test_directory }}"
@@ -12,7 +11,7 @@
     dest: "{{ goss_test_directory }}/test_{{ item }}.yml"
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   when: dir.stat is defined and dir.stat.exists and dir.stat.isdir
   with_items:
     - prosody

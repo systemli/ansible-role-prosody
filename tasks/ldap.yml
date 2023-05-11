@@ -1,5 +1,4 @@
 ---
-
 # kudos: https://blogs.mafia-server.net/nur-bahnhof/2013/12/prosody-authentification-ldapactivedirectory/
 # and https://wiki.debian.org/InstallingProsody#Cyrus_SASL_with_LDAP
 
@@ -13,8 +12,8 @@
     dest: /etc/default/saslauthd
     owner: root
     group: root
-    mode: 0644
-  notify: restart saslauthd
+    mode: "0644"
+  notify: Restart saslauthd
 
 - name: Configure ldap details
   ansible.builtin.template:
@@ -22,8 +21,8 @@
     dest: /etc/saslauthd.conf
     owner: root
     group: root
-    mode: 0644
-  notify: restart saslauthd
+    mode: "0644"
+  notify: Restart saslauthd
 
 - name: Create sasl directory
   ansible.builtin.file:
@@ -31,7 +30,7 @@
     state: directory
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
 
 - name: Create SASL prosody config
   ansible.builtin.copy:
@@ -39,12 +38,12 @@
     dest: /etc/sasl/prosody.conf
     owner: root
     group: root
-    mode: 0644
-  notify: restart saslauthd
+    mode: "0644"
+  notify: Restart saslauthd
 
 - name: Add prosody to sasl group
   ansible.builtin.user:
     name: prosody
     groups: sasl
     append: true
-  notify: restart prosody
+  notify: Restart prosody

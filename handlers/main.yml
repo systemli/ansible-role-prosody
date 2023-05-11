@@ -1,37 +1,36 @@
 ---
-
-- name: update lua alternatives
+- name: Update lua alternatives
   community.general.alternatives:
     name: lua-interpreter
     link: /usr/bin/lua
     path: "/usr/bin/lua{{ prosody_lua_version }}"
 
-- name: reload systemd
+- name: Reload systemd
   ansible.builtin.systemd:
     daemon_reload: true
 
-- name: reload prosody config
+- name: Reload prosody config
   ansible.builtin.systemd:
     name: prosody
     state: reloaded
 
-- name: restart prosody
+- name: Restart prosody
   ansible.builtin.systemd:
     name: prosody
     state: restarted
     daemon_reload: true
 
-- name: stop prosody
+- name: Stop prosody
   ansible.builtin.systemd:
     name: prosody
     state: stopped
 
-- name: start prosody
+- name: Start prosody
   ansible.builtin.systemd:
     name: prosody
     state: started
 
-- name: restart saslauthd
+- name: Restart saslauthd
   ansible.builtin.systemd:
     name: saslauthd
     state: restarted
