@@ -1,12 +1,11 @@
 ---
-
-- name: create .well-known
+- name: Create .well-known
   ansible.builtin.file:
     path: "{{ prosody_web_dir }}/.well-known"
     state: directory
     owner: "{{ prosody_web_user }}"
     group: "{{ prosody_web_user }}"
-    mode: 0755
+    mode: "0755"
 
 - name: Create .well-known/host-meta.json
   ansible.builtin.template:
@@ -14,4 +13,4 @@
     dest: "{{ prosody_web_dir }}/.well-known/host-meta.json"
     owner: "{{ prosody_web_user }}"
     group: "{{ prosody_web_user }}"
-    mode: 0644
+    mode: "0644"

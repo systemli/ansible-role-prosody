@@ -1,0 +1,6 @@
+---
+roles:
+  - name: systemli.apt_repositories
+    version: 1.0.5
+collections:
+  - name: community.general

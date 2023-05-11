@@ -1,6 +1,5 @@
 ---
-
-- name: "Push TLS cert of {{ item.name }} to /etc/prosody/certs/"
+- name: "Push TLS cert /etc/prosody/certs/"
   ansible.builtin.copy:
     content: "{{ item.cert }}"
     dest: "/etc/prosody/certs/{{ item.name }}.crt"
@@ -10,9 +9,9 @@
   when: item.cert is defined
   tags:
     - certs-jabber
-  notify: reload prosody config
+  notify: Reload prosody config
 
-- name: "Push TLS key of {{ item.name }} to /etc/prosody/certs/"
+- name: "Push TLS key to /etc/prosody/certs/"
   ansible.builtin.copy:
     content: "{{ item.key }}"
     dest: "/etc/prosody/certs/{{ item.name }}.key"
@@ -22,4 +21,4 @@
   when: item.key is defined
   tags:
     - certs-jabber
-  notify: reload prosody config
+  notify: Reload prosody config

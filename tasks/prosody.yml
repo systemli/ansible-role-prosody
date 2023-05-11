@@ -1,5 +1,4 @@
 ---
-
 - name: Ensure selected lua version is present
   ansible.builtin.apt:
     pkg: "{{ item }}"
@@ -8,27 +7,26 @@
     - "lua{{ prosody_lua_version }}"
     - "liblua{{ prosody_lua_version }}-dev"
   notify:
-    - update lua alternatives
-    - restart prosody
+    - Update lua alternatives
+    - Restart prosody
 
 - name: Ensure required packages are present
   ansible.builtin.apt:
     pkg: "{{ prosody_packages }}"
     cache_valid_time: 600
 
-- name: ensure prosody systemd drop-in dir exists
+- name: Ensure prosody systemd drop-in dir exists
   ansible.builtin.file:
     path: "/etc/systemd/system/prosody.service.d"
     state: directory
-    mode: 0755
+    mode: "0755"
 
-- name: ensure prosody file descriptor limit is set
+- name: Ensure prosody file descriptor limit is set
   ansible.builtin.template:
     src: "10-fd-limit.conf.j2"
     dest: "/etc/systemd/system/prosody.service.d/10-fd-limit.conf"
-    mode: 0444
-  notify:
-    - restart prosody
+    mode: "0444"
+  notify: Restart prosody
 
 - name: Get latest registration theme
   ansible.builtin.git:
@@ -43,8 +41,8 @@
     dest: /etc/prosody/prosody.cfg.lua
     owner: root
     group: prosody
-    mode: 0640
-  notify: reload prosody config
+    mode: "0640"
+  notify: Reload prosody config
 
 - name: Flush handlers
   ansible.builtin.meta: flush_handlers
@@ -53,54 +51,55 @@
 #   ansible.builtin.command: prosodyctl register {{ item.name }} {{ prosody_virtual_domain }} {{ item.password }}
 #   with_items: prosody_accounts
 
-- name: get installed prosody modules
+- name: Get installed prosody modules
   ansible.builtin.command: prosodyctl list
   changed_when: false
   check_mode: false
   register: __prosody_installed_modules
 
-- name: assemble external module list to install and enable
+- name: Assemble external module list to install and enable
   ansible.builtin.set_fact:
     __prosody_extra_modules: >-
-     {{ __prosody_extra_modules | default([])
-     + prosody_external_modules | default([])
-     + prosody_muc_modules_extra | default([]) }}
-     {% if prosody_motd and not prosody_motd is string %}
-     + [ 'motd_sequential']{% endif %}
-     {% if prosody_external_services is defined %}
-     + ['extdisco'] {% endif %}
-     {% if prosody_turncredentials_host is defined
-     and prosody_turncredentials_secret is defined %}
-     + ['turncredentials']{% endif %}
+      {{ __prosody_extra_modules | default([])
+      + prosody_external_modules | default([])
+      + prosody_muc_modules_extra | default([]) }}
+      {% if prosody_motd and not prosody_motd is string %}
+      + [ 'motd_sequential']{% endif %}
+      {% if prosody_external_services is defined %}
+      + ['extdisco'] {% endif %}
+      {% if prosody_turncredentials_host is defined
+      and prosody_turncredentials_secret is defined %}
+      + ['turncredentials']{% endif %}
 
-- name: ensure prosody modules are present
+- name: Ensure prosody modules are present
   ansible.builtin.command: prosodyctl install mod_{{ item }}
+  changed_when: false
   loop: "{{ __prosody_extra_modules | flatten(levels=1) }}"
   when:
     - __prosody_installed_modules.stdout_lines is not search(item)
     - __prosody_extra_modules
-  notify:
-    - restart prosody
+  notify: Restart prosody
 
-- name: get outdated prosody modules
+- name: Get outdated prosody modules
   ansible.builtin.command: prosodyctl list --outdated
   changed_when: false
   check_mode: false
   register: __prosody_outdated_modules
   when: prosody_update_external_modules
 
-- name: ensure prosody modules are not outdated
+- name: Ensure prosody modules are not outdated
   ansible.builtin.command: prosodyctl install mod_{{ item }}
+  changed_when: false
   loop: "{{ __prosody_extra_modules | flatten(levels=1) }}"
   when:
     - __prosody_outdated_modules.stdout_lines | default() is search(item)
     - __prosody_extra_modules
     - prosody_update_external_modules
     - prosody_update_external_modules_ignore is not search(item)
-  notify:
-    - restart prosody
+  notify: Restart prosody
 
-- include_tasks: tls.yml
+- name: Include Tasks for TLS Certificates
+  ansible.builtin.include_tasks: tls.yml
   with_items: "{{ prosody_virtual_hosts }}"
   tags:
     - certs-jabber
@@ -109,7 +108,7 @@
   ansible.builtin.command: "openssl dhparam -out /etc/prosody/certs/dh-{{ prosody_dhparam_length }}.pem {{ prosody_dhparam_length }}"
   args:
     creates: /etc/prosody/certs/dh-{{ prosody_dhparam_length }}.pem
-  notify: restart prosody
+  notify: Restart prosody
   when: not __testing|default()
 
 - name: Push proxy TLS cert to /etc/prosody/certs/
@@ -122,7 +121,7 @@
   when: prosody_proxy_ssl_cert is defined
   tags:
     - certs-jabber
-  notify: reload prosody config
+  notify: Reload prosody config
 
 - name: Change ownership of generic key file if no custom is used
   ansible.builtin.file:
@@ -142,7 +141,7 @@
   when: prosody_proxy_ssl_key is defined
   tags:
     - certs-jabber
-  notify: reload prosody config
+  notify: Reload prosody config
 
 - name: Flush handlers
   ansible.builtin.meta: flush_handlers
