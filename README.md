@@ -1,40 +1,34 @@
-ansible-role-prosody
-=========
+# ansible-role-prosody
+
 [![Build Status](https://github.com/systemli/ansible-role-prosody/workflows/Integration/badge.svg?branch=main)](https://github.com/systemli/ansible-role-prosody/actions?query=workflow%3AIntegration)
 [![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-prosody-blue.svg)](https://galaxy.ansible.com/systemli/prosody/)
-[![IM observatory](https://check.messaging.one/badge.php?domain=jabber.systemli.org)](https://check.messaging.one/result.php?domain=jabber.systemli.org&amp;type=client)
-<a href='https://compliance.conversations.im/server/jabber.systemli.org'><img src='https://compliance.conversations.im/badge/jabber.systemli.org'></a>
-
 
 Install and maintain [Prosody](http://prosody.im/) from official repo with Ansible.
 Tested with Molecule, Docker and Vagrant.
 
-Requirements
-------------
+## Requirements
 
-Debian 10. Other versions of Debian/Ubuntu might be supported as well, but aren't tested.
+Debian 11. Other versions of Debian/Ubuntu might be supported as well, but aren't tested.
 
-Role Variables
---------------
+## Role Variables
 
 see `defaults/main.yml`
 
-Dependencies
-------------
+## Dependencies
 
- - [systemli.apt_repositories](https://galaxy.ansible.com/systemli/apt_repositories)
+- [systemli.apt_repositories](https://galaxy.ansible.com/systemli/apt_repositories)
 
-Download
---------
+## Download
 
 Download latest release with `ansible-galaxy`
 
-	ansible-galaxy install systemli.prosody
-
-Example Playbook
-----------------
-
+```shell
+ansible-galaxy install systemli.prosody
 ```
+
+## Example Playbook
+
+```yaml
 - hosts: servers
   roles:
     - systemli.prosody
@@ -58,7 +52,7 @@ Look at [systemli.onion](https://github.com/systemli/ansible-role-onion).
 
 You can also combine it with [systemli.letsencrypt](https://github.com/systemli/ansible-role-letsencrypt/) to automatically configure certs.
 
-```
+```yaml
 - hosts: servers
   roles:
     - systemli.letsencrypt
@@ -76,13 +70,14 @@ You can also combine it with [systemli.letsencrypt](https://github.com/systemli/
       renew_hook: "/usr/bin/prosodyctl --root cert import /etc/letsencrypt/live/"
 ```
 
-Tests
------
+## Tests
 
 Run local tests with
-```
+
+```shell
 molecule test
 ```
+
 Requires Molecule, Vagrant and `python-vagrant` to be installed.
 
 To update vars in tests run
@@ -104,12 +99,10 @@ def j2_environment_params():
     )
 ```
 
-License
--------
+## License
 
 GPL
 
-Author Information
-------------------
+## Author Information
 
-https://www.systemli.org
+<https://www.systemli.org>
